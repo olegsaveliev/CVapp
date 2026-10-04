@@ -6,7 +6,7 @@ Interactive personal CV site for Oleg Saveliev.
 
 - `cv-site.html`: the source you edit (styles, markup and script in one file).
 - `build.sh`: wraps the source into a full page at `site/index.html`.
-- `site/`: the finished site, ready to host (`index.html`, `oleg.jpg`, `Oleg-Saveliev-CV.pdf`, the Pip images `pip-*.jpg` and `aid-hero.jpg` for the Projects desktop).
+- `site/`: the finished site, ready to host (`index.html`, `oleg.jpg`, `Oleg-Saveliev-CV.pdf`, the Pip images `pip-*.jpg`, `aid-hero.jpg` for the Projects desktop, and the tab icons `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`).
 - `.claude/launch.json`: local preview server on port 8791.
 - `tools/build_geo.py`: turns Natural Earth and OpenStreetMap downloads into the map data embedded in `cv-site.html` (the `kyivGeo` block) for the Locate animation.
 

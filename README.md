@@ -26,7 +26,7 @@ Then open http://localhost:8791.
 
 ## Publish
 
-Upload the `site/` folder to any static host, for example Netlify Drop (app.netlify.com/drop), GitHub Pages or Vercel.
+Live on Vercel: https://cv-app-phi-fawn.vercel.app/ . Every push to `main` redeploys; `vercel.json` runs `build.sh` and serves the `site/` folder. The `site/` folder also works on any other static host.
 
 The Locate animation uses map data © OpenStreetMap contributors (ODbL) and Natural Earth (public domain). Keep the attribution line visible in the overlay.
 

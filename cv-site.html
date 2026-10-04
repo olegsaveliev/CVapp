@@ -1267,6 +1267,12 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 .hire-chip[data-state="hired"] { background: var(--accent); color: var(--accent-ink); border-color: transparent; box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); animation: chipPing 2.6s infinite; }
 .hire-chip[data-state="hired"] i { background: var(--accent-ink); animation: none; }
 @keyframes chipPing { 0%, 60% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+.hire-grp { display: inline-flex; align-items: stretch; }
+.nav-tools > * { flex: none; }
+.hire-again { height: 36px; padding: 0 11px; border: 0; border-left: 1px solid color-mix(in srgb, var(--accent-ink) 25%, transparent); border-radius: 0 8px 8px 0; background: color-mix(in srgb, var(--accent) 82%, var(--fg)); color: var(--accent-ink); font: 600 .74rem/1 var(--f-mono); cursor: pointer; white-space: nowrap; transition: filter .2s; }
+.hire-again:hover { filter: brightness(1.12); }
+.hire-grp:has(.hire-again:not([hidden])) .hire-chip { border-radius: 8px 0 0 8px; }
+@media (max-width: 1320px) { .hire-again .ha-l { display: none; } }
 @media (max-width: 1100px) { .hire-chip .hc-l { display: none; } .hire-chip .hc-s { display: inline; } }
 @media (max-width: 420px) { .hire-chip { padding: 0 10px; } #openTermNav > span:not(.kbd-hint) { display: none; } }
 @media (prefers-reduced-motion: reduce) { .hire-chip, .hire-chip i { animation: none !important; } }
@@ -1307,7 +1313,7 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 .hx-stat.c b { color: #FFB23E; }
 .hx-btn { background: rgba(10,30,16,.8); border: 1px solid #1F4A2A; color: #9CC7A6; border-radius: 8px; height: 34px; min-width: 34px; padding: 0 10px; font: 500 .74rem/1 var(--f-mono); cursor: pointer; }
 .hx-btn:hover { color: #fff; border-color: #3DFF7A; }
-.hx-ctx { position: absolute; left: 16px; right: 16px; top: calc(58px + env(safe-area-inset-top, 0px)); height: 4px; border-radius: 2px; background: #0E2416; z-index: 2; pointer-events: none; }
+.hx-ctx { visibility: hidden; position: absolute; left: 16px; right: 16px; top: calc(58px + env(safe-area-inset-top, 0px)); height: 4px; border-radius: 2px; background: #0E2416; z-index: 2; pointer-events: none; }
 .hx-ctx i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 2px; background: #A497EA; transition: background .3s; }
 .hx-ctx i.hot { background: #FF5A4E; }
 .hx-ctx span { position: absolute; right: 0; top: 8px; font-size: .58rem; letter-spacing: .12em; color: #7FA88A; text-transform: uppercase; }
@@ -1319,8 +1325,7 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 @keyframes hxMsg { 0% { opacity: 0; transform: scale(1.4); filter: blur(6px); } 12% { opacity: 1; transform: scale(1); filter: none; } 78% { opacity: 1; } 100% { opacity: 0; transform: scale(.96); } }
 .hx-screen { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 24px 16px; background: radial-gradient(circle at 50% 40%, rgba(8,30,16,.82), rgba(2,6,4,.95)); overflow-y: auto; }
 .hx-card { width: min(520px, 100%); text-align: center; }
-.hx-title { font: 900 clamp(3.2rem, 13vw, 6.4rem)/.9 var(--f-display); font-stretch: 125%; letter-spacing: -.02em; color: #3DFF7A; margin: 0; text-shadow: 0 0 30px rgba(61,255,122,.5), 3px 0 0 rgba(255,59,48,.55), -3px 0 0 rgba(91,196,232,.55); animation: hxGl 3s infinite; }
-@keyframes hxGl { 0%, 92%, 100% { transform: none; } 93% { transform: translateX(-4px) skewX(8deg); } 95% { transform: translateX(3px); } 97% { transform: translateX(-1px) skewX(-6deg); } }
+.hx-title { font: 900 clamp(3.2rem, 13vw, 6.4rem)/.9 var(--f-display); font-stretch: 125%; letter-spacing: -.02em; color: #3DFF7A; margin: 0; text-shadow: 0 0 30px rgba(61,255,122,.5); }
 .hx-sub { margin: 14px auto 18px; max-width: 42ch; color: #9CC7A6; font: 400 .95rem/1.5 var(--f-body); }
 .hx-rules { list-style: none; margin: 0 auto 22px; padding: 14px 16px; display: grid; gap: 8px; text-align: left; border: 1px solid #1F4A2A; border-radius: 10px; font-size: .78rem; line-height: 1.45; color: #CFEFD6; background: rgba(0,0,0,.3); max-width: 440px; }
 .hx-rules li { display: grid; grid-template-columns: 22px 1fr; gap: 6px; }
@@ -1366,7 +1371,7 @@ html.thermal { filter: url(#thermalFx); }
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-tools">
-      <button class="hire-chip" id="hireChip" type="button" data-state="play"><i aria-hidden="true"></i><span class="hc-l">Play HIRE.EXE</span><span class="hc-s">Hire me</span></button>
+      <span class="hire-grp"><button class="hire-chip" id="hireChip" type="button" data-state="play"><i aria-hidden="true"></i><span class="hc-l">Play HIRE.EXE</span><span class="hc-s">Hire me</span></button><button class="hire-again" id="hireAgain" type="button" aria-label="Play HIRE.EXE again" title="Play again" hidden>↻<span class="ha-l"> Play again</span></button></span>
       <button class="icon-btn" id="openPalette" type="button" aria-label="Open command menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <span class="kbd-hint"><kbd id="modKey">⌘</kbd> <kbd>K</kbd></span><span class="touch-hint">Menu</span>
@@ -2053,13 +2058,12 @@ html.thermal { filter: url(#thermalFx); }
   <div class="hx-screen" id="hxIntro">
     <div class="hx-card">
       <p class="hx-title">HIRE.EXE</p>
-      <p class="hx-sub">Subject ID-01 is loose on the night cameras. You have 60 seconds to lock on and hire him as many times as you can.</p>
+      <p class="hx-sub">Subject ID-01 is wandering the night cameras. No traps, no rush. Just lock on and hire him as many times as you can in 60 seconds.</p>
       <ul class="hx-rules">
-        <li><span>◎</span><span><b>Press and hold</b> on Oleg until confidence hits 0.99. Slip off and the lock breaks.</span></li>
-        <li><span>×2</span><span>Hire him again and again to build the combo: ×2, ×4, ×8.</span></li>
-        <li><span>π</span><span>Don't hire <b>Pip</b>. He's the bot, not the candidate.</span></li>
-        <li><span>≋</span><span><b>Deepfakes</b> glitch. The real Oleg never does.</span></li>
-        <li><span>▣</span><span>Tap the red <b>rival recruiters</b> before they poach him.</span></li>
+        <li><span>◎</span><span><b>Press and hold</b> on Oleg until confidence hits 0.99.</span></li>
+        <li><span>×2</span><span>Hire him again and again to grow the combo: ×2, ×4, ×8.</span></li>
+        <li><span>π</span><span><b>Pip</b> strolls by now and then. Tap him for a bonus.</span></li>
+        <li><span>✶</span><span>In the last seconds he's on <b>every camera</b>. Tap away.</span></li>
       </ul>
       <button class="hx-start" type="button" id="hxStart">▶ Start · 60 s</button>
       <p class="hx-best" id="hxBest"></p>
@@ -4925,18 +4929,17 @@ Kyiv, Ukraine · 19 years in IT
   const ZONES = ['LOBBY', 'STAIRS', 'OPEN SPACE', 'KITCHEN', 'BOARDROOM', 'PARKING', 'SERVER RM', 'ROOFTOP', 'HR OFFICE'];
   // 60 seconds in five acts; each adds one new way to get it wrong.
   const LV = [
-    { t: 0, name: 'Level 1 · Warm-up', sub: 'Press and hold on Oleg', decoys: 3, clones: 0, hop: 2.4, sp: .3, lock: .6 },
-    { t: 15, name: 'Level 2 · Pip is loose', sub: "Don't hire the bot", decoys: 4, clones: 0, hop: 1.9, sp: .4, lock: .55, pip: true },
-    { t: 30, name: 'Level 3 · Deepfakes', sub: 'The real one never glitches. Mind the context fog', decoys: 2, clones: 3, hop: 1.7, sp: .45, lock: .5, pip: true, fog: true },
-    { t: 45, name: 'Level 4 · Rival recruiters', sub: 'Tap the red boxes before they poach him', decoys: 2, clones: 2, hop: 1.6, sp: .5, lock: .48, rivals: true, fog: true },
-    { t: 55, name: 'Final 5 seconds', sub: "He's everywhere. Tap, tap, tap", fin: true, sp: .35, hop: 99, lock: .4 }
+    { t: 0, name: 'Warm-up', sub: 'Press and hold on Oleg', decoys: 2, hop: 3.4, sp: .2, lock: .45 },
+    { t: 20, name: 'More people in the office', sub: 'Pip strolls by sometimes. Tap him for a bonus', decoys: 3, hop: 3, sp: .24, lock: .45, pip: true },
+    { t: 38, name: 'Busy floor', sub: 'Six cameras now. No rush', decoys: 4, hop: 2.8, sp: .26, lock: .45, pip: true },
+    { t: 52, name: 'Final 8 seconds', sub: "He's on every camera. Tap, tap, tap", fin: true, sp: .2, hop: 99, lock: .4 }
   ];
   const rnd = (a, b) => a + Math.random() * (b - a);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   let W = 0, Hh = 0, dpr = 1, raf = 0, last = 0, S = null, open = false, lastF = null;
   let muted = store.get('hx-mute') === '1', best = +(store.get('hx-best') || 0);
   const ptr = { x: -999, y: -999, down: false, has: false };
-  const hud = { lvl: $('#hxLvl'), time: $('#hxTime'), timeW: $('#hxTimeW'), combo: $('#hxCombo'), score: $('#hxScore'), ctx: $('#hxCtx'), ctxT: $('#hxCtxT'), msg: $('#hxMsg') };
+  const hud = { lvl: $('#hxLvl'), time: $('#hxTime'), timeW: $('#hxTimeW'), combo: $('#hxCombo'), score: $('#hxScore'), msg: $('#hxMsg') };
   const shown = {};
   const setT = (k, v) => { if (shown[k] !== v) { shown[k] = v; hud[k].textContent = v; } };
 
@@ -4976,7 +4979,6 @@ Kyiv, Ukraine · 19 years in IT
   const SFX = {
     tick: () => tone(380 + S.lock * 900, .04, 'square', .02),
     hire: () => { tone(200, .2, 'sawtooth', .06, 55); tone(880, .1, 'square', .035, 1760); setTimeout(() => tone(1320, .12, 'triangle', .05), 70); },
-    bad: () => tone(150, .32, 'sawtooth', .06, 60),
     block: () => tone(700, .1, 'square', .04, 180),
     lvl: () => [330, 495, 660].forEach((f, i) => setTimeout(() => tone(f, .14, 'triangle', .05), i * 110)),
     end: () => [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, .26, 'triangle', .05), i * 120))
@@ -4990,11 +4992,11 @@ Kyiv, Ukraine · 19 years in IT
   // ---- state ----
   function fresh(demo) {
     return { on: !demo, demo, over: false, t: 0, level: 0, L: LV[0], feeds: [], unit: 100, ents: [], parts: [], stamps: [], floats: [],
-      score: 0, hires: 0, streak: 0, bestM: 1, miss: { pip: 0, clone: 0, decoy: 0 }, lost: 0, poached: 0, blocked: 0,
-      ctx: .12, compacting: 0, shake: 0, stop: 0, red: 0, lock: 0, lockT: null, ticks: 0, nextPip: 2, nextRival: .6 };
+      score: 0, hires: 0, streak: 0, bestM: 1, miss: { pip: 0, decoy: 0 },
+      shake: 0, stop: 0, lock: 0, lockT: null, ticks: 0, nextPip: 2 };
   }
   function layout() {
-    const [c0, r0] = S.level <= 1 ? [2, 2] : S.level === 2 ? [3, 2] : [3, 3];
+    const [c0, r0] = S.level <= 1 ? [2, 2] : S.L.fin ? [3, 3] : [3, 2];
     const [c, r] = W < Hh ? [r0, c0] : [c0, r0];
     const top = $('.hx-ctx', hx).getBoundingClientRect().bottom + 22, pad = W < 600 ? 10 : 16, gap = 8;
     const fw = (W - pad * 2 - gap * (c - 1)) / c, fh = (Hh - top - pad - gap * (r - 1)) / r;
@@ -5008,23 +5010,22 @@ Kyiv, Ukraine · 19 years in IT
   function mk(kind, f) {
     const L = S.L;
     return { kind, f: f ?? Math.floor(Math.random() * S.feeds.length), u: rnd(.25, .75), v: rnd(.3, .7), tu: rnd(.2, .8), tv: rnd(.3, .7),
-      sp: (kind === 'decoy' ? .16 : L.sp) * rnd(.8, 1.2), hopIn: rnd(.6, 1) * L.hop * (kind === 'clone' ? 1.3 : 1), gone: 0, gl: rnd(0, 9),
+      sp: (kind === 'decoy' ? .16 : L.sp) * rnd(.8, 1.2), hopIn: rnd(.6, 1) * L.hop, gone: 0, gl: rnd(0, 9),
       cf: (kind === 'decoy' ? rnd(.38, .62) : rnd(.41, .58)).toFixed(2) };
   }
   function applyLevel(i, silent) {
     const L = LV[i]; S.level = i + 1; S.L = L; layout();
-    S.ents = S.ents.filter(e => e.kind === 'oleg' || e.kind === 'pip' || e.kind === 'rival');
+    S.ents = S.ents.filter(e => e.kind === 'oleg' || e.kind === 'pip');
     if (L.fin) { S.ents = []; S.feeds.forEach((f, k) => S.ents.push(mk('fin', k))); S.lockT = null; }
     else {
       if (!S.ents.some(e => e.kind === 'oleg')) S.ents.push(mk('oleg'));
       for (let k = 0; k < L.decoys; k++) S.ents.push(mk('decoy'));
-      for (let k = 0; k < L.clones; k++) S.ents.push(mk('clone'));
       S.ents.forEach(e => { if (e.kind === 'oleg') { e.sp = L.sp; } });
     }
-    if (!silent) { msg(L.name, L.sub); sfx('lvl'); S.feeds.forEach(f => f.flash = .8); }
+    if (!silent) { msg(L.name, L.sub); sfx('lvl'); S.feeds.forEach(f => f.flash = .3); }
     hud.lvl.textContent = S.demo ? 'Standby · subject on camera' : L.name;
   }
-  const pos = e => { if (e.kind === 'pip' || e.kind === 'rival') return e; const f = feedOf(e); return { x: f.x + e.u * f.w, y: f.y + e.v * f.h }; };
+  const pos = e => { if (e.kind === 'pip') return e; const f = feedOf(e); return { x: f.x + e.u * f.w, y: f.y + e.v * f.h }; };
   const rad = e => { const b = clamp(S.unit * .17, 24, 70); return e.kind === 'pip' ? b * .8 : e.kind === 'decoy' ? b * .95 : b; };
   function hitTest(kinds) {
     let bestE = null, bd = 1e9;
@@ -5048,30 +5049,28 @@ Kyiv, Ukraine · 19 years in IT
     burst(p.x, p.y, quick ? 22 : 48, ['#3DFF7A', '#FFB23E', '#FFFFFF', '#A497EA']);
     S.stamps.push({ x: p.x, y: p.y, life: 1, rot: rnd(-.32, -.12) });
     float(p.x, p.y - r - 10, `+${pts}${m > 1 ? ' ×' + m : ''}`, '#FFB23E');
-    S.shake = quick ? 6 : 14; S.stop = quick ? .03 : .09; sfx('hire');
-    S.ctx = Math.min(1, S.ctx + (S.L.fog ? .09 : .04));
+    S.shake = quick ? 2 : 5; S.stop = quick ? .02 : .06; sfx('hire');
     e.gone = quick ? .3 : .32; e.pending = true;
     if (S.lockT === e) { S.lockT = null; S.lock = 0; }
   }
   function wrong(title, sub, pen, key) {
     S.streak = 0; S.score = Math.max(0, S.score - pen); if (key) S.miss[key]++;
-    msg(title, sub + (pen ? ` · −${pen}` : ''), true); S.shake = 9; S.red = .45; sfx('bad');
+    msg(title, sub); S.shake = 2; tone(260, .16, 'triangle', .04, 200);
   }
   function resolve(e) {
     S.lockT = null; S.lock = 0;
     if (e.kind === 'oleg') return hire(e);
-    const p = pos(e);
-    if (e.kind === 'clone') { burst(p.x, p.y, 30, ['#FF3B30', '#5BC4E8', '#FFFFFF']); e.gone = .6; e.pending = true; wrong('Deepfake!', 'The real Oleg never glitches', 100, 'clone'); }
-    else if (e.kind === 'pip') { S.ents = S.ents.filter(x => x !== e); burst(p.x, p.y, 20, ['#5BC4E8', '#FFFFFF']); wrong("That's Pip", "He's the bot. Not for hire", 50, 'pip'); }
-    else { e.gone = .5; e.pending = true; wrong('Not a match', 'You just hired a stranger', 50, 'decoy'); }
+    if (e.kind === 'pip') return pipHi(e);
+    e.gone = .5; e.pending = true; wrong('Not him', 'That was someone else. Combo reset', 0, 'decoy');
   }
-  function block(rv) {
-    S.ents = S.ents.filter(x => x !== rv); S.blocked++; S.score += 25;
-    burst(rv.x, rv.y, 26, ['#FF3B30', '#FFB23E']); float(rv.x, rv.y - 30, '+25 BLOCKED', '#FF5A4E'); S.shake = 5; sfx('block');
+  // Pip is a bonus now: tap him as he strolls past.
+  function pipHi(e) {
+    const p = pos(e); S.ents = S.ents.filter(x => x !== e); S.miss.pip++; S.score += 50;
+    burst(p.x, p.y, 24, ['#5BC4E8', '#9FE7FF', '#FFFFFF']); float(p.x, p.y - 30, '+50 Pip says hi', '#9FE7FF'); sfx('block');
   }
   function relocate(e, keepFeed) {
     const f = keepFeed ? e.f : otherFeed(e.f); e.f = f; e.u = rnd(.25, .75); e.v = rnd(.3, .7); e.tu = rnd(.2, .8); e.tv = rnd(.3, .7);
-    S.feeds[f].flash = .7;
+    S.feeds[f].flash = .25;
   }
 
   // ---- simulation ----
@@ -5080,7 +5079,7 @@ Kyiv, Ukraine · 19 years in IT
     S.parts = S.parts.filter(p => p.life > 0);
     S.stamps.forEach(s => s.life -= dt * 1.1); S.stamps = S.stamps.filter(s => s.life > 0);
     S.floats.forEach(f => { f.y -= 60 * dt; f.life -= dt * 1.2; }); S.floats = S.floats.filter(f => f.life > 0);
-    S.shake *= Math.pow(.002, dt); S.red = Math.max(0, S.red - dt * 1.4);
+    S.shake *= Math.pow(.002, dt);
     S.feeds.forEach(f => f.flash = Math.max(0, f.flash - dt * 2.2));
     if (S.stop > 0) { S.stop -= dt; return; }                       // hit-stop: the world freezes on a hire
     if (S.on) {
@@ -5092,40 +5091,23 @@ Kyiv, Ukraine · 19 years in IT
     const L = S.L;
     S.ents.forEach(e => {
       if (e.kind === 'pip') { e.x += e.vx * dt; e.y = e.y0 + Math.sin(S.t * 9 + e.gl) * 6; return; }
-      if (e.kind === 'rival') {
-        const o = S.ents.find(x => x.kind === 'oleg' && x.gone <= 0); if (!o) return;
-        const p = pos(o), dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy) || 1;
-        e.x += dx / d * e.v * dt; e.y += dy / d * e.v * dt;
-        if (d < rad(o) * .7) { S.ents = S.ents.filter(x => x !== e); S.poached++; if (S.lockT === o) { S.lockT = null; S.lock = 0; } o.gone = .4; o.pending = true; burst(p.x, p.y, 24, ['#FF3B30']); wrong('Poached!', 'A rival recruiter got him first', 0); }
-        return;
-      }
       if (e.gone > 0) { e.gone -= dt; if (e.gone <= 0 && e.pending) { e.pending = false; relocate(e, e.kind === 'fin'); } return; }
       const f = feedOf(e), dx = e.tu - e.u, dy = e.tv - e.v, d = Math.hypot(dx * f.w, dy * f.h), step = e.sp * S.unit * dt;
       if (d <= step + 1) { e.tu = rnd(.2, .8); e.tv = rnd(.28, .72); } else { e.u += dx * step / d; e.v += dy * step / d; }
-      if (e.kind === 'oleg' || e.kind === 'clone') { e.hopIn -= dt; if (e.hopIn <= 0) { e.hopIn = rnd(.7, 1.2) * L.hop * (e.kind === 'clone' ? 1.3 : 1); S.feeds[e.f].flash = .6; relocate(e); } }
+      if (e.kind === 'oleg') { e.hopIn -= dt; if (e.hopIn <= 0) { e.hopIn = rnd(.7, 1.2) * L.hop; S.feeds[e.f].flash = .2; relocate(e); } }
     });
     S.ents = S.ents.filter(e => e.kind !== 'pip' || (e.x > -120 && e.x < W + 120));
     if (S.on && L.pip && !L.fin && (S.nextPip -= dt) <= 0) {
       S.nextPip = rnd(3.5, 5.5); const left = Math.random() < .5, top = S.feeds[0].y, bot = S.feeds[S.feeds.length - 1].y + S.feeds[S.feeds.length - 1].h;
       const y0 = rnd(top + 50, bot - 50); S.ents.push({ kind: 'pip', x: left ? -60 : W + 60, y: y0, y0, vx: (left ? 1 : -1) * rnd(200, 280) * clamp(W / 1200, .6, 1.2), gl: rnd(0, 6) });
     }
-    if (S.on && L.rivals && (S.nextRival -= dt) <= 0 && S.ents.filter(e => e.kind === 'rival').length < 4) {
-      S.nextRival = rnd(1.2, 1.9); const side = Math.floor(Math.random() * 4), top = S.feeds[0].y;
-      const x = side === 0 ? -30 : side === 1 ? W + 30 : rnd(30, W - 30), y = side === 2 ? top - 10 : side === 3 ? Hh + 30 : rnd(top, Hh - 30);
-      S.ents.push({ kind: 'rival', x, y, v: rnd(95, 135) * clamp(W / 1200, .7, 1.2) });
-    }
-    if (S.on) {
-      if (S.compacting > 0) { S.compacting -= dt; if (S.compacting <= 0) S.ctx = .12; }
-      else { S.ctx += dt * (L.fog ? .05 : .01); if (S.ctx >= 1) { S.compacting = 1.3; msg('Auto-compacting…', 'Context window full. Clearing the fog'); } }
-    }
     // lock-on: hold the pointer on a subject until confidence reaches 0.99
     if (S.on && ptr.down) {
-      if (!S.lockT) { const t = hitTest(['oleg', 'clone', 'decoy', 'pip']); if (t) { S.lockT = t; S.lock = 0; S.ticks = 0; } }
+      if (!S.lockT) { const t = hitTest(['oleg', 'decoy']); if (t) { S.lockT = t; S.lock = 0; S.ticks = 0; } }
       const e = S.lockT;
       if (e) {
         const p = pos(e);
-        if (e.gone > 0 || !S.ents.includes(e) || Math.hypot(ptr.x - p.x, ptr.y - p.y) > rad(e) * 1.3) {
-          if (S.lock > .3 && e.kind === 'oleg') { S.streak = 0; S.lost++; msg('Lock lost', 'Combo reset. Stay on him', true); sfx('bad'); }
+        if (e.gone > 0 || !S.ents.includes(e) || Math.hypot(ptr.x - p.x, ptr.y - p.y) > rad(e) * 1.7) {
           S.lockT = null; S.lock = 0;
         } else {
           S.lock += dt / L.lock;
@@ -5149,7 +5131,7 @@ Kyiv, Ukraine · 19 years in IT
     g.strokeStyle = 'rgba(61,255,122,.05)'; g.lineWidth = 1; g.beginPath();
     for (let k = 1; k < 5; k++) { const y = f.y + f.h * (.55 + k * k * .022); g.moveTo(f.x, y); g.lineTo(f.x + f.w, y); }
     g.stroke();
-    g.globalAlpha = .08 + f.flash * .7; g.drawImage(noise, (Math.random() * 64) | 0, (Math.random() * 64) | 0, 64, 64, f.x, f.y, f.w, f.h); g.globalAlpha = 1;
+    g.globalAlpha = .05 + f.flash * .5; g.drawImage(noise, (Math.random() * 64) | 0, (Math.random() * 64) | 0, 64, 64, f.x, f.y, f.w, f.h); g.globalAlpha = 1;
     g.font = '600 10px "JetBrains Mono", ui-monospace, monospace'; g.fillStyle = 'rgba(120,255,160,.7)';
     g.fillText(`CAM-${String(f.id).padStart(2, '0')}${f.w > 190 ? ' · ' + ZONES[f.id - 1] : ''}`, f.x + 10, f.y + 17);
     g.fillStyle = (t * 2 | 0) % 2 ? '#FF3B30' : 'rgba(255,59,48,.25)'; g.beginPath(); g.arc(f.x + f.w - 14, f.y + 13, 3.5, 0, PI2); g.fill();
@@ -5161,12 +5143,7 @@ Kyiv, Ukraine · 19 years in IT
       g.fillStyle = 'rgba(110,180,125,.3)'; g.beginPath(); g.arc(p.x, p.y - r * .36, r * .33, 0, PI2); g.fill();
       g.beginPath(); g.ellipse(p.x, p.y + r * .62, r * .74, r * .6, 0, Math.PI, 0); g.fill();
     } else if (nv) {
-      const glitch = e.kind === 'clone' && ((t * 1.6 + e.gl) % 1.5) < .34;
-      if (glitch) {
-        for (let k = 0; k < 6; k++) g.drawImage(nv, 0, k * N / 6, N, N / 6, p.x - r + rnd(-.35, .35) * r, p.y - r + k * r / 3, r * 2, r / 3);
-        g.fillStyle = 'rgba(255,40,90,.35)'; g.fillRect(p.x - r, p.y - r + Math.random() * r * 2, r * 2, 3);
-        g.fillStyle = 'rgba(91,196,232,.3)'; g.fillRect(p.x - r, p.y - r + Math.random() * r * 2, r * 2, 2);
-      } else g.drawImage(nv, p.x - r, p.y - r, r * 2, r * 2);
+      g.drawImage(nv, p.x - r, p.y - r, r * 2, r * 2);
     } else { g.fillStyle = '#3DFF7A'; g.beginPath(); g.arc(p.x, p.y, r * .6, 0, PI2); g.fill(); }
     const s = r * 1.12;
     if (e.kind === 'fin') { const pu = .6 + Math.sin(t * 10) * .4; brackets(p.x, p.y, s, `rgba(255,178,62,${pu})`, 2); g.fillStyle = '#FFB23E'; g.font = '700 10px "JetBrains Mono", monospace'; g.fillText('HIRE ME', p.x - s, p.y - s - 5); }
@@ -5182,13 +5159,6 @@ Kyiv, Ukraine · 19 years in IT
     g.beginPath(); g.ellipse(x - r * .22, y - r * .05, r * .1, r * .12 * bl, 0, 0, PI2); g.ellipse(x + r * .22, y - r * .05, r * .1, r * .12 * bl, 0, 0, PI2); g.fill(); g.shadowBlur = 0;
     g.fillStyle = 'rgba(160,230,255,.8)'; g.font = '700 10px "JetBrains Mono", monospace'; g.fillText('π PIP · bot', x - r * .6, y + r * .5 + 13);
   }
-  function drawRival(e, t) {
-    const s = 26 + Math.sin(t * 8 + e.x) * 2;
-    g.fillStyle = 'rgba(255,59,48,.14)'; g.fillRect(e.x - s, e.y - s, s * 2, s * 2);
-    brackets(e.x, e.y, s, '#FF3B30', 2.5, 10);
-    g.fillStyle = '#FF5A4E'; g.font = '800 15px "Archivo", sans-serif'; g.textAlign = 'center'; g.fillText('$$$', e.x, e.y + 5);
-    g.font = '600 9px "JetBrains Mono", monospace'; g.fillText('RIVAL RECRUITER', e.x, e.y - s - 6); g.textAlign = 'left';
-  }
   function draw() {
     const t = performance.now() / 1000;
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -5196,17 +5166,10 @@ Kyiv, Ukraine · 19 years in IT
     const sh = reduced ? 0 : S.shake; g.save(); g.translate(rnd(-sh, sh), rnd(-sh, sh));
     S.feeds.forEach(f => drawFeed(f, t));
     S.ents.forEach(e => {
-      if (e.kind === 'pip' || e.kind === 'rival' || e.gone > 0) return;
+      if (e.kind === 'pip' || e.gone > 0) return;
       const f = feedOf(e); g.save(); g.beginPath(); g.rect(f.x, f.y, f.w, f.h); g.clip(); drawPerson(e, t); g.restore();
     });
     S.ents.forEach(e => { if (e.kind === 'pip') drawPip(e, t); });
-    S.ents.forEach(e => { if (e.kind === 'rival') drawRival(e, t); });
-    // context fog
-    const fa = S.compacting > 0 ? S.compacting / 1.3 * .85 : S.L.fog ? clamp((S.ctx - .55) / .45, 0, 1) * .8 : 0;
-    if (fa > 0.01) {
-      const top = S.feeds[0].y; g.fillStyle = `rgba(140,165,150,${fa * .55})`; g.fillRect(0, top, W, Hh - top);
-      g.globalAlpha = fa * .45; g.drawImage(noise, (Math.random() * 64) | 0, 0, 64, 64, 0, top, W, Hh - top); g.globalAlpha = 1;
-    }
     S.parts.forEach(p => { g.globalAlpha = Math.max(0, p.life); g.fillStyle = p.c; g.fillRect(p.x, p.y, p.s, p.s); }); g.globalAlpha = 1;
     S.stamps.forEach(s => {
       const a = 1 - s.life, k = a < .1 ? 2.4 - a / .1 * 1.4 : 1;
@@ -5227,17 +5190,15 @@ Kyiv, Ukraine · 19 years in IT
         g.fillStyle = col; g.font = '700 11px "JetBrains Mono", monospace'; g.fillText(`LOCK ${(.4 + .59 * Math.min(1, S.lock)).toFixed(2)}`, p.x - s, p.y + s + 15);
       }
     }
-    // scanlines + vignette + red flash
+    // scanlines + vignette
     g.fillStyle = 'rgba(0,0,0,.16)'; for (let y = 0; y < Hh; y += 3) g.fillRect(0, y, W, 1);
     const vg = g.createRadialGradient(W / 2, Hh / 2, Math.min(W, Hh) * .3, W / 2, Hh / 2, Math.max(W, Hh) * .75);
     vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)'); g.fillStyle = vg; g.fillRect(0, 0, W, Hh);
-    if (S.red > 0) { g.fillStyle = `rgba(255,30,30,${S.red * .35})`; g.fillRect(0, 0, W, Hh); }
     // HUD
     if (S.on) {
       const left = Math.max(0, Math.ceil(GAME_T - S.t)); setT('time', String(left)); hud.timeW.classList.toggle('low', left <= 10);
       const m = S.streak >= 6 ? 8 : S.streak >= 4 ? 4 : S.streak >= 2 ? 2 : 1; setT('combo', '×' + m); setT('score', S.score.toLocaleString('en-US'));
     }
-    const cp = Math.round(S.ctx * 100); hud.ctx.style.width = cp + '%'; hud.ctx.classList.toggle('hot', S.ctx > .8); setT('ctxT', S.compacting > 0 ? 'auto-compacting…' : `context ${cp}%`);
   }
   function loop(now) {
     const dt = Math.min(.05, (now - last) / 1000 || 0); last = now;
@@ -5251,17 +5212,16 @@ Kyiv, Ukraine · 19 years in IT
     const R = S; R.on = false; sfx('end');
     const isBest = R.score > best; if (isBest) { best = R.score; store.set('hx-best', String(best)); }
     store.set('hx-last', JSON.stringify({ hires: R.hires, score: R.score })); syncChip();
-    const wrongN = R.miss.pip + R.miss.clone + R.miss.decoy, n = String(1000 + Math.floor(Math.random() * 9000));
+    const n = String(1000 + Math.floor(Math.random() * 9000));
     const day = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date());
     $('#hxRcpt').innerHTML = `<h3>OFFER LETTER</h3><div class="c">HIRE.EXE · #HX-${n} · ${day}</div><hr>
       <dl><dt>Candidate</dt><dd>Oleg Saveliev</dd><dt>Role</dt><dd>Delivery Manager, GenAI</dd><dt>Times hired</dt><dd>${R.hires}</dd>
-      <dt>Best combo</dt><dd>×${R.bestM}</dd><dt>Rivals blocked</dt><dd>${R.blocked}</dd><dt>Poached</dt><dd>${R.poached}</dd>
-      <dt>Wrong locks</dt><dd>${wrongN}${wrongN ? ` <span style="font-weight:500">(Pip ${R.miss.pip} · fakes ${R.miss.clone} · strangers ${R.miss.decoy})</span>` : ''}</dd>
+      <dt>Best combo</dt><dd>×${R.bestM}</dd><dt>Pip said hi</dt><dd>${R.miss.pip}×</dd><dt>Strangers hired</dt><dd>${R.miss.decoy}</dd>
       <dt>Rank</dt><dd>${rankOf(R.score)}</dd><dt>Start date</dt><dd>Tomorrow</dd><dt>Hiring manager</dt><dd>You</dd></dl><hr>
       <dl><dt>Score</dt><dd class="tot">${R.score.toLocaleString('en-US')}</dd></dl>
       <div class="c">${isBest ? '<span class="hx-new">★ New best on this device</span>' : 'Best on this device: ' + best.toLocaleString('en-US')}</div>
       <div class="hx-bar"></div><div class="c">Thank you for hiring responsibly</div><div class="stamp">HIRED</div>`;
-    S = fresh(true); applyLevel(0, true); S.ctx = R.ctx;
+    S = fresh(true); applyLevel(0, true);
     ptr.down = false; hx.classList.add('idle'); $('#hxEnd').hidden = false; hud.msg.innerHTML = '';
     setTimeout(() => $('#hxOffer').focus({ preventScroll: true }), 50);
   }
@@ -5293,8 +5253,8 @@ Kyiv, Ukraine · 19 years in IT
   cv.addEventListener('pointerdown', e => {
     if (!S || !S.on) return; e.preventDefault(); audio(); setPtr(e); ptr.down = true;
     try { cv.setPointerCapture(e.pointerId); } catch {}
-    const rv = hitTest(['rival']); if (rv) { block(rv); return; }
     const fin = hitTest(['fin']); if (fin) { hire(fin, true); return; }
+    const pp = hitTest(['pip']); if (pp) { pipHi(pp); return; }
   });
   cv.addEventListener('pointermove', setPtr);
   const up = () => { ptr.down = false; if (S) { S.lockT = null; S.lock = 0; } };
@@ -5310,13 +5270,14 @@ Kyiv, Ukraine · 19 years in IT
   const chip = $('#hireChip');
   function syncChip() {
     let r = null; try { r = JSON.parse(store.get('hx-last') || 'null'); } catch {}
-    chip.dataset.state = r ? 'hired' : 'play';
+    chip.dataset.state = r ? 'hired' : 'play'; $('#hireAgain').hidden = !r;
     const [l, sh, aria] = !r ? ['Play HIRE.EXE', 'Hire me', 'Play HIRE.EXE, a 60-second game']
-      : r.hires ? [`You hired me ${r.hires}× · Send the offer →`, `Hired ${r.hires}× →`, `You hired me ${r.hires} times in the game. Send the real offer: go to contact and copy my email`]
+      : r.hires ? [`Hired me ${r.hires}× · Send the offer →`, `Hired ${r.hires}× →`, `You hired me ${r.hires} times in the game. Send the real offer: go to contact and copy my email`]
       : ['Hire me for real →', 'Hire me →', 'Hire me for real: go to contact and copy my email'];
     $('.hc-l', chip).textContent = l; $('.hc-s', chip).textContent = sh; chip.setAttribute('aria-label', aria);
   }
   chip.addEventListener('click', () => { if (chip.dataset.state === 'hired') { go('contact'); copyEmail(); } else openGame(); });
+  $('#hireAgain').addEventListener('click', () => { openGame(); start(); });
   syncChip();
 
   // ---- "Still thinking of hiring me?" alert: after 30 s on the page, or when the mouse heads for the tabs ----

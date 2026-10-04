@@ -1269,6 +1269,18 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
   .desk *, .desk *::before, .desk *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
+/* header chip: the game's call to action, and after a game the visitor's result + the real offer */
+.hire-chip { height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 8px; border: 1px solid #1F4A2A; background: #071009; color: #3DFF7A; font: 600 .74rem/1 var(--f-mono); cursor: pointer; white-space: nowrap; box-shadow: 0 0 14px rgba(61,255,122,.18); transition: box-shadow .2s, transform .2s; }
+.hire-chip:hover { box-shadow: 0 0 22px rgba(61,255,122,.38); transform: translateY(-1px); }
+.hire-chip i { width: 7px; height: 7px; border-radius: 50%; background: #FF3B30; animation: agBlink .9s steps(2) infinite; flex: none; }
+.hire-chip .hc-s { display: none; }
+.hire-chip[data-state="hired"] { background: var(--accent); color: var(--accent-ink); border-color: transparent; box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); animation: chipPing 2.6s infinite; }
+.hire-chip[data-state="hired"] i { background: var(--accent-ink); animation: none; }
+@keyframes chipPing { 0%, 60% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+@media (max-width: 1100px) { .hire-chip .hc-l { display: none; } .hire-chip .hc-s { display: inline; } }
+@media (max-width: 420px) { .hire-chip { padding: 0 10px; } #openTermNav > span:not(.kbd-hint) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hire-chip, .hire-chip i { animation: none !important; } }
+
 /* ---------- HIRE.EXE: alert, game overlay, thermal mode ---------- */
 .hx-alert {
   position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 70; width: min(340px, calc(100vw - 32px));
@@ -1364,6 +1376,7 @@ html.thermal { filter: url(#thermalFx); }
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-tools">
+      <button class="hire-chip" id="hireChip" type="button" data-state="play"><i aria-hidden="true"></i><span class="hc-l">Play HIRE.EXE</span><span class="hc-s">Hire me</span></button>
       <button class="icon-btn" id="openPalette" type="button" aria-label="Open command menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <span class="kbd-hint"><kbd id="modKey">⌘</kbd> <kbd>K</kbd></span><span class="touch-hint">Menu</span>
@@ -5247,6 +5260,7 @@ Kyiv, Ukraine · 19 years in IT
   function end() {
     const R = S; R.on = false; sfx('end');
     const isBest = R.score > best; if (isBest) { best = R.score; store.set('hx-best', String(best)); }
+    store.set('hx-last', JSON.stringify({ hires: R.hires, score: R.score })); syncChip();
     const wrongN = R.miss.pip + R.miss.clone + R.miss.decoy, n = String(1000 + Math.floor(Math.random() * 9000));
     const day = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date());
     $('#hxRcpt').innerHTML = `<h3>OFFER LETTER</h3><div class="c">HIRE.EXE · #HX-${n} · ${day}</div><hr>
@@ -5301,6 +5315,19 @@ Kyiv, Ukraine · 19 years in IT
   $('#hxClose').addEventListener('click', closeGame);
   $('#hxOffer').addEventListener('click', () => { closeGame(); go('contact'); copyEmail(); });
   addEventListener('resize', () => { if (open) resize(); });
+
+  // ---- header chip: "Play HIRE.EXE" until a game is played, then "You hired me N× · Send the offer" for good ----
+  const chip = $('#hireChip');
+  function syncChip() {
+    let r = null; try { r = JSON.parse(store.get('hx-last') || 'null'); } catch {}
+    chip.dataset.state = r ? 'hired' : 'play';
+    const [l, sh, aria] = !r ? ['Play HIRE.EXE', 'Hire me', 'Play HIRE.EXE, a 60-second game']
+      : r.hires ? [`You hired me ${r.hires}× · Send the offer →`, `Hired ${r.hires}× →`, `You hired me ${r.hires} times in the game. Send the real offer: go to contact and copy my email`]
+      : ['Hire me for real →', 'Hire me →', 'Hire me for real: go to contact and copy my email'];
+    $('.hc-l', chip).textContent = l; $('.hc-s', chip).textContent = sh; chip.setAttribute('aria-label', aria);
+  }
+  chip.addEventListener('click', () => { if (chip.dataset.state === 'hired') { go('contact'); copyEmail(); } else openGame(); });
+  syncChip();
 
   // ---- "Still thinking of hiring me?" alert: after 30 s on the page, or when the mouse heads for the tabs ----
   const alertEl = $('#hxAlert'), bornAt = Date.now();

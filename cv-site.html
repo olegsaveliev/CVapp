@@ -1966,7 +1966,7 @@ html.thermal { filter: url(#thermalFx); }
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow">Credentials</span>
-        <h2>16 certifications</h2>
+        <h2>17 certifications</h2>
         <p>Recent focus on generative AI and cloud, built on a long base of agile delivery at scale.</p>
       </div>
       <div class="filters reveal" id="filters" role="group" aria-label="Filter certifications"></div>
@@ -2853,6 +2853,7 @@ html.thermal { filter: url(#thermalFx); }
 
   /* ---------------- certs ---------------- */
   const certs = [
+    ['OpenAI Cyber Deployment Practitioner', 'OpenAI', 'ai'],
     ['Claude Certified Architect – Professional', 'Anthropic', 'ai'],
     ['Claude Certified Architect – Foundations', 'Anthropic', 'ai'],
     ['Claude Certified Associate – Foundations', 'Anthropic', 'ai'],
@@ -2922,7 +2923,7 @@ html.thermal { filter: url(#thermalFx); }
     { g: 'Sections', ico: '#', label: 'Professional journey', hint: 'Career agent', run: () => go('journey') },
     { g: 'Sections', ico: '#', label: 'Impact', hint: 'Numbers + key moments', run: () => go('impact') },
     { g: 'Sections', ico: '#', label: 'Skills radar', hint: 'Competencies', run: () => go('skills') },
-    { g: 'Sections', ico: '#', label: 'Certifications', hint: '16 certs', run: () => go('certs') },
+    { g: 'Sections', ico: '#', label: 'Certifications', hint: '17 certs', run: () => go('certs') },
     { g: 'Sections', ico: '#', label: 'Contact', hint: 'Get in touch', run: () => go('contact') },
     { g: 'Roles', ico: '◆', label: 'Delivery Manager, GenAI @ EPAM', hint: '2026', run: () => { go('journey'); select('epam', true); } },
     { g: 'Roles', ico: '◆', label: 'Delivery Lead, AI/ML @ Ring', hint: '2022', run: () => { go('journey'); select('ring-lead', true); } },

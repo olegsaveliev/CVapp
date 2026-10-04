@@ -5345,6 +5345,27 @@ Kyiv, Ukraine · 19 years in IT
   };
   })();
 
+  /* ---------------- visit ping ---------------- */
+  /* One tiny note per browser tab to this site's own /api/visit (stored in the owner's Vercel project), so the owner's
+     Claude Code can say "someone opened your CV". Sends only: referrer host, timezone, phone/desktop. No IP or cookies stored. Open the site once with ?me
+     to mark a browser as the owner's and it never pings again. */
+  (function () {
+    try {
+      const h = location.hostname;
+      if (/^(localhost|127\.|\[::1\]|.*\.localhost)$/.test(h) || location.protocol === 'file:') return;
+      if (/[?&]me\b/.test(location.search)) localStorage.setItem('cv-owner', '1');
+      if (localStorage.getItem('cv-owner') || sessionStorage.getItem('cv-ping')) return;
+      if (/bot|crawl|spider|preview|lighthouse|headless/i.test(navigator.userAgent)) return;
+      sessionStorage.setItem('cv-ping', '1');
+      let from = '';
+      try { from = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch (e) {}
+      if (from === h) from = '';
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').slice(0, 40);
+      const dev = matchMedia('(pointer:coarse)').matches ? 'phone' : 'desktop';
+      fetch('/api/visit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ from, tz, device: dev }), keepalive: true }).catch(() => {});
+    } catch (e) {}
+  })();
+
   /* ---------------- global keys ---------------- */
   addEventListener('keydown', e => {
     const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;

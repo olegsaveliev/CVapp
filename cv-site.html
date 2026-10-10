@@ -1714,7 +1714,7 @@ html.thermal { filter: url(#thermalFx); }
               <span class="win-title">Hireloop recruitment</span>
             </header>
             <div class="win-body hl-body">
-              <figure class="hl-frame"><video id="hlVideo" src="hireloop-demo.mp4" poster="hireloop-poster.jpg" controls playsinline preload="none" aria-label="Hireloop recruitment demo"></video></figure>
+              <figure class="hl-frame"><video id="hlVideo" src="hireloop-demo.mp4" poster="hireloop-poster.jpg" controls muted playsinline preload="none" aria-label="Hireloop recruitment demo"></video></figure>
             </div>
           </article>
 
@@ -4491,8 +4491,14 @@ Kyiv, Ukraine · 19 years in IT
   /* ----- app: Hireloop recruitment ----- */
   (function () {
     const v = $('#hlVideo');
-    // pause whenever the window is closed, minimised or on another workspace (the video then has no box)
-    if ('IntersectionObserver' in window) new IntersectionObserver(es => { if (!es[0].isIntersecting) v.pause(); }).observe(v);
+    v.muted = true;
+    let leaving = false, byUser = false;
+    v.addEventListener('pause', () => { byUser = !leaving && !v.ended; });
+    // plays (muted) when the window opens; pauses when it closes, minimises or its workspace is left
+    if ('IntersectionObserver' in window) new IntersectionObserver(es => {
+      if (es[0].isIntersecting) { leaving = false; if (!byUser) { if (v.ended) v.currentTime = 0; v.play().catch(() => {}); } }
+      else { leaving = true; v.pause(); }
+    }, { threshold: .4 }).observe(v);
   })();
 
   /* ----- app: Delivery Copilot ----- */

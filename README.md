@@ -37,7 +37,7 @@ Live on Vercel: https://oleg-saveliev.vercel.app/ . Every push to `main` redeplo
   - Personal bot: Pip, who naps until clicked and falls back asleep after 45 seconds. He lives only in this tab. The Pip images are cropped from the Pip LinkedIn carousel.
   - Development: AI Factory.
   - Computer vision: CAM-02, Pi Cam Bot and Frame Journey, a drawn simulation of the Raspberry Pi 5 edge camera from github.com/olegsaveliev/cv-project (the 60-second alert cooldown runs 6x faster there). The hero's person box and the subject file both link to it ("Real camera: CAM-02").
-  - Recruitment: Hireloop recruitment, a window that plays the product demo video (it pauses when the window is closed or you switch workspace).
+  - Recruitment: Hireloop recruitment, a window that plays the product demo video (it autoplays muted when the window opens and pauses when it closes or you switch workspace).
 - **My professional journey** (right after the projects): runs as a Claude Code style agent session. Choosing a role shows tool calls, MCP calls and parallel subagents loading it, and a context-window bar fills with every load. Near 84% it auto-compacts; `/compact` and `/clear` work by hand. Steps fold away once a role has loaded (click the summary line to reopen them). Tool names are illustrative, but every result in the traces comes from the CV.
 - **The work, in numbers:** eight counted outcomes, each with its story and a Source link that opens the matching role in the career agent.
 - **HIRE.EXE:** a relaxed 60-second game. Catch and hire Oleg on night-vision camera feeds (press and hold to lock on, tap Pip for a bonus, tap-frenzy in the last seconds), ending with a printed offer letter.

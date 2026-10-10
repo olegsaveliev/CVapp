@@ -725,6 +725,8 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 .ai-factory { background: repeating-linear-gradient(-45deg, #F5B700 0 6px, #E5A800 6px 12px); }
 .ai-copilot { background: linear-gradient(160deg, #E58A66, #B5532F); }
 
+.ai-hireloop { background: linear-gradient(160deg, #1FB6A6, #0B5F59); }
+
 /* windows */
 .win {
   --wb: #2A2A2D; --wt: #D1D1D6;
@@ -1076,6 +1078,12 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 .pi-out.pop { animation: nbPop .45s cubic-bezier(.3, 1.5, .5, 1); }
 .pi-quote { margin: 0; font: 600 .82rem/1.3 var(--f-body); color: #D5F098; }
 @container (max-width: 440px) { .pi-top { grid-template-columns: 104px minmax(0, 1fr); } .pi-acts { grid-template-columns: 1fr 1fr; } .pi-copy p { font-size: .72rem; } }
+
+/* --- Hireloop recruitment --- */
+.win[data-app="hireloop"] { --wb: #0E1F1E; --wt: #5EEAD4; background: #0A1413; color: #E6F5F3; }
+.hl-body { padding: 10px; display: grid; }
+.hl-frame { margin: 0; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(94, 234, 212, .22); }
+.hl-frame video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; max-height: 620px; margin-inline: auto; background: #000; object-fit: contain; }
 
 /* --- AI Factory --- */
 .win[data-app="factory"] { --wb: #202327; --wt: #F5B700; background: #16181B; color: #E8EAED; }
@@ -1497,6 +1505,7 @@ html.thermal { filter: url(#thermalFx); }
         <button class="desk-tab" type="button" role="tab" id="tab-bot" data-tab="bot" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="pip"></span><span class="tb-l"><span class="tb-long">Personal </span>bot</span><em>1</em></button>
         <button class="desk-tab" type="button" role="tab" id="tab-dev" data-tab="dev" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="factory"></span><span class="tb-l">Development</span><em>1</em></button>
         <button class="desk-tab" type="button" role="tab" id="tab-cv" data-tab="cv" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="cam tg journey"></span><span class="tb-l"><span class="tb-long">Computer </span>vision</span><em>3</em></button>
+        <button class="desk-tab" type="button" role="tab" id="tab-hire" data-tab="hire" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="hireloop"></span><span class="tb-l">Recruitment</span><em>1</em></button>
       </div>
       <div class="desk reveal" id="desk" data-tab="prod" role="tabpanel" aria-labelledby="tab-prod">
         <div class="desk-bar">
@@ -1539,6 +1548,11 @@ html.thermal { filter: url(#thermalFx); }
             <div class="dg" data-g="dev" role="group" aria-label="Development apps">
               <ul>
                 <li><button type="button" data-open="factory"><span class="dk-ic ai-factory"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 35V22l8 5v-5l8 5v-5l8 5V12h7v23z" fill="#16181B"/><rect x="8" y="37" width="31" height="3" fill="#16181B"/></svg></span><b>AI Factory</b></button></li>
+              </ul>
+            </div>
+            <div class="dg" data-g="hire" role="group" aria-label="Recruitment apps">
+              <ul>
+                <li><button type="button" data-open="hireloop"><span class="dk-ic ai-hireloop"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="11" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="52 17" stroke-linecap="round" transform="rotate(-60 24 24)"/><circle cx="24" cy="24" r="3.6" fill="#fff"/></svg></span><b>Hireloop</b></button></li>
               </ul>
             </div>
           </div>
@@ -1705,6 +1719,18 @@ html.thermal { filter: url(#thermalFx); }
             </div>
           </article>
 
+          <!-- Hireloop recruitment -->
+          <article class="win" data-app="hireloop" aria-label="Hireloop recruitment" hidden>
+            <header class="win-bar">
+              <div class="win-dots"><button class="wd close" type="button" aria-label="Close Hireloop recruitment"></button><button class="wd min" type="button" aria-label="Minimize Hireloop recruitment"></button><button class="wd max" type="button" aria-label="Maximize Hireloop recruitment"></button></div>
+              <button class="win-home" type="button">‹ Home</button>
+              <span class="win-title">Hireloop recruitment</span>
+            </header>
+            <div class="win-body hl-body">
+              <figure class="hl-frame"><video id="hlVideo" src="hireloop-demo.mp4" poster="hireloop-poster.jpg" controls playsinline preload="none" aria-label="Hireloop recruitment demo"></video></figure>
+            </div>
+          </article>
+
           <!-- Delivery Copilot -->
           <article class="win" data-app="copilot" aria-label="Delivery Copilot" hidden>
             <header class="win-bar">
@@ -1854,6 +1880,7 @@ html.thermal { filter: url(#thermalFx); }
           <button type="button" data-open="cam" data-name="CAM-02" aria-label="CAM-02"><span class="dk-ic ai-cam"></span></button>
           <button type="button" data-open="tg" data-name="Pi Cam Bot" aria-label="Pi Cam Bot"><span class="dk-ic ai-tg"></span></button>
           <button type="button" data-open="journey" data-name="Frame Journey" aria-label="Frame Journey"><span class="dk-ic ai-journey"></span></button>
+          <button type="button" data-open="hireloop" data-name="Hireloop recruitment" aria-label="Hireloop recruitment"><span class="dk-ic ai-hireloop"></span></button>
         </div>
       </div>
     </div>
@@ -2947,6 +2974,7 @@ html.thermal { filter: url(#thermalFx); }
     { g: 'Projects', ico: '▣', label: 'Nimbus', hint: 'AI task board', run: () => deskApi.launchApp('nimbus') },
     { g: 'Projects', ico: '▣', label: 'AI Decoded', hint: 'AI learning platform', run: () => deskApi.launchApp('aidecoded') },
     { g: 'Projects', ico: '▣', label: 'Pip', hint: 'Desktop companion', run: () => deskApi.launchApp('pip') },
+    { g: 'Projects', ico: '▣', label: 'Hireloop recruitment', hint: 'demo video', run: () => deskApi.launchApp('hireloop') },
     { g: 'Projects', ico: '▣', label: 'AI Factory', hint: 'ai-delivery-flow', run: () => deskApi.launchApp('factory') },
     { g: 'Projects', ico: '▣', label: 'CAM-02', hint: 'Raspberry Pi 5 edge camera', run: () => deskApi.launchApp('cam') },
     { g: 'Projects', ico: '▣', label: 'Pi Cam Bot', hint: 'Telegram alerts', run: () => deskApi.launchApp('tg') },
@@ -3543,6 +3571,7 @@ Kyiv, Ukraine · 19 years in IT
     cam: { g: 'cv', name: 'CAM-02', w: 640, say: 'A camera? I prefer to be the one watching.' },
     tg: { g: 'cv', name: 'Pi Cam Bot', w: 330, say: 'Another bot. Hi, colleague.' },
     journey: { g: 'cv', name: 'Frame Journey', w: 620, say: 'Lens to phone in eight steps.' },
+    hireloop: { g: 'hire', name: 'Hireloop recruitment', w: 440, say: 'Recruitment, huh? I know a candidate.' },
     copilot: { g: 'prod', name: 'Delivery Copilot', w: 590, say: 'These run his Mondays. I run his water breaks.' }
   };
   const W = {};
@@ -3552,7 +3581,7 @@ Kyiv, Ukraine · 19 years in IT
   $$('#dock [data-open]').forEach(b => { b.firstElementChild.innerHTML = icon(b.dataset.open).innerHTML; });
   $$('#deskTabs .tb-ics[data-apps]').forEach(t => { t.innerHTML = t.dataset.apps.split(' ').map(id => icon(id).outerHTML).join(''); });
   // workspaces: each tab is its own desktop
-  const TABS = { prod: { path: '~/productivity', boot: ['timeline', 'poker'] }, edu: { path: '~/education', boot: ['aidecoded'] }, bot: { path: '~/bot', boot: ['pip'] }, dev: { path: '~/dev', boot: ['factory'] }, cv: { path: '~/vision', boot: ['cam', 'tg'] } };
+  const TABS = { prod: { path: '~/productivity', boot: ['timeline', 'poker'] }, edu: { path: '~/education', boot: ['aidecoded'] }, bot: { path: '~/bot', boot: ['pip'] }, dev: { path: '~/dev', boot: ['factory'] }, cv: { path: '~/vision', boot: ['cam', 'tg'] }, hire: { path: '~/recruitment', boot: ['hireloop'] } };
   const TAB_ORDER = Object.keys(TABS);
   let tab = 'prod';
   const vis = w => w.open && !w.min && w.g === tab;
@@ -4471,6 +4500,13 @@ Kyiv, Ukraine · 19 years in IT
     $('#afRun').disabled = false; $('#afRun').textContent = '▶ Run a story'; $('#afFloor').classList.remove('run'); $('#afCrate').classList.remove('show');
     $('#afOk').hidden = true; $('#afNo').hidden = true;
   };
+
+  /* ----- app: Hireloop recruitment ----- */
+  (function () {
+    const v = $('#hlVideo');
+    // pause whenever the window is closed, minimised or on another workspace (the video then has no box)
+    if ('IntersectionObserver' in window) new IntersectionObserver(es => { if (!es[0].isIntersecting) v.pause(); }).observe(v);
+  })();
 
   /* ----- app: Delivery Copilot ----- */
   const spark = pts => { const mx = Math.max(...pts), mn = Math.min(...pts); return 'M' + pts.map((p, i) => `${(i / (pts.length - 1) * 100).toFixed(1)} ${(26 - (p - mn) / (mx - mn || 1) * 22).toFixed(1)}`).join(' L'); };

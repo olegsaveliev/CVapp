@@ -956,9 +956,9 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 
 /* --- AI Decoded: walkthrough video --- */
 .win[data-app="aidecoded"] { --wb: #1B1B1E; --wt: #C7C7CC; background: #141416; color: #F5F5F7; }
-.ad-body { flex: none; padding: 10px; display: block; }
-.ad-frame { position: relative; margin: 0; height: 0; padding-top: 75%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
-.ad-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
+.edu-body { flex: none; padding: 10px; display: block; }
+.edu-frame { position: relative; margin: 0; height: 0; padding-top: 75%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.edu-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- Pip --- */
 .win[data-app="pip"] { --wb: #1F2A24; --wt: #D5F098; background: #17201B; color: #EEF3E6; }
@@ -1525,8 +1525,8 @@ html.thermal { filter: url(#thermalFx); }
               <span class="win-title">AI Decoded</span>
               <a class="win-open" href="https://www.aidecoded.academy/" target="_blank" rel="noopener">Open live ↗</a>
             </header>
-            <div class="win-body ad-body">
-              <figure class="ad-frame"><video id="adVideo" src="aidecoded-demo.mp4" poster="aidecoded-poster.jpg" controls muted playsinline preload="none" aria-label="AI Decoded walkthrough"></video></figure>
+            <div class="win-body edu-body">
+              <figure class="edu-frame"><video id="eduVideo" src="aidecoded-demo.mp4" poster="aidecoded-poster.jpg" controls muted playsinline preload="none" aria-label="AI Decoded walkthrough"></video></figure>
             </div>
           </article>
 
@@ -4255,7 +4255,7 @@ Kyiv, Ukraine · 19 years in IT
   };
 
   /* ----- demo videos (Hireloop recruitment, AI Decoded) ----- */
-  ['hlVideo', 'adVideo'].forEach(id => {
+  ['hlVideo', 'eduVideo'].forEach(id => {
     const v = $('#' + id);
     v.muted = true;
     let ours = 0, byUser = false;   // ours: pauses we made ourselves, so only the viewer's own pause stops autoplay

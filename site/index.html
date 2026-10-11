@@ -967,95 +967,11 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 @keyframes nbDone { 30% { box-shadow: 0 0 0 3px #67E8F9, 0 0 30px #67E8F9; } }
 @container (max-width: 470px) { .nb-board { grid-template-columns: repeat(3, 150px); overflow-x: auto; padding-bottom: 4px; } }
 
-/* --- AI Decoded: the academy home screen --- */
-.win[data-app="aidecoded"] { --wb: #1B1B1E; --wt: #C7C7CC; height: min(640px, calc(100% - 24px)); background: #141416; color: #F5F5F7; }
-.ad { padding: 0; gap: 0; background: radial-gradient(ellipse at 85% 30%, rgba(52, 70, 120, .22), transparent 55%), linear-gradient(180deg, #232224, #141416 340px); }
-.ad-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
-.ad-view { display: grid; align-content: start; gap: 14px; padding: 0 18px 20px; }
-.ad-view[hidden] { display: none; }
-.ad-top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; margin: 0 -18px; padding: 10px 18px; background: rgba(30, 29, 31, .92); backdrop-filter: blur(8px); border-bottom: 1px solid #2E2E32; }
-.ad-logo { font: 700 1.15rem/1 var(--f-body); letter-spacing: -.02em; color: #F5F5F7; text-decoration: none; }
-.ad-logo i { font-style: normal; color: #0A84FF; }
-.ad-ics { display: flex; gap: 14px; }
-.ad-ics svg, .ad-quick svg, .ad-search svg, .ad-c svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.ad-ics svg { width: 18px; height: 18px; color: #C7C7CC; }
-.ad-q { margin: 12px 0 0; text-align: center; font: 600 clamp(1rem, 3.2cqi, 1.3rem)/1.25 var(--f-body); letter-spacing: -.01em; color: #A1A1A6; text-wrap: balance; }
-.ad-hi { margin: 0; display: grid; gap: 6px; justify-items: center; text-align: center; font: 400 .8rem/1.2 var(--f-body); color: #A1A1A6; }
-.ad-hi b { font-weight: 500; font-size: .88rem; color: #F5F5F7; }
-.ad-quick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.ad-quick > * { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 11px 14px; border: 1px solid #3A3A3E; border-radius: 10px; background: rgba(255, 255, 255, .025); color: #F5F5F7; text-decoration: none; text-align: left; font: inherit; cursor: pointer; transition: border-color .15s, background .15s; }
-.ad-quick > *:hover { border-color: #5A5A60; background: rgba(255, 255, 255, .05); }
-.ad-quick svg { flex: none; width: 20px; height: 20px; }
-.ad-quick span { flex: 1; min-width: 0; display: grid; gap: 2px; font: 400 .7rem/1.3 var(--f-body); color: #A1A1A6; }
-.ad-quick b { font-weight: 600; font-size: .8rem; color: #F5F5F7; }
-.ad-quick i { flex: none; font-style: normal; color: #A1A1A6; }
-.ad-search { justify-self: center; width: min(100%, 420px); display: flex; align-items: center; gap: 9px; padding: 0 14px; height: 38px; border: 1px solid #3A3A3E; border-radius: 999px; background: rgba(255, 255, 255, .03); }
-.ad-search:focus-within { border-color: #0A84FF; }
-.ad-search svg { flex: none; width: 16px; height: 16px; color: #A1A1A6; }
-.ad-search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; color: #F5F5F7; font: 400 .82rem/1 var(--f-body); }
-.ad-search input::placeholder { color: #8E8E93; }
-.ad-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-.ad-chips button { padding: 6px 12px; border: 1px solid #3A3A3E; border-radius: 999px; background: rgba(255, 255, 255, .03); color: #E5E5EA; font: 500 .74rem/1 var(--f-body); }
-.ad-chips button:hover { border-color: #5A5A60; }
-.ad-chips button[aria-pressed="true"] { border-color: transparent; background: none; color: #fff; font-weight: 700; }
-.ad-chips button em { margin-left: 5px; font-style: normal; font-size: .64rem; color: #8E8E93; }
-.ad-grid { display: grid; grid-template-columns: repeat(var(--adc, 1), minmax(0, 1fr)); gap: 10px; }
-@container (min-width: 380px) { .ad-grid { --adc: 2; } }
-@container (min-width: 560px) { .ad-grid { --adc: 3; } }
-@container (min-width: 720px) { .ad-grid { --adc: 4; } }
-.ad-c { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 7px; padding: 13px 14px 11px; border: 1px solid #3A3A3E; border-radius: 13px; background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .015)); transition: border-color .15s, transform .15s; }
-.ad-c:hover { border-color: #5A5A60; transform: translateY(-2px); }
-.ad-c[hidden] { display: none; }
-.ad-tag { justify-self: start; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--tc) 18%, transparent); color: var(--tc); font: 600 .6rem/1.2 var(--f-body); letter-spacing: .06em; text-transform: uppercase; }
-.ad-c h5 { margin: 0; display: flex; gap: 7px; align-items: flex-start; font: 600 .86rem/1.25 var(--f-body); color: #F5F5F7; }
-.ad-c h5 svg { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--tc); }
-.ad-c a, .ad-c .ad-open { color: inherit; text-decoration: none; background: none; border: 0; padding: 0; font: inherit; text-align: left; cursor: pointer; }
-.ad-c a::after, .ad-c .ad-open::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
-.ad-c p { margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font: 400 .72rem/1.45 var(--f-body); color: #A1A1A6; }
-.ad-ft { position: relative; z-index: 1; display: flex; justify-content: flex-end; gap: 8px; pointer-events: none; }
-.ad-ft svg { width: 15px; height: 15px; }
-.ad-ft .ok { color: #30D158; }
-.ad-ft .mon { color: #5E5CE6; }
-.ad-ft button { pointer-events: auto; padding: 0; border: 0; background: none; color: #8E8E93; line-height: 0; }
-.ad-ft button[aria-pressed="true"] { color: #FF9F0A; }
-.ad-ft button[aria-pressed="true"] svg { fill: currentColor; }
-.ad-c.live { border-color: rgba(10, 132, 255, .55); }
-.ad-c .ad-try { position: absolute; top: 12px; right: 12px; font: 600 .58rem/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: #0A84FF; }
-.ad-c.pulse { animation: adPulse 1.4s ease 2; }
-@keyframes adPulse { 50% { border-color: #FF9F0A; box-shadow: 0 0 0 3px rgba(255, 159, 10, .25); } }
-.ad-empty { margin: 0; text-align: center; font-size: .8rem; color: #8E8E93; }
-.ad-back { justify-self: start; margin-top: 12px; padding: 6px 12px; border: 1px solid #3A3A3E; border-radius: 999px; background: none; color: #E5E5EA; font: 500 .74rem/1 var(--f-body); }
-.ad-back:hover { border-color: #0A84FF; }
-@container (max-width: 470px) { .ad-quick { grid-template-columns: minmax(0, 1fr); } .ad-ics { gap: 10px; } }
-.ad-hero { position: relative; height: 118px; border-radius: 10px; overflow: hidden; background: #000; }
-.ad-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; opacity: .9; }
-.ad-hero div { position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 3px; padding: 28px 14px 10px; background: linear-gradient(transparent, #141416 85%); }
-.ad-hero b { font: 700 1.2rem/1 var(--f-body); color: #F4F1EA; }
-.ad-hero span { font-size: .72rem; color: #B9AE9C; }
-.ad-lab { display: grid; gap: 10px; padding: 12px; border-radius: 10px; background: #1B1A18; border: 1px solid #2A241B; }
-.ad-k { font: 500 .6rem/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #E9C88A; }
-.ad-text { margin: 0; min-height: 2.8em; font: 500 1rem/1.4 var(--f-body); color: #fff; }
-.ad-text .tok { border-radius: 4px; background: rgba(74, 140, 255, .2); animation: adTok .8s ease; }
-@keyframes adTok { from { background: #E9C88A; color: #0B0A09; } }
-.ad-caret { display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -.15em; background: #E9C88A; animation: blink 1s steps(2, start) infinite; }
-.ad-bars { display: grid; gap: 5px; }
-.ad-row { display: grid; grid-template-columns: minmax(70px, 110px) minmax(0, 1fr) 38px; align-items: center; gap: 8px; padding: 2px 4px; border-radius: 5px; font: 500 .72rem/1 var(--f-mono); transition: background .1s; }
-.ad-row code { color: #EDE6DA; white-space: pre; overflow: hidden; text-overflow: ellipsis; }
-.ad-row code i { font-style: normal; color: #6D6455; }
-.ad-row .pbar { height: 12px; border-radius: 3px; background: #221D15; overflow: hidden; }
-.ad-row .pbar i { display: block; height: 100%; background: linear-gradient(90deg, #8A6A35, #E9C88A); transition: width .35s cubic-bezier(.2, .9, .25, 1); }
-.ad-row em { font-style: normal; text-align: right; color: #B9AE9C; font-variant-numeric: tabular-nums; }
-.ad-row.hot { background: rgba(74, 140, 255, .16); }
-.ad-row.hit { background: rgba(74, 140, 255, .3); }
-.ad-row.hit .bar i { background: linear-gradient(90deg, #2F6BFF, #8CC0FF); }
-.ad-ctrl { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 14px; font-size: .74rem; }
-.ad-ctrl label { display: flex; align-items: center; gap: 8px; }
-.ad-ctrl input { width: 110px; accent-color: #E9C88A; }
-.ad-ctrl b { font: 700 .74rem/1 var(--f-mono); color: #E9C88A; min-width: 2.2em; }
-.ad-go { height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid #E9C88A; background: transparent; color: #E9C88A; font: 600 .76rem/1 var(--f-body); }
-.ad-go:hover { background: #E9C88A; color: #0B0A09; }
-.ad-go:disabled { opacity: .5; cursor: progress; }
-.ad-note { margin: 0; font-size: .72rem; line-height: 1.45; color: #8F8576; }
+/* --- AI Decoded: walkthrough video --- */
+.win[data-app="aidecoded"] { --wb: #1B1B1E; --wt: #C7C7CC; background: #141416; color: #F5F5F7; }
+.ad-body { padding: 10px; display: grid; }
+.ad-frame { margin: 0; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.ad-frame video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #000; object-fit: contain; }
 
 /* --- Pip --- */
 .win[data-app="pip"] { --wb: #1F2A24; --wt: #D5F098; background: #17201B; color: #EEF3E6; }
@@ -1619,54 +1535,11 @@ html.thermal { filter: url(#thermalFx); }
             <header class="win-bar">
               <div class="win-dots"><button class="wd close" type="button" aria-label="Close AI Decoded"></button><button class="wd min" type="button" aria-label="Minimize AI Decoded"></button><button class="wd max" type="button" aria-label="Maximize AI Decoded"></button></div>
               <button class="win-home" type="button">‹ Home</button>
-              <span class="win-title">AI Decoded · Home</span>
+              <span class="win-title">AI Decoded</span>
               <a class="win-open" href="https://www.aidecoded.academy/" target="_blank" rel="noopener">Open live ↗</a>
             </header>
-            <div class="win-body ad">
-              <svg class="ad-sprite" aria-hidden="true"><defs>
-                <symbol id="adi-0" viewBox="0 0 24 24"><path d="M13 2 4 14h8l-1 8 9-12h-8z"/></symbol>
-                <symbol id="adi-1" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
-                <symbol id="adi-2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
-                <symbol id="adi-3" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
-                <symbol id="adi-4" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5.5"/><path d="M7 12.5h4M9 10.5v4"/><circle cx="15.5" cy="11.5" r=".9"/><circle cx="17.5" cy="13.5" r=".9"/></symbol>
-                <symbol id="adi-5" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
-                <symbol id="adi-6" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
-                <symbol id="adi-ok" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
-                <symbol id="adi-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6L12 16.7 6.6 19.6l1.1-6L3.2 9.4l6.1-.8z"/></symbol>
-                <symbol id="adi-mon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
-              </defs></svg>
-              <div class="ad-view" id="adHome">
-                <div class="ad-top">
-                  <a class="ad-logo" href="https://www.aidecoded.academy/" target="_blank" rel="noopener"><i>&lt;</i>AI Decoded <i>/&gt;</i></a>
-                  <span class="ad-ics" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span>
-                </div>
-                <p class="ad-q">What would you like to explore today?</p>
-                <p class="ad-hi"><b>Welcome back, Oleg</b><span id="adProg">Progress: 0 / 0 modules</span></p>
-                <div class="ad-quick">
-                  <a href="https://www.aidecoded.academy/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" style="color:#4A8CFF"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg><span><b>Learning Paths</b>Follow a guided journey through AI</span><i>→</i></a>
-                  <button type="button" data-quick="basics"><svg viewBox="0 0 24 24" style="color:#8B7CF6"><use href="#adi-3"/></svg><span><b>Start from the Basics</b>How AI, ML, Deep Learning, NLP and LLMs connect</span><i>→</i></button>
-                  <button type="button" data-quick="day"><svg viewBox="0 0 24 24" style="color:#8B7CF6"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>Module of the Day</b>AI Self-Verification &amp; Error Recovery</span><i>→</i></button>
-                  <button type="button" data-quick="cert"><svg viewBox="0 0 24 24" style="color:#4A8CFF"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></svg><span><b>AI Certifications</b>Top AI certifications for your career</span><i>→</i></button>
-                </div>
-                <label class="ad-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input type="search" id="adQ" placeholder="Search tutorials..." aria-label="Search tutorials" autocomplete="off"></label>
-                <div class="ad-chips" id="adChips" role="toolbar" aria-label="Filter modules"></div>
-                <div class="ad-grid" id="adGrid"></div>
-                <p class="ad-empty" id="adEmpty" hidden>No modules match. Try another word.</p>
-              </div>
-              <div class="ad-view" id="adLesson" hidden>
-                <button class="ad-back" id="adBack" type="button">← All modules</button>
-                <div class="ad-hero"><img src="aid-hero.jpg" alt="" loading="lazy" width="640" height="417"><div><b>Token Generation</b><span>Watch AI predict the next word live.</span></div></div>
-                <div class="ad-lab">
-                  <div class="ad-k">Mini lesson · How a language model picks the next word</div>
-                  <p class="ad-text" id="adText" aria-live="polite"></p>
-                  <div class="ad-bars" id="adBars"></div>
-                  <div class="ad-ctrl">
-                    <label>Temperature <input type="range" id="adTemp" min="0.2" max="2" step="0.1" value="1"> <b id="adTv">1.0</b></label>
-                    <button class="ad-go" id="adGo" type="button">Generate next token</button>
-                  </div>
-                  <p class="ad-note" id="adNote">Low temperature plays it safe. High temperature gets creative, and a little chaotic.</p>
-                </div>
-              </div>
+            <div class="win-body ad-body">
+              <figure class="ad-frame"><video id="adVideo" src="aidecoded-demo.mp4" poster="aidecoded-poster.jpg" controls muted playsinline preload="none" aria-label="AI Decoded walkthrough"></video></figure>
             </div>
           </article>
 
@@ -4321,114 +4194,6 @@ Kyiv, Ukraine · 19 years in IT
     });
   };
 
-  /* ----- app: AI Decoded ----- */
-  const AD = {
-    '^': [[' mostly', 34], [' boring', 22], [' a', 20], [' invisible', 14], [' magic', 10]],
-    ' mostly': [[' planning', 38], [' communication', 30], [' trust', 17], [' coffee', 10], [' luck', 5]],
-    ' boring': [[' on', 36], [' by', 28], [' when', 21], ['.', 15]],
-    ' a': [[' team', 44], [' habit', 28], [' contact', 16], [' vibe', 12]],
-    ' invisible': [[' until', 48], [' when', 32], ['.', 20]],
-    ' magic': [['.', 40], [' tricks', 35], ['?', 25]],
-    ' on': [[' purpose', 60], [' paper', 28], [' Fridays', 12]],
-    ' by': [[' design', 72], [' accident', 20], [' Tuesday', 8]],
-    ' when': [[' done', 44], [' it', 34], [' nobody', 22]],
-    ' it': [[' works', 70], [' ships', 30]],
-    ' nobody': [[' panics', 80], [' notices', 20]],
-    ' until': [[' launch', 46], [' Friday', 30], [' it', 24]],
-    ' team': [[' sport', 62], [' habit', 22], ['.', 16]],
-    ' contact': [[' sport', 70], ['.', 30]]
-  };
-  const AD_END = [['.', 62], ['!', 20], ['…', 12], ['?', 6]], AD_STOP = new Set(['.', '!', '?', '…']);
-  let adToks = [], adBusy = false;
-  const adDist = () => { const last = adToks.length ? adToks[adToks.length - 1] : '^'; return AD[last] || AD_END; };
-  const adProbs = () => { const T = +$('#adTemp').value, d = adDist(), w = d.map(([, p]) => Math.pow(p, 1 / T)), s = w.reduce((a, b) => a + b, 0); return d.map(([t], i) => [t, w[i] / s]); };
-  function adRender() {
-    const done = adToks.length && AD_STOP.has(adToks[adToks.length - 1]);
-    $('#adText').innerHTML = 'Great delivery is' + adToks.map((t, i) => `<span class="${i === adToks.length - 1 ? 'tok' : ''}">${escH(t)}</span>`).join('') + (done ? '' : '<span class="ad-caret"></span>');
-    $('#adBars').innerHTML = done ? '' : adProbs().map(([t, p]) => `<div class="ad-row"><code>${t.startsWith(' ') ? '<i>·</i>' + escH(t.slice(1)) : escH(t)}</code><span class="pbar"><i style="width:${(p * 100).toFixed(1)}%"></i></span><em>${Math.round(p * 100)}%</em></div>`).join('');
-    $('#adGo').textContent = done ? '↻ New sentence' : 'Generate next token';
-  }
-  function adUpdateBars() {
-    const rows = $$('#adBars .ad-row'); if (!rows.length) return;
-    adProbs().forEach(([, p], i) => { $('.pbar i', rows[i]).style.width = (p * 100).toFixed(1) + '%'; $('em', rows[i]).textContent = Math.round(p * 100) + '%'; });
-  }
-  async function adGen() {
-    if (adBusy) return;
-    if (adToks.length && AD_STOP.has(adToks[adToks.length - 1])) { adToks = []; adRender(); $('#adNote').textContent = 'Fresh prompt. Try a different temperature this time.'; return; }
-    adBusy = true; $('#adGo').disabled = true;
-    const probs = adProbs(); let r = Math.random(), k = 0;
-    for (; k < probs.length - 1; k++) { r -= probs[k][1]; if (r <= 0) break; }
-    const rows = $$('#adBars .ad-row');
-    if (!reduced) {
-      const steps = probs.length * 2 + k;
-      for (let s = 0; s <= steps; s++) { rows.forEach((row, i) => row.classList.toggle('hot', i === s % probs.length)); await sleep(40 + s * s * 1.6); }
-    }
-    rows.forEach((row, i) => { row.classList.remove('hot'); row.classList.toggle('hit', i === k); });
-    await sleep(reduced ? 0 : 380);
-    const [tok, p] = probs[k], T = +$('#adTemp').value;
-    adToks.push(tok); adRender();
-    $('#adNote').textContent = `Sampled “${tok.trim()}” at ${Math.round(p * 100)}% probability. ${p < .15 ? 'A long shot! That’s temperature at work.' : T < .6 ? 'Low temperature keeps it predictable.' : T > 1.4 ? 'High temperature flattens the odds. Expect surprises.' : 'Sampling, not always the top choice.'}`;
-    adBusy = false; $('#adGo').disabled = false;
-  }
-  // the academy home: the real module catalogue from aidecoded.academy
-  const AD_MODS = [["playground","Playground","Chat directly with AI and experiment with parameters in real time",0],["tokenizer","Tokenizer","See exactly how AI reads your text — broken into tokens in real time",0],["generation","Token Generation","Watch AI predict the next word live — Manual or Simulate",0],["how-llms-work","How LLMs Work","An interactive 5-stage journey from your prompt to the AI response",1],["model-training","Model Training","Discover how AI models like ChatGPT are built from scratch — data to deployment",1],["prompt-engineering","Prompt Engineering","Learn how to write better prompts and get dramatically better results from any AI",2],["context-engineering","Context Engineering","Learn how to give AI the right context to get dramatically better results every time",2],["rag","RAG","How AI learns from YOUR documents — Retrieval Augmented Generation explained",1],["agentic-ai","Agentic AI","AI that plans, acts and learns on its own — understand the systems changing what AI can do",3],["machine-learning","Machine Learning","How machines actually learn from data — the foundation of all modern AI",3],["neural-networks","Neural Networks","Watch a neural network learn in real time — animated weights, live loss curves, and hands-on backpropagation",3],["deep-learning","Deep Learning","Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT",3],["computer-vision","Computer Vision","How does AI see a cat and know it's a cat? Drag convolution filters over pixel grids, watch feature maps emerge, and build intuition for how CNNs, ResNets, and modern vision transformers actually work.",3],["fine-tuning","Fine-Tuning","Turn a general-purpose AI into a domain expert trained on your specific data and style",3],["generative-ai","Generative AI","From noise to masterpiece — discover how AI creates images, music, video, code and text that never existed before",1],["ai-city-builder","AI City Builder","Investigate AI-powered mysteries in a growing city. Solve detective cases using real AI concepts.",4],["ai-lab-explorer","AI Lab Explorer","Walk through an AI research lab. Unlock each room by completing hands-on challenges.",4],["prompt-heist","Prompt Heist","Craft the perfect prompt to outsmart AI security systems and pull off 5 legendary heists.",4],["token-budget","Token Budget","Rewrite prompts to fit strict token limits without losing quality. Real API cost thinking through play.",4],["ai-ethics-tribunal","AI Ethics Tribunal","Preside over real-world AI dilemmas. Weigh the arguments. Deliver your verdict. No easy answers.",4],["pm-simulator","PM Simulator","You are the PM. Write system instructions, design evals, fix hallucinations. Ship the AI feature — or watch it fail.",4],["ai-native-pm","AI for Product Managers","The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic.",5],["ai-safety","AI Safety & Hallucinations","Why AI confidently makes things up — and the practical techniques that stop it.",2],["ai-fluency","AI Fluency","The collaboration habits that separate AI power users from passive ones — backed by real research.",2],["ai-startup-simulator","AI Startup Simulator","You just got funded. Build vs buy, RAG vs fine-tune, which data to collect. Make the right calls or watch your startup fail.",4],["precision-recall","Precision & Recall","Why accuracy is a lie and what to measure instead. Master TP, TN, FP, FN, precision, recall and F1 through interactive real-world scenarios.",3],["rag-under-the-hood","Why RAG Fails","Your RAG works in the demo and breaks in production. Learn exactly why — chunking, metadata, retrieval, filtering — and how to fix each layer.",3],["ai-in-production","AI in Production","Shipping an AI feature is the beginning, not the end. Learn how to monitor quality, measure latency, track cost, detect drift and know when your AI is silently failing.",3],["alignment-game","The Alignment Game","Give an AI a goal. Watch it achieve the goal perfectly and completely miss the point. Can you write constraints tight enough to stop it?",4],["choosing-ai-model","Choosing the Right AI Model","GPT-5, Claude, Gemini, DeepSeek, Llama — the choice is paralyzing. Learn the framework that cuts through the noise and matches any task to the right model, every time.",2],["ollama","Run AI Locally","No API costs. No data leaving your machine. No rate limits. Learn how Ollama lets you run Llama, Gemma, Mistral and more on your own hardware — and build your own custom AI assistant in minutes.",2],["label-master","Label Master","Draw bounding boxes around objects as fast as you can. Scored on IoU accuracy. Escalates from single objects to crowded scenes to pixel segmentation. Teaches how object detection really works — and why labelling AI training data is so hard.",4],["draw-and-deceive","Draw & Deceive","Draw on a pixel grid. GPT-4o tries to classify what you drew. Try to make it say the right thing — then try to fool it. Teaches how AI vision works and why it sometimes fails spectacularly.",4],["agent-office","Agent Office","Run a pixel art AI startup. Assign agents to tasks, give them tools and instructions, watch them work in real time. Learn why tools, memory, and clear instructions determine everything about whether an AI agent succeeds or fails.",4],["claude-code","Claude Code","Your AI pair programmer that lives in the terminal. Learn how Claude Code reads your codebase, executes real commands, remembers your conventions via CLAUDE.md, and connects to any tool via MCP.",2],["claude-md-rules","Karpathy's CLAUDE.md Rules","The four ways coding agents go wrong — and the CLAUDE.md rules that fix them. Think before coding, keep it simple, stay surgical, and drive by goals, plus four community gaps.",2],["claude-code-commands","Claude Code Commands","Master the commands top developers use in Claude Code — /init, plan mode, /clear vs /compact, /review, subagents, /loop, and more — then chain them into one perfect daily workflow.",0],["claude-skills","Claude Skills","Skills are reusable instruction files that teach Claude how to do specific tasks better — permanently. Learn how to write a SKILL.md, when to use one, how triggering works, and how to build skills that compound in value over time.",2],["agent-teams","Agent Teams","Subagents are function calls. Agent Teams are organisations. Learn how Claude Code's experimental multi-agent feature works: lead agents, teammates, shared task lists, and direct messaging between agents working in parallel.",3],["custom-agents","Custom Agents","Define specialist AI assistants for your own workflow. A security auditor, a test writer, a doc generator — each with its own system prompt, tools, model, and memory. Claude delegates to them automatically. One Markdown file. Infinite leverage.",3],["model-training-tycoon","Model Training Tycoon","You have $50,000 and 6 weeks. Train the best AI model you can. Allocate budget across data, architecture, training, and fine-tuning. Survive GPU outages, bad labels, and rival model drops.",4],["coding-agent-tycoon","Coding Agent Tycoon","Manage AI coding agents building a SaaS product over 6 sprints. Balance autonomy vs. oversight, handle hallucinated code, ship releases.",4],["system-design-interview","System Design Interview","Design a real AI system across 7 architecture decisions. Two interviewers push back on every choice. Then your design faces three live incidents. Three scenarios, all replayable.",4],["spec-driven-dev","Spec-Driven Development","Stop vibe coding. Start speccing. Write what you want before AI writes how to build it. Learn the three-document pattern that turns chaotic AI sessions into structured, reviewable, reproducible builds.",2],["vibe-coding","Vibe Coding","Describe what you want, AI writes the code. Learn the workflow, tools, and mindset behind the coding paradigm coined by Andrej Karpathy.",2],["ralph-loop","The Ralph Loop","A single coding agent in a while-true loop, talking to itself via a markdown file. Learn the pattern, build the setup, and add the guardrails before letting it run overnight.",2],["agent-harness","Agent Harness","The thin layer that turns a language model from a text predictor into an autonomous agent — tools, loops, permissions, and memory explained.",2],["ai-coding-tools","AI Coding Tools","Cursor, Copilot, Windsurf, Kiro, Cline — the market is exploding. This tour covers the 8 tools every developer needs to know, how they differ, and a quick quiz that recommends the right one for your workflow.",2],["ai-pm-workflows","AI Workflows for PMs","The prompts, templates and weekly rhythms that separate AI-native PMs from everyone else. Copy-ready prompts for discovery, planning and stakeholder communication.",5],["prompt-injection","Prompt Injection Explained","The number one AI security risk according to OWASP 2025. Learn how attackers hijack AI systems using nothing but carefully crafted text — then try the attacks yourself in a live simulation.",6],["ai-agent-security","AI Agent Security","How to govern and protect AI agent systems with policies, credential management, drift detection, and layered defense. The security playbook for autonomous AI.",6],["owasp-llm-top10","OWASP Top 10 for LLMs","The 10 most critical security risks in AI systems — from prompt injection to denial-of-wallet attacks. Interactive demos and hands-on defense strategies.",6],["prompt-injection-lab","Prompt Injection Lab","Choose your side. As the attacker, extract secrets using real injection techniques. As the defender, write the system prompt that stops those exact attacks. Both roles teach you something the other cannot.",4],["skill-builder-challenge","Skill Builder Challenge","Claude fails at a task. Your job: write the SKILL.md that fixes it. Three rounds, escalating complexity. See your skill run against real test cases.",4],["image-generation","Image Generation","How does AI turn a text prompt into a photorealistic image? Follow the diffusion process step by step — from pure random noise through dozens of denoising passes guided by your words.",1],["ai-scientific-discovery","AI for Scientific Discovery","How AI accelerates research breakthroughs — from AlphaFold and drug discovery to materials science and climate modeling.",1],["multimodal-ai","Multimodal AI","Vision + text + audio in one model — how multimodal AI works, from patch tokenization and spectrograms to cross-attention and real-world architectures.",3],["reasoning-models","Reasoning Models","How o1, o3, and Claude thinking mode solve hard problems by reasoning step-by-step. Chain-of-thought, thinking trees, and compute budgets.",3],["mixture-of-experts","Mixture of Experts","How GPT-4, Mixtral, and DeepSeek activate only a fraction of their parameters per token. Routers, experts, and sparse activation explained.",3],["mcp","Model Context Protocol","The USB standard for AI tools. Learn how MCP lets any AI app plug into filesystems, databases, APIs, and dev tools using one universal protocol — no custom integrations required.",3],["a2a-vs-mcp","A2A vs MCP","Two protocols that give AI agents superpowers. MCP connects agents to tools. A2A connects agents to each other. Learn how they work together.",3],["neural-network-surgeon","Neural Network Surgeon","Operate on a sick neural network — close the overfitting gap without crashing the patient.",4],["embedding-space-explorer","Embedding Space Explorer","Navigate through word embedding space from start to target. Solve analogy puzzles with vector arithmetic.",4],["bias-detector","The Bias Detector","Five AI products are about to ship. Each one hides a bias in its training data. Find it before launch.",4],["hallucination-hunter","Hallucination Hunter","Spot AI hallucinations under time pressure. 10 responses, 60 seconds each. Trust or Flag.",4],["ai-strategy","AI Strategy for Leaders","Assess your AI maturity, build the business case, structure your team, and plan your transformation roadmap. The executive playbook for making AI work.",5],["ai-platform-engineering","AI in Platform Engineering","How AI transforms DevOps — smart CI/CD pipelines, deployment risk scoring, AIOps log analysis, and automated incident response.",5],["ai-for-sdlc","AI for SDLC","How AI accelerates every phase of the software development lifecycle — from planning and coding to testing, deployment, and code review.",5],["software-to-ai-products","From Software to AI Products","Conventional software, data products, and AI products — understand the spectrum, the AI product lifecycle, and Software 2.0.",5],["hardware-lifecycle","Hardware Lifecycle","Follow an AI camera from concept to mass production — EVT, DVT, PVT, MP and the gates every edge-AI device passes through.",5],["aws-aif-foundations","AWS AI Practitioner: Foundations","AIF-C01 exam prep — AI terminology, the AI/ML/DL hierarchy, inferencing types, data classification, and learning paradigms.",5],["aws-aif-use-cases","AWS AI Practitioner: Use Cases","AIF-C01 exam prep — when to use AI, ML techniques (regression, classification, clustering), real-world applications, and AWS AI services.",5],["aws-aif-ml-lifecycle","AWS AI Practitioner: ML Lifecycle","AIF-C01 exam prep — ML pipeline stages, model sources, production deployment, SageMaker ecosystem, MLOps, and evaluation metrics.",5],["aws-aif-genai-concepts","AWS AI Practitioner: GenAI Concepts","AIF-C01 exam prep — tokens, embeddings, foundation models, transformers, multimodal models, diffusion models, and prompt engineering.",5],["claude-cert-agentic","Claude Cert: Agentic Architecture","Claude Certified Architect exam prep — agentic loops, hub-and-spoke orchestration, guardrails, hooks, session management, and error recovery.",5],["claude-cert-tools","Claude Cert: Tool Design & MCP","Claude Certified Architect exam prep — tool schema design, MCP error handling, client integration, configuration scoping, and tool routing.",5],["claude-cert-config","Claude Cert: Configuration","Claude Certified Architect exam prep — CLAUDE.md hierarchy, skills vs commands, path-specific rules, plan mode, iterative refinement, and CI/CD integration.",5],["claude-cert-prompt","Claude Cert: Prompt Engineering","Claude Certified Architect exam prep — system prompts, structured output, prompt chaining, few-shot examples, batch optimization, and output validation.",5],["claude-cert-context","Claude Cert: Context Management","Claude Certified Architect exam prep — context windows, escalation calibration, error propagation, context degradation, monitoring, and information provenance.",5],["evaluation-benchmarks","Evaluation & Benchmarks","MMLU, HumanEval, Arena ELO — how we actually measure if a model is good. Try the benchmarks yourself.",3],["ai-cost-optimization","AI Cost Optimization","Caching, batching, model routing, prompt compression — practical money-saving skills that cut AI API costs by 50-80%.",2],["ai-coding-levels","5 Levels of AI Coding","From autocomplete to dark factories — the 5-level framework for AI coding maturity, why most devs plateau at Level 2, and how to prepare for the shift.",2],["using-ai-at-work","Using AI at Work","12 practical tips for using AI in your daily work — prompt frameworks, writing, brainstorming, automation, and finding the right human-AI balance.",5],["ai-legal-compliance","AI Legal & Compliance","Copyright, data privacy, the EU AI Act, bias liability, and the compliance checklist every AI builder needs before shipping.",2],["knowledge-distillation","Knowledge Distillation","How small models learn from big ones — soft labels, temperature, and the techniques behind DistilBERT and TinyLlama.",3],["mechanistic-interpretability","Mechanistic Interpretability","MIT's #1 Breakthrough of 2026 — open the black box and see how neurons, features, and circuits work inside language models.",3],["ai-self-verification","AI Self-Verification & Error Recovery","How agents catch their own mistakes — error compounding, verification loops, and circuit breakers for multi-step pipelines.",3],["transformers","Transformers","The architecture behind every modern AI — self-attention, multi-head attention, and the design that powers GPT, Claude, and every frontier model.",3],["on-device-ai","On-Device AI & Edge Inference","NPUs, edge inference, quantization, and the software stack that runs AI on your phone, laptop, and car.",3],["ai-dev-workflows","AI-Assisted Coding","The AI-native development loop — prompting, code review, test generation, metrics, and guardrails from prompt to production.",2],["distillation-lab","Distillation Lab","Compress giant AI models into smaller ones. Balance quality, size, cost, and latency across 5 client missions.",4],["hugging-face","Hugging Face","The open-source AI platform where 1 million+ models, datasets, and demos live. Learn how it became the GitHub of machine learning.",2],["agent-memory","Agent Memory","How AI agents remember across conversations — working, episodic, semantic, and procedural memory architectures.",3],["scaling-chatgpt","How OpenAI Scaled ChatGPT","How OpenAI scaled ChatGPT to 800M users on a single primary PostgreSQL instance — replicas, caching, pooling, and the art of not over-engineering.",3],["synthetic-data","Synthetic Data Generation","Where training data comes from when real data is scarce or private — generation techniques, quality metrics, model collapse risk, and production pipelines.",3],["multimodal-embeddings","Multimodal Embeddings","How AI puts text, images, audio, and video into the same mathematical space — enabling cross-modal search and multimodal RAG.",3],["open-router","OpenRouter","One key, every AI model. How OpenRouter unifies GPT, Claude, Gemini, Llama and more into a single API — with smart routing and automatic fallback.",2],["vector-stores","Vector Stores","Pinecone, ChromaDB, pgvector and friends — how vector databases store and search by meaning, and which one to pick for your project.",3],["ai-basics","AI Basics","The AI taxonomy explained — how AI, Machine Learning, Deep Learning, NLP, and Large Language Models relate to each other.",3],["llm-concepts","LLM Concepts Explained","Your guided tour of the AI landscape — parameters, training, tokens, prompting, embeddings, RAG, and agents all connected into one mental map.",1],["structured-outputs","Structured Outputs & Tool Use","JSON mode, function calling, and schemas — the bridge from chatbot to software component.",2],["ai-job-market-skills","AI Job Market Skills","The job market split in two. 7 high-paying skills that separate the rising path from the falling one — and how to build them from wherever you are now.",2],["bias-mitigation","Bias Mitigation Libraries","AIF360, Fairlearn, and HELM — three open-source toolkits that catch unfair models. Measure fairness, mitigate bias, and benchmark LLMs across demographic groups.",6],["obsidian-second-brain","Obsidian: Second Brain","Build a personal knowledge system with Obsidian — from first linked note to AI-powered semantic search.",2],["self-hosted-agents","Self-Hosted AI Agents","Run your own AI agent on a laptop or $5 server — OpenClaw and Hermes, from message routing to a self-improving learning loop.",2]];
-  const AD_TAGS = [['Tools', '#0A84FF'], ['Foundations', '#FF9F0A'], ['Skills', '#30D158'], ['Advanced', '#7D7AFF'], ['Play', '#06B6D4'], ['Professional', '#0EA5E9'], ['Security', '#FF453A']];
-  const adStars = new Set(['tokenizer', 'generation', 'how-llms-work', 'model-training', 'prompt-engineering', 'context-engineering', 'rag']);
-  let adFilter = 'All';
-  function adHomeInit() {
-    $('#adProg').textContent = `Progress: ${AD_MODS.length} / ${AD_MODS.length} modules`;
-    const counts = AD_TAGS.map((_, k) => AD_MODS.filter(m => m[3] === k).length);
-    $('#adChips').innerHTML = ['All', 'My List', ...AD_TAGS.map(t => t[0])].map(f => `<button type="button" data-f="${f}" aria-pressed="${f === 'All'}">${f}</button>`).join('');
-    $('#adGrid').innerHTML = AD_MODS.map(([id, t, d, k]) => {
-      const live = id === 'generation', ic = n => `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#adi-${n}"/></svg>`;
-      return `<article class="ad-c${live ? ' live' : ''}" data-id="${id}" data-k="${k}" style="--tc:${AD_TAGS[k][1]}">
-        <span class="ad-tag">${AD_TAGS[k][0]}</span>${live ? '<span class="ad-try">Try it here</span>' : ''}
-        <h5>${ic(k)}${live ? `<button type="button" class="ad-open">${escH(t)}</button>` : `<a href="https://www.aidecoded.academy/" target="_blank" rel="noopener">${escH(t)}</a>`}</h5>
-        <p>${escH(d)}</p>
-        <div class="ad-ft"><span class="ok" title="Completed">${ic('ok')}</span><button type="button" aria-label="Add ${escH(t)} to My List" aria-pressed="${adStars.has(id)}">${ic('star')}</button>${k ? `<span class="mon" title="Slides">${ic('mon')}</span>` : ''}</div>
-      </article>`;
-    }).join('');
-    $('#adGrid').addEventListener('click', e => {
-      const star = e.target.closest('.ad-ft button');
-      if (star) { const c = star.closest('.ad-c'), on = !adStars.has(c.dataset.id); on ? adStars.add(c.dataset.id) : adStars.delete(c.dataset.id); star.setAttribute('aria-pressed', on); if (adFilter === 'My List') adApply(); return; }
-      if (e.target.closest('.ad-open')) adShow('lesson');
-    });
-    $('#adChips').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (b) { adFilter = b.dataset.f; adApply(); } });
-    $('#adQ').addEventListener('input', adApply);
-    $('.ad-quick').addEventListener('click', e => {
-      const b = e.target.closest('[data-quick]'); if (!b) return;
-      const q = b.dataset.quick;
-      if (q === 'basics') { $('#adQ').value = ''; adFilter = 'Foundations'; adApply(); adScrollTo('#adChips'); }
-      else if (q === 'cert') { adFilter = 'Professional'; $('#adQ').value = 'cert'; adApply(); adScrollTo('#adChips'); }
-      else { $('#adQ').value = ''; adFilter = 'All'; adApply(); const c = $('.ad-c[data-id="ai-self-verification"]'); if (c) { c.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' }); c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse'); } }
-    });
-    $('#adBack').addEventListener('click', () => adShow('home'));
-  }
-  function adScrollTo(sel) { const body = $('.win[data-app="aidecoded"] .win-body'), el = $(sel); body.scrollTo({ top: el.offsetTop - 60, behavior: reduced ? 'auto' : 'smooth' }); }
-  function adApply() {
-    const q = $('#adQ').value.trim().toLowerCase(); let n = 0;
-    $$('#adChips button').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === adFilter));
-    $$('#adGrid .ad-c').forEach(c => {
-      const k = +c.dataset.k, f = adFilter, okF = f === 'All' || (f === 'My List' ? adStars.has(c.dataset.id) : AD_TAGS[k][0] === f);
-      const okQ = !q || c.textContent.toLowerCase().includes(q);
-      c.hidden = !(okF && okQ); if (!c.hidden) n++;
-    });
-    $('#adEmpty').hidden = n > 0;
-  }
-  function adShow(v) {
-    $('#adHome').hidden = v !== 'home'; $('#adLesson').hidden = v === 'home';
-    $('.win[data-app="aidecoded"] .win-title').textContent = v === 'home' ? 'AI Decoded · Home' : 'AI Decoded · Token Generation';
-    $('.win[data-app="aidecoded"] .win-body').scrollTop = 0;
-    if (v !== 'home') adRender();
-  }
-  APPS.aidecoded.init = () => {
-    if (APPS.aidecoded.ready) return; APPS.aidecoded.ready = true;
-    adHomeInit();
-    $('#adTemp').addEventListener('input', () => { $('#adTv').textContent = (+$('#adTemp').value).toFixed(1); adUpdateBars(); });
-    $('#adGo').addEventListener('click', adGen);
-    adRender();
-  };
-
   /* ----- app: AI Factory ----- */
   const AF = [
     { l: 'a', n: 'Story', i: '▤', log: s => [`<span class="a">→</span> ${s} picked up from Jira`] },
@@ -4502,9 +4267,9 @@ Kyiv, Ukraine · 19 years in IT
     $('#afOk').hidden = true; $('#afNo').hidden = true;
   };
 
-  /* ----- app: Hireloop recruitment ----- */
-  (function () {
-    const v = $('#hlVideo');
+  /* ----- demo videos (Hireloop recruitment, AI Decoded) ----- */
+  ['hlVideo', 'adVideo'].forEach(id => {
+    const v = $('#' + id);
     v.muted = true;
     let leaving = false, byUser = false;
     v.addEventListener('pause', () => { byUser = !leaving && !v.ended; });
@@ -4513,7 +4278,7 @@ Kyiv, Ukraine · 19 years in IT
       if (es[0].isIntersecting) { leaving = false; if (!byUser) { if (v.ended) v.currentTime = 0; v.play().catch(() => {}); } }
       else { leaving = true; v.pause(); }
     }, { threshold: .4 }).observe(v);
-  })();
+  });
 
   /* ----- app: Delivery Copilot ----- */
   const spark = pts => { const mx = Math.max(...pts), mn = Math.min(...pts); return 'M' + pts.map((p, i) => `${(i / (pts.length - 1) * 100).toFixed(1)} ${(26 - (p - mn) / (mx - mn || 1) * 22).toFixed(1)}`).join(' L'); };

@@ -969,8 +969,8 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 
 /* --- AI Decoded: walkthrough video --- */
 .win[data-app="aidecoded"] { --wb: #1B1B1E; --wt: #C7C7CC; background: #141416; color: #F5F5F7; }
-.ad-body { padding: 10px; display: grid; }
-.ad-frame { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.ad-body { flex: none; padding: 10px; display: block; }
+.ad-frame { position: relative; margin: 0; height: 0; padding-top: 75%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
 .ad-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- Pip --- */
@@ -997,8 +997,8 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 
 /* --- Hireloop recruitment --- */
 .win[data-app="hireloop"] { --wb: #0E1F1E; --wt: #5EEAD4; background: #0A1413; color: #E6F5F3; }
-.hl-body { padding: 10px; display: grid; }
-.hl-frame { position: relative; margin: 0; aspect-ratio: 4 / 5; max-height: 620px; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(94, 234, 212, .22); }
+.hl-body { flex: none; padding: 10px; display: block; }
+.hl-frame { position: relative; margin: 0; height: 0; padding-top: 125%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(94, 234, 212, .22); }
 .hl-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- AI Factory --- */

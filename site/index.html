@@ -970,8 +970,8 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 /* --- AI Decoded: walkthrough video --- */
 .win[data-app="aidecoded"] { --wb: #1B1B1E; --wt: #C7C7CC; background: #141416; color: #F5F5F7; }
 .ad-body { padding: 10px; display: grid; }
-.ad-frame { margin: 0; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
-.ad-frame video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #000; object-fit: contain; }
+.ad-frame { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.ad-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- Pip --- */
 .win[data-app="pip"] { --wb: #1F2A24; --wt: #D5F098; background: #17201B; color: #EEF3E6; }
@@ -998,8 +998,8 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 /* --- Hireloop recruitment --- */
 .win[data-app="hireloop"] { --wb: #0E1F1E; --wt: #5EEAD4; background: #0A1413; color: #E6F5F3; }
 .hl-body { padding: 10px; display: grid; }
-.hl-frame { margin: 0; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(94, 234, 212, .22); }
-.hl-frame video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; max-height: 620px; margin-inline: auto; background: #000; object-fit: contain; }
+.hl-frame { position: relative; margin: 0; aspect-ratio: 4 / 5; max-height: 620px; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(94, 234, 212, .22); }
+.hl-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- AI Factory --- */
 .win[data-app="factory"] { --wb: #202327; --wt: #F5B700; background: #16181B; color: #E8EAED; }
@@ -3439,7 +3439,7 @@ Kyiv, Ukraine · 19 years in IT
     timeline: { g: 'prod', name: 'Timeline Studio', w: 600, say: 'Monte Carlo! A casino where I always win.' },
     poker: { g: 'prod', name: 'Planning Poker', w: 450, say: 'I vote ☕. I always vote ☕.' },
     nimbus: { g: 'prod', name: 'Nimbus', w: 560, say: 'Glassy. Like my visor.' },
-    aidecoded: { g: 'edu', name: 'AI Decoded', w: 780, say: 'Lesson time. Turn the temperature up.' },
+    aidecoded: { g: 'edu', name: 'AI Decoded', w: 640, say: 'Lesson time. Turn the temperature up.' },
     pip: { g: 'bot', name: 'Pip', w: 500, say: 'Hey, that’s me!' },
     factory: { g: 'dev', name: 'AI Factory', w: 620, say: 'Claude proposes, Oleg approves. I supervise.' },
     cam: { g: 'cv', name: 'CAM-02', w: 640, say: 'A camera? I prefer to be the one watching.' },
@@ -4271,13 +4271,14 @@ Kyiv, Ukraine · 19 years in IT
   ['hlVideo', 'adVideo'].forEach(id => {
     const v = $('#' + id);
     v.muted = true;
-    let leaving = false, byUser = false;
-    v.addEventListener('pause', () => { byUser = !leaving && !v.ended; });
+    let ours = 0, byUser = false;   // ours: pauses we made ourselves, so only the viewer's own pause stops autoplay
+    v.addEventListener('pause', () => { if (ours > 0) ours--; else if (!v.ended) byUser = true; });
+    v.addEventListener('play', () => { byUser = false; });
     // plays (muted) when the window opens; pauses when it closes, minimises or its workspace is left
     if ('IntersectionObserver' in window) new IntersectionObserver(es => {
-      if (es[0].isIntersecting) { leaving = false; if (!byUser) { if (v.ended) v.currentTime = 0; v.play().catch(() => {}); } }
-      else { leaving = true; v.pause(); }
-    }, { threshold: .4 }).observe(v);
+      if (es[0].isIntersecting) { if (!byUser && v.paused) { if (v.ended) v.currentTime = 0; v.play().catch(() => {}); } }
+      else if (!v.paused) { ours++; v.pause(); }
+    }, { threshold: .05 }).observe(v);
   });
 
   /* ----- app: Delivery Copilot ----- */

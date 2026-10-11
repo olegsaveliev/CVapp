@@ -681,7 +681,8 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 @keyframes cvBlink { 50% { opacity: .15; } }
 
 /* workspace tabs: three separate desktops */
-.desk-tabs { position: relative; z-index: 2; display: flex; align-items: flex-end; gap: 6px; padding: 0 14px; margin-bottom: -1px; }
+.desk-tabs { position: relative; z-index: 2; display: flex; align-items: flex-end; gap: 6px; padding: 0 14px; margin-bottom: -1px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.desk-tabs::-webkit-scrollbar { display: none; }
 .desk-tab {
   flex: none; display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 14px 0 12px;
   border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0;
@@ -700,12 +701,16 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 .tb-ics .ai-poker { border-radius: 3px; }
 .desk-tab[aria-selected="true"] .dk-ic { box-shadow: 0 0 0 2px var(--bg-2); }
 .desk-tab:hover .tb-ics .dk-ic:not(:first-child) { margin-left: -2px; }
-@media (max-width: 700px) {
-  .desk-tabs { padding: 0 6px; gap: 4px; overflow-x: auto; scrollbar-width: none; }
-  .desk-tabs::-webkit-scrollbar { display: none; }
-  .desk-tab { gap: 6px; padding: 0 10px; font-size: .6rem; letter-spacing: .06em; }
-  .tb-long, .tb-ics { display: none; }
-}
+/* the strip sheds detail until the tabs fit (data-fit is set by fitTabs): 1 short labels, 2 no icons, 3 tight and scrollable */
+.desk-tabs:not([data-fit="0"]) .tb-long { display: none; }
+.desk-tabs[data-fit="2"] .tb-ics, .desk-tabs[data-fit="3"] .tb-ics { display: none; }
+.desk-tabs[data-fit="2"] .desk-tab { gap: 7px; padding: 0 11px; }
+.desk-tabs[data-fit="3"] { padding: 0 6px; gap: 4px; }
+.desk-tabs[data-fit="3"] .desk-tab { gap: 6px; padding: 0 10px; font-size: .6rem; letter-spacing: .06em; }
+/* fades hint at tabs scrolled out of view */
+.desk-tabs.more-r { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
+.desk-tabs.more-l { -webkit-mask-image: linear-gradient(to right, transparent, #000 36px); mask-image: linear-gradient(to right, transparent, #000 36px); }
+.desk-tabs.more-l.more-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent); }
 .desk-icons button {
   width: 94px; display: grid; justify-items: center; gap: 5px; padding: 6px 4px 7px;
   border: 1px solid transparent; border-radius: 8px; background: none; user-select: none; -webkit-user-select: none;
@@ -3596,6 +3601,23 @@ Kyiv, Ukraine · 19 years in IT
     if (!reduced && !quiet) [...$$(`[data-g="${t}"]`, area), ...Object.values(W).filter(vis).map(w => w.el), $('#dock')]
       .forEach((el, i) => el.animate([{ transform: `translateX(${dir * 36}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 380, delay: i * 40, easing: 'cubic-bezier(.2,.9,.25,1)', fill: 'backwards' }));
   }
+  // tabs: drop detail step by step until they fit, then scroll with edge fades
+  const strip = $('#deskTabs');
+  const tabEdges = () => {
+    const max = strip.scrollWidth - strip.clientWidth;
+    strip.classList.toggle('more-l', max > 1 && strip.scrollLeft > 1);
+    strip.classList.toggle('more-r', max > 1 && strip.scrollLeft < max - 1);
+  };
+  const fitTabs = () => {
+    for (let l = 0; l <= 3; l++) { strip.dataset.fit = l; if (strip.scrollWidth <= strip.clientWidth + 1) break; }
+    const tb = $('#tab-' + tab);
+    if (strip.scrollWidth > strip.clientWidth) strip.scrollLeft = tb.offsetLeft - (strip.clientWidth - tb.offsetWidth) / 2;
+    tabEdges();
+  };
+  strip.addEventListener('scroll', tabEdges, { passive: true });
+  new ResizeObserver(fitTabs).observe(strip.parentElement);
+  if (document.fonts) document.fonts.ready.then(fitTabs);
+  fitTabs();
   $$('#deskTabs .desk-tab').forEach(b => {
     b.addEventListener('click', () => setTab(b.dataset.tab));
     b.addEventListener('keydown', e => {

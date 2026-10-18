@@ -301,6 +301,69 @@ section.block + section.block { border-top: 1px solid var(--line); }
 .reveal { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
 
 
+/* ---------- feedback: colleague recommendations ---------- */
+.fb-themes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.fb-themes .filter i { width: 8px; height: 8px; border-radius: 50%; background: var(--tc, var(--muted)); }
+.fb-themes .filter[aria-pressed="true"] i { box-shadow: 0 0 0 2px var(--bg); }
+.fb { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 18px; align-items: start; }
+.fb-roster { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.fb-who {
+  width: 100%; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 11px;
+  padding: 9px 11px; border: 1px solid var(--line); border-radius: 11px; background: var(--bg-2); color: var(--fg); text-align: left;
+  transition: border-color .2s, opacity .25s, transform .2s;
+}
+.fb-who:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.fb-who[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.fb-who.off { opacity: .32; }
+.fb-who b { display: block; font: 600 .9rem/1.2 var(--f-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fb-who small { display: block; margin-top: 2px; font: 500 .62rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fb-av {
+  width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%;
+  font: 700 .78rem/1 var(--f-mono); letter-spacing: .04em; color: var(--fg); background: var(--bg-3); border: 1.5px solid var(--rc, var(--line));
+}
+.fb-dots { display: flex; gap: 3px; }
+.fb-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+.fb-dots i.on { background: var(--tc); }
+.fb-card {
+  position: relative; min-width: 0; display: flex; flex-direction: column; gap: 18px; overflow: hidden;
+  padding: clamp(22px, 3vw, 34px); border: 1px solid var(--line); border-radius: 16px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 7%, var(--bg-2)), var(--bg-2) 55%);
+}
+.fb-card::before {
+  content: "“"; position: absolute; right: clamp(14px, 3vw, 30px); top: -.18em; pointer-events: none;
+  font: 800 clamp(7rem, 14vw, 11rem)/1 var(--f-display); color: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.fb-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font: 500 .66rem/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.fb-rel { padding: 4px 8px; border-radius: 4px; border: 1px solid var(--rc); color: var(--rc); }
+.fb-pull { position: relative; margin: 0; max-width: 24ch; font: 750 clamp(1.5rem, 3.2vw, 2.25rem)/1.08 var(--f-display); font-stretch: 108%; letter-spacing: -.01em; text-wrap: balance; }
+.fb-text { position: relative; display: grid; gap: .8em; max-width: 68ch; font-size: .97rem; line-height: 1.65; color: color-mix(in srgb, var(--fg) 86%, var(--muted)); }
+.fb-text p { margin: 0; }
+.fb-text mark { background: none; color: inherit; border-radius: 3px; padding: 0 1px; transition: background-color .3s, box-shadow .3s; }
+.fb-text mark.hit { background: color-mix(in srgb, var(--tc) 22%, transparent); color: var(--fg); box-shadow: inset 0 -2px 0 var(--tc); }
+.fb-sign { display: flex; align-items: center; gap: 12px; }
+.fb-sign .fb-av { width: 46px; height: 46px; font-size: .9rem; }
+.fb-sign div b { display: block; font: 700 1.02rem/1.2 var(--f-display); font-stretch: 108%; }
+.fb-sign div span { display: block; font-size: .82rem; color: var(--muted); }
+.fb-foot { display: flex; align-items: center; gap: 10px; margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--line); font: 500 .7rem/1 var(--f-mono); color: var(--muted); }
+.fb-count { font-variant-numeric: tabular-nums; letter-spacing: .08em; }
+.fb-count b { color: var(--fg); }
+.fb-nav { margin-left: auto; display: flex; gap: 6px; }
+.fb-nav button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg-2); color: var(--fg); font: 600 .95rem/1 var(--f-mono); }
+.fb-nav button:hover { border-color: var(--accent); color: var(--accent); }
+.fb-src { color: var(--muted); text-decoration: none; }
+.fb-src:hover { color: var(--accent); }
+.fb-timer { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); opacity: .7; }
+@media (max-width: 820px) {
+  .fb { grid-template-columns: minmax(0, 1fr); }
+  .fb-roster { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .fb-roster::-webkit-scrollbar { display: none; }
+  .fb-roster li { flex: none; }
+  .fb-who { width: auto; grid-template-columns: 30px auto; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; }
+  .fb-who .fb-av { width: 30px; height: 30px; font-size: .66rem; }
+  .fb-who small, .fb-who .fb-dots, .fb-who .fb-ln { display: none; }
+  .fb-who[aria-selected="true"] { box-shadow: none; }
+}
+
 /* ---------- impact: numbers + the events behind them ---------- */
 .evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 @media (max-width: 960px) { .evs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -1261,6 +1324,7 @@ html.thermal { filter: url(#thermalFx); }
       <li><a href="#impact">Impact</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#certs">Certs</a></li>
+      <li><a href="#feedback">Feedback</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-tools">
@@ -1847,6 +1911,21 @@ html.thermal { filter: url(#thermalFx); }
       <div class="edu reveal">
         <span class="mono">Education · 2003–2009</span>
         <div><b>State University of Information and Communication Technologies</b><br><span>Degree in Information Technologies · Kyiv</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="feedback">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Field reports</span>
+        <h2>What colleagues say</h2>
+        <p>Recommendations from managers, peers and people I hired, as written on LinkedIn. Pick a theme to see who said it, and where.</p>
+      </div>
+      <div class="fb-themes reveal" id="fbThemes" role="group" aria-label="Highlight a theme"></div>
+      <div class="fb reveal" id="fb">
+        <ul class="fb-roster" id="fbRoster" role="tablist" aria-label="Colleagues"></ul>
+        <article class="fb-card" id="fbCard" role="tabpanel" aria-live="polite"></article>
       </div>
     </div>
   </section>
@@ -2770,6 +2849,113 @@ html.thermal { filter: url(#thermalFx); }
   }
   renderCerts('all', false);
 
+  /* ---------------- feedback: colleague recommendations ---------------- */
+  // [[theme:phrase]] marks the words each theme highlights; text is verbatim from LinkedIn
+  const FB_THEMES = [
+    ['deliv', 'Delivery', '#E0802B'], ['own', 'Ownership', '#3FA36B'], ['stake', 'Stakeholders', '#3D8BD9'],
+    ['tech', 'Technical depth', '#9B6BDF'], ['people', 'People & mentoring', '#D9567A']
+  ];
+  const FB_REL = { mgr: ['Managed Oleg', 'var(--accent)'], rep: ['Reported to Oleg', 'var(--signal)'], peer: ['Same team', 'var(--muted)'] };
+  const FB = [
+    { n: 'Viktor Bezhenar', ini: 'VB', role: 'Staff Technical Program Manager', rel: 'peer', d: 'Feb 21, 2026', pull: 'An outstanding TPM.',
+      t: `I had the pleasure of working alongside Oleg as a fellow TPM during the launch of multiple initiatives for Ring. He led key motion detection and CV/ML programs, demonstrating [[tech:strong technical depth]] and [[stake:excellent stakeholder management]]. His passion for AI and tech program management, combined with his ability to [[stake:align teams]] and [[deliv:drive execution]], makes him an outstanding TPM.` },
+    { n: 'Maksim Koroteyev', ini: 'MK', role: 'Leader in complex deliveries · MSM, CSM', rel: 'mgr', d: 'Feb 5, 2026', pull: 'I would rehire Oleg without hesitation.',
+      t: `I had the pleasure of managing Oleg, and he consistently demonstrated [[own:a strong sense of ownership, reliability]], and [[deliv:results-oriented execution]]. He delivers high-quality outcomes, [[deliv:brings structure to complex initiatives]], and [[stake:collaborates effectively across teams]], even in high-pressure or ambiguous situations.
+Oleg [[stake:builds trusted relationships with stakeholders]], and maintains focus on shared goals while [[people:supporting those around him]]. If I had the opportunity, I would rehire Oleg without hesitation, and I highly recommend him to any team seeking a dependable and impactful professional.` },
+    { n: 'Dima Nekrasov', ini: 'DN', role: 'AI Data Programs', rel: 'peer', d: 'Feb 5, 2026', pull: 'Even under tight timelines, he kept quality high.',
+      t: `I worked closely with Oleg on data collection and annotation for our AI programs.
+He’s [[own:consistently professional and dependable]]; even under tight timelines, he [[deliv:kept quality high and deliveries on track]]. He’s [[tech:detail-oriented, understands what matters in AI data work]], and is [[people:a solid teammate]].
+I’d recommend him without hesitation.` },
+    { n: 'Valerii Yevsiukov', ini: 'VY', role: 'Senior Technical Program Manager', rel: 'peer', d: 'Feb 2, 2026', pull: 'He finds a common language with all stakeholders.',
+      t: `I had the pleasure of working closely with Oleg on the same complex program, and he is an outstanding Technical Program Manager. Oleg is an experienced manager with [[own:a strong sense of ownership and exceptional attention to details]]. He [[deliv:consistently drives programs forward end to end]], from early planning through execution and delivery.
+What really sets Oleg apart is his ability to [[stake:build strong relationships and find a common language with all stakeholders]] - engineering, product, and leadership alike. He maintains [[stake:excellent communication and awareness across all involved teams]], ensuring alignment and transparency at every stage.
+Oleg excels in [[deliv:planning, risk management, and overall program execution]], [[own:proactively identifying issues and addressing them before they become problems]]. At the same time, he is known by team members as [[people:a friendly, approachable, and easygoing person]], which makes collaboration both effective and enjoyable.
+I would highly recommend Oleg to any organization looking for a TPM who combines [[tech:technical depth]], strong execution skills, and great people skills.` },
+    { n: 'Pavlo Sheberstov', ini: 'PS', role: 'Project Manager · Ajax Systems', rel: 'rep', d: 'Feb 2, 2026', pull: 'A mentor and a manager whose guidance shaped my career.',
+      t: `I’ve worked with Oleg since 2018 for over seven years across two different companies, where he has been [[people:both a mentor and a manager whose guidance shaped my career]]. Oleg hired me as a coordinator and, [[people:through continuous mentoring and trust, helped me grow]] into a high-impact RM manager.
+Oleg is [[own:exceptionally reliable and structured]], with [[deliv:a strong delivery mindset]] and [[tech:deep technical understanding]] that consistently drives teams to successful outcomes. …` },
+    { n: 'Andrey Prykhodko', ini: 'AP', role: 'Program Manager · DXC Technology', rel: 'peer', d: 'Jan 27, 2026', pull: 'A highly reliable and structured professional.',
+      t: `Oleg and I worked together during our PgM journey. Oleg is [[own:a highly reliable and structured professional]] with [[deliv:a strong delivery mindset]].
+He [[deliv:consistently ensures on-time delivery]], drives process optimization across teams, and [[people:supports both team development]] and business growth. Oleg is an effective communicator, skilled in [[stake:managing customer expectations and aligning cross-functional stakeholders]].` },
+    { n: 'Amir Chernykh', ini: 'AC', role: 'Strategic Partnerships & AWS Alliance Lead', rel: 'peer', d: 'Jun 18, 2025', pull: 'He gets stuff delivered: on time, within the budget, hassle-free.',
+      t: `I enjoyed working with Oleg across several research and AI projects where he wore the hat of a Technical Program Manager, ensuring smooth progress, weeding out any roadblocks soon as they popped up.
+Oleg is great at [[deliv:project planning, resources allocation and risk management]]. He’s quick to jump at and resolve any hindrance to progress, be it [[stake:a disagreement between stakeholders]], a quirky bug that has to be assigned to the correct team, or a fly-in request from leadership to speed up the delivery.
+Oleg’s [[tech:rich expertise and technical proficiency, especially with Firmware and CV]], elicits respect and collaboration from fellow engineers. He can [[tech:spot a deficiency in the proposed architecture]], suggest cost- and labour-efficient solutions to cross-team dependencies.
+Oleg is a hard worker, always willing to jump in the thick of it and get the show on the road. In essence, [[deliv:he gets stuff delivered: on time, within the budget, hassle-free]]. If you’re looking for a guy who gets stuff done, look no further.` },
+    { n: 'Gennadii Mysliuk', ini: 'GM', role: 'QA Manager · SQUAD', rel: 'peer', d: 'Jan 26, 2026', pull: 'Clear and timely updates, every time.',
+      t: `I worked with Oleg on several projects. He is [[own:a highly responsible and professional person]] who [[deliv:effectively managed the development process]], [[stake:coordinated communication between teams]], and consistently provided clear and timely updates. I was fully satisfied with our collaboration.` }
+  ];
+  FB.forEach(f => { f.has = new Set([...f.t.matchAll(/\[\[(\w+):/g)].map(m => m[1])); });
+  const fbTc = k => FB_THEMES.find(x => x[0] === k)[2];
+  const fbHtml = t => t.split('\n').map(p => `<p>${p.replace(/\[\[(\w+):([^\]]+)\]\]/g, (_, k, w) => `<mark data-t="${k}" style="--tc:${fbTc(k)}">${w}</mark>`)}</p>`).join('');
+  const fbThemes = $('#fbThemes'), fbRoster = $('#fbRoster'), fbCard = $('#fbCard');
+  let fbI = 0, fbTheme = 'all', fbAuto = !reduced, fbTimerAnim = null, fbSeen = false;
+  [['all', 'All voices', null], ...FB_THEMES].forEach(([k, label, c]) => {
+    const n = k === 'all' ? FB.length : FB.filter(f => f.has.has(k)).length;
+    const b = document.createElement('button');
+    b.className = 'filter'; b.type = 'button'; b.dataset.k = k; b.setAttribute('aria-pressed', k === 'all');
+    if (c) b.style.setProperty('--tc', c);
+    b.innerHTML = `${c ? '<i aria-hidden="true"></i>' : ''}${label} <span class="n">${k === 'all' ? n : n + '/' + FB.length}</span>`;
+    b.addEventListener('click', () => { fbStop(); fbSetTheme(k); });
+    fbThemes.appendChild(b);
+  });
+  fbRoster.innerHTML = FB.map((f, i) => `<li role="presentation"><button class="fb-who" type="button" role="tab" id="fbw${i}" data-i="${i}" aria-controls="fbCard" style="--rc:${FB_REL[f.rel][1]}">
+    <span class="fb-av" aria-hidden="true">${f.ini}</span><span class="fb-ln"><b>${f.n}</b><small>${FB_REL[f.rel][0]}</small></span><b class="fb-mob" hidden>${f.n.split(' ')[0]}</b>
+    <span class="fb-dots" aria-hidden="true">${FB_THEMES.map(([k, , c]) => `<i class="${f.has.has(k) ? 'on' : ''}" style="--tc:${c}"></i>`).join('')}</span></button></li>`).join('');
+  const fbMobile = matchMedia('(max-width: 820px)');
+  const fbNames = () => $$('.fb-mob', fbRoster).forEach(e => { e.hidden = !fbMobile.matches; });
+  fbMobile.addEventListener('change', fbNames); fbNames();
+  fbRoster.addEventListener('click', e => { const b = e.target.closest('.fb-who'); if (b) { fbStop(); fbShow(+b.dataset.i); } });
+  fbRoster.addEventListener('keydown', e => {
+    const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (!d) return;
+    e.preventDefault(); fbStop(); fbStep(d); $('#fbw' + fbI).focus();
+  });
+  const fbList = () => FB.map((f, i) => i).filter(i => fbTheme === 'all' || FB[i].has.has(fbTheme));
+  function fbStep(d) { const l = fbList(); const p = l.indexOf(fbI); fbShow(l[(p < 0 ? 0 : p + d + l.length) % l.length]); }
+  function fbSetTheme(k) {
+    fbTheme = k;
+    $$('.filter', fbThemes).forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k));
+    $$('.fb-who', fbRoster).forEach(b => b.classList.toggle('off', k !== 'all' && !FB[+b.dataset.i].has.has(k)));
+    const keep = k === 'all' || FB[fbI].has.has(k);
+    fbShow(keep ? fbI : fbList()[0], keep);
+  }
+  function fbMarks() { $$('mark', fbCard).forEach(m => m.classList.toggle('hit', m.dataset.t === fbTheme)); }
+  function fbShow(i, quiet) {
+    fbI = i; const f = FB[i], rel = FB_REL[f.rel], l = fbList();
+    $$('.fb-who', fbRoster).forEach(b => { const on = +b.dataset.i === i; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
+    const sel = $('#fbw' + i); if (fbMobile.matches && sel) fbRoster.scrollTo({ left: sel.parentElement.offsetLeft - (fbRoster.clientWidth - sel.offsetWidth) / 2, behavior: reduced ? 'auto' : 'smooth' });
+    fbCard.setAttribute('aria-labelledby', 'fbw' + i);
+    fbCard.style.setProperty('--rc', rel[1]);
+    fbCard.innerHTML = `<div class="fb-meta"><span class="fb-rel">${rel[0]}</span><span>${f.d}</span></div>
+      <p class="fb-pull">“${f.pull}”</p>
+      <div class="fb-text">${fbHtml(f.t)}</div>
+      <div class="fb-sign"><span class="fb-av" style="--rc:${rel[1]}" aria-hidden="true">${f.ini}</span><div><b>${f.n}</b><span>${f.role}</span></div></div>
+      <div class="fb-foot"><span class="fb-count"><b>${String(l.indexOf(i) + 1).padStart(2, '0')}</b> / ${String(l.length).padStart(2, '0')}</span>
+        <a class="fb-src" href="https://www.linkedin.com/in/oleg-savelyev/details/recommendations/" target="_blank" rel="noopener">on LinkedIn ↗</a>
+        <span class="fb-nav"><button type="button" data-d="-1" aria-label="Previous recommendation">←</button><button type="button" data-d="1" aria-label="Next recommendation">→</button></span></div>
+      <span class="fb-timer" aria-hidden="true"></span>`;
+    fbMarks();
+    if (!quiet && !reduced) fbCard.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'cubic-bezier(.2,.9,.25,1)' });
+    fbTick();
+  }
+  fbCard.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b) { fbStop(); fbStep(+b.dataset.d); } });
+  // gentle auto-rotation while the section is on screen, until the visitor takes over
+  function fbTick() {
+    if (fbTimerAnim) { fbTimerAnim.cancel(); fbTimerAnim = null; }
+    if (!fbAuto || !fbSeen) return;
+    const bar = $('.fb-timer', fbCard);
+    fbTimerAnim = bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 9000, easing: 'linear' });
+    fbTimerAnim.onfinish = () => { if (fbAuto && fbSeen) fbStep(1); };
+  }
+  function fbStop() { fbAuto = false; if (fbTimerAnim) { fbTimerAnim.cancel(); fbTimerAnim = null; } }
+  const fbPause = on => { if (fbTimerAnim) on ? fbTimerAnim.pause() : fbTimerAnim.play(); };
+  $('#fb').addEventListener('pointerenter', () => fbPause(true));
+  $('#fb').addEventListener('pointerleave', () => fbPause(false));
+  $('#fb').addEventListener('focusin', () => fbPause(true));
+  $('#fb').addEventListener('focusout', e => { if (!$('#fb').contains(e.relatedTarget)) fbPause(false); });
+  new IntersectionObserver(es => { fbSeen = es[0].isIntersecting; if (fbSeen) { if (!fbTimerAnim) fbTick(); } else if (fbTimerAnim) { fbTimerAnim.cancel(); fbTimerAnim = null; } }, { threshold: .35 }).observe($('#fb'));
+  fbShow(0, true);
+
   /* ---------------- copy email ---------------- */
   async function copyEmail() {
     try { await navigator.clipboard.writeText(EMAIL); toast('Email copied'); }
@@ -2797,6 +2983,7 @@ html.thermal { filter: url(#thermalFx); }
     { g: 'Sections', ico: '#', label: 'Impact', hint: 'Numbers + key moments', run: () => go('impact') },
     { g: 'Sections', ico: '#', label: 'Skills radar', hint: 'Competencies', run: () => go('skills') },
     { g: 'Sections', ico: '#', label: 'Certifications', hint: '17 certs', run: () => go('certs') },
+    { g: 'Sections', ico: '#', label: 'Feedback', hint: '8 recommendations', run: () => go('feedback') },
     { g: 'Sections', ico: '#', label: 'Contact', hint: 'Get in touch', run: () => go('contact') },
     { g: 'Roles', ico: '◆', label: 'Delivery Manager, GenAI @ EPAM', hint: '2026', run: () => { go('journey'); select('epam', true); } },
     { g: 'Roles', ico: '◆', label: 'Delivery Lead, AI/ML @ Ring', hint: '2022', run: () => { go('journey'); select('ring-lead', true); } },
@@ -2906,11 +3093,11 @@ Kyiv, Ukraine · 19 years in IT
     skills: () => print(skills.map(s => `${pad(s.name, 24)}<span class="t-acc">${'█'.repeat(s.yrs)}</span><span class="t-dim">${'░'.repeat(YMAX - s.yrs)}</span> ${s.yrs}y`).join('\n')),
     certs: () => print(certs.map(c => `<span class="${c[2] === 'ai' ? 't-acc' : 't-sig'}">●</span> ${esc(c[0])} <span class="t-dim">· ${esc(c[1])}</span>`).join('\n')),
     contact: () => print(`email     <span class="t-acc">${EMAIL}</span>\nlinkedin  <span class="t-sig">linkedin.com/in/oleg-savelyev</span>\nlocation  Kyiv, Ukraine`),
-    ls: () => print('<span class="t-sig">top/  projects/  journey/  impact/  skills/  certs/  contact/</span>'),
+    ls: () => print('<span class="t-sig">top/  projects/  journey/  impact/  skills/  certs/  feedback/  contact/</span>'),
     cd: a => {
       const t = (a[0] || '').replace(/\/$/, '');
       if (!t || t === '~') return print('<span class="t-dim">already home</span>');
-      if (!document.getElementById(t) || !['top', 'projects', 'journey', 'impact', 'skills', 'certs', 'contact'].includes(t)) return print(`<span class="t-err">cd: no such section: ${esc(t)}</span>`);
+      if (!document.getElementById(t) || !['top', 'projects', 'journey', 'impact', 'skills', 'certs', 'feedback', 'contact'].includes(t)) return print(`<span class="t-err">cd: no such section: ${esc(t)}</span>`);
       print(`<span class="t-dim">→ /${t}</span>`); setTimeout(() => { closeTerm(); go(t); }, 350);
     },
     date: () => print(fullFmt.format(new Date()) + ' <span class="t-dim">Europe/Kyiv</span>'),

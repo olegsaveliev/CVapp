@@ -850,35 +850,9 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 
 /* --- Timeline Studio --- */
 .win[data-app="timeline"] { --wb: #2C2C2E; --wt: #D1D1D6; background: #1C1C1E; color: #E9E9EB; }
-.win[data-app="timeline"].sim { border-color: #FFB020; box-shadow: 0 0 0 2px #FFB020, 0 34px 80px -24px rgba(5, 10, 15, .75); }
-.ts-head { display: flex; justify-content: space-between; gap: 10px; font: 500 .64rem/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: #8E8E93; }
-.ts-head b { color: #fff; font-weight: 700; }
-.ts-head b.late { color: #FFB020; }
-.ts-gantt { position: relative; display: grid; grid-template-columns: 116px minmax(0, 1fr); row-gap: 6px; font: 500 .72rem/1 var(--f-body); }
-.ts-weeks { grid-column: 2; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); font: 500 .56rem/1 var(--f-mono); color: #6E6E73; }
-.ts-weeks span { text-align: center; }
-.ts-name { align-self: center; padding-right: 8px; color: #C7C7CC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ts-track { position: relative; height: 26px; border-radius: 5px; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px calc(100% / 12)); }
-.ts-bar {
-  position: absolute; top: 3px; bottom: 3px; display: flex; align-items: center; padding: 0 6px; overflow: hidden;
-  border-radius: 6px; border: 1px solid #55555A; background: #3A3A3C; color: #fff; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
-  font: 600 .58rem/1 var(--f-mono); transition: left .18s cubic-bezier(.2, .9, .25, 1), background .2s, border-color .2s;
-}
-.ts-bar.crit { background: #0A84FF; border-color: #57A9FF; }
-.ts-bar.drag { transition: none; cursor: grabbing; box-shadow: 0 0 0 2px rgba(255, 255, 255, .5), 0 8px 18px -6px rgba(0, 0, 0, .7); z-index: 2; }
-.ts-bar:hover { filter: brightness(1.12); }
-.ts-links { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-.ts-sim { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.ts-run { height: 32px; padding: 0 14px; border: 0; border-radius: 8px; background: #0A84FF; color: #fff; font: 600 .78rem/1 var(--f-body); }
-.ts-run:hover { background: #2D96FF; }
-.ts-run:disabled { opacity: .6; cursor: progress; }
-.ts-tip { font-size: .72rem; color: #8E8E93; }
-.ts-hist { padding: 8px 10px; border-radius: 9px; background: #141416; border: 1px solid #2C2C2E; }
-.ts-hist canvas { display: block; width: 100%; height: 116px; }
-.ts-read { margin: 6px 0 0; font: 400 .74rem/1.45 var(--f-body); color: #C7C7CC; }
-.ts-read b { color: #fff; }
-.ts-read .amb { color: #FFB020; }
-@container (max-width: 440px) { .ts-gantt { grid-template-columns: 84px minmax(0, 1fr); } .ts-name { font-size: .64rem; } .ts-bar { font-size: 0; } }
+.tl-body { flex: none; padding: 10px; display: block; }
+.tl-frame { position: relative; margin: 0; height: 0; padding-top: 56.25%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+.tl-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- Planning Poker (pixel) --- */
 .win[data-app="poker"] { --wb: #3A3852; --wt: #FFD12B; background: #2E2C3F; color: #E6E4F5; }
@@ -1481,12 +1455,8 @@ html.thermal { filter: url(#thermalFx); }
               <span class="win-title">Timeline Studio</span>
               <a class="win-open" href="https://timelinestudio.app/" target="_blank" rel="noopener">Open live ↗</a>
             </header>
-            <div class="win-body ts">
-              <p class="w-lead">Plan projects visually on an interactive Gantt chart, link dependencies and run what-if simulations before you promise a date.</p>
-              <div class="ts-head"><span>Project · GenAI assistant launch</span><span>Launch <b id="tsEnd">wk 10</b></span></div>
-              <div class="ts-gantt" id="tsGantt"></div>
-              <div class="ts-sim"><button class="ts-run" id="tsRun" type="button">▶ Run Monte Carlo · 1,000 runs</button><span class="ts-tip">Drag a bar. Dependent tasks move with it.</span></div>
-              <div class="ts-hist"><canvas id="tsCanvas" aria-label="Forecast histogram"></canvas><p class="ts-read" id="tsRead">The plan says week 10. Run the simulation to see how likely that is.</p></div>
+            <div class="win-body tl-body">
+              <figure class="tl-frame"><video id="tlVideo" src="timeline-demo.mp4" poster="timeline-poster.jpg" controls muted playsinline preload="none" aria-label="Timeline Studio demo"></video></figure>
             </div>
           </article>
 
@@ -2857,7 +2827,7 @@ html.thermal { filter: url(#thermalFx); }
     { g: 'Roles', ico: '◆', label: 'Delivery Lead, AI/ML @ Ring', hint: '2022', run: () => { go('journey'); select('ring-lead', true); } },
     { g: 'Roles', ico: '◆', label: 'Technical Program Manager @ Ring', hint: '2019', run: () => { go('journey'); select('ring-tpm', true); } },
     { g: 'Roles', ico: '◆', label: 'Release Manager @ Luxoft', hint: '2013', run: () => { go('journey'); select('luxoft', true); } },
-    { g: 'Projects', ico: '▣', label: 'Timeline Studio', hint: 'Gantt + Monte Carlo', run: () => deskApi.launchApp('timeline') },
+    { g: 'Projects', ico: '▣', label: 'Timeline Studio', hint: 'demo video', run: () => deskApi.launchApp('timeline') },
     { g: 'Projects', ico: '▣', label: 'Planning Poker', hint: 'Pixel estimation', run: () => deskApi.launchApp('poker') },
     { g: 'Projects', ico: '▣', label: 'Nimbus', hint: 'AI task board', run: () => deskApi.launchApp('nimbus') },
     { g: 'Projects', ico: '▣', label: 'AI Decoded', hint: 'AI learning platform', run: () => deskApi.launchApp('aidecoded') },
@@ -3451,7 +3421,7 @@ Kyiv, Ukraine · 19 years in IT
   const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
   const escH = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const APPS = {
-    timeline: { g: 'prod', name: 'Timeline Studio', w: 600, say: 'Monte Carlo! A casino where I always win.' },
+    timeline: { g: 'prod', name: 'Timeline Studio', w: 640, say: 'Monte Carlo! A casino where I always win.' },
     poker: { g: 'prod', name: 'Planning Poker', w: 450, say: 'I vote ☕. I always vote ☕.' },
     nimbus: { g: 'prod', name: 'Nimbus', w: 560, say: 'Glassy. Like my visor.' },
     aidecoded: { g: 'edu', name: 'AI Decoded', w: 640, say: 'Lesson time. Turn the temperature up.' },
@@ -3666,7 +3636,7 @@ Kyiv, Ukraine · 19 years in IT
   const pm = $('#pipM'), pmR = $('.pm-r', pm), pmEyes = $$('.pm-eyes', pm), sayEl = $('#pipSay');
   const P = { x: 200, y: 0, vx: 0, vy: 0, on: 'floor', rel: 200, dir: 1, mode: 'sit', t: 2, quiet: true, touch: 0, hidden: false, game: null, ex: 0, ey: 0, blink: 1, blinkT: 3, landT: 0, notice: 0 };
   const LINES = {
-    click: ['Hi! I’m Pip.', 'Small tasks. Big personality.', 'Throw me. I dare you.', 'I’m not a developer either.', 'Drink some water.', 'Try the Monte Carlo button.', 'Have you stretched today?', 'What would your Pip do?'],
+    click: ['Hi! I’m Pip.', 'Small tasks. Big personality.', 'Throw me. I dare you.', 'I’m not a developer either.', 'Drink some water.', 'Have you stretched today?', 'What would your Pip do?'],
     throw: ['Wheee!', 'Again!', 'I regret nothing.', 'Weeeeee!', 'Not the face!'],
     land: ['Nice view from up here.', 'Stuck the landing.', 'This window is comfy.'],
     shake: ['Whoa, careful!', 'Earthquake!', 'I’m getting dizzy.']
@@ -3935,129 +3905,6 @@ Kyiv, Ukraine · 19 years in IT
     });
   };
 
-  /* ----- app: Timeline Studio ----- */
-  const TS0 = [
-    { n: 'Discovery', s: 1, d: 2, deps: [] },
-    { n: 'Data pipeline', s: 3, d: 3, deps: [0] },
-    { n: 'UX + prompts', s: 3, d: 3, deps: [0] },
-    { n: 'Model tuning', s: 6, d: 3, deps: [1] },
-    { n: 'Evals + guardrails', s: 9, d: 1, deps: [2, 3] },
-    { n: 'Launch', s: 10, d: 1, deps: [4] }
-  ];
-  const ts = TS0.map(t => ({ ...t })), WEEKS = 12;
-  let tsSimRaf = 0, tsRes = null;
-  const tsES = i => Math.max(1, ...ts[i].deps.map(j => ts[j].s + ts[j].d));
-  const tsEnd = () => ts[ts.length - 1].s + ts[ts.length - 1].d - 1;
-  function tsCascade() { ts.forEach((t, i) => { t.s = Math.max(t.s, tsES(i)); }); }
-  function tsCrit() {
-    const n = ts.length, LF = [], end = tsEnd();
-    for (let i = n - 1; i >= 0; i--) {
-      const succ = []; ts.forEach((t, k) => { if (t.deps.includes(i)) succ.push(k); });
-      LF[i] = succ.length ? Math.min(...succ.map(k => LF[k] - ts[k].d)) : end;
-      ts[i].crit = LF[i] - (ts[i].s + ts[i].d - 1) === 0;
-    }
-  }
-  function tsDraw() {
-    tsCrit();
-    const g = $('#tsGantt');
-    $$('.ts-bar', g).forEach((b, i) => {
-      const t = ts[i];
-      b.style.left = `calc(${(t.s - 1) / WEEKS * 100}% + 1px)`; b.style.width = `calc(${t.d / WEEKS * 100}% - 2px)`;
-      b.classList.toggle('crit', t.crit);
-      b.setAttribute('aria-label', `${t.n}: weeks ${t.s} to ${t.s + t.d - 1}${t.crit ? ', critical path' : ''}`);
-    });
-    const e = tsEnd(), base = TS0[TS0.length - 1].s, el = $('#tsEnd');
-    el.textContent = `wk ${e}${e > base ? ` (+${e - base})` : ''}`; el.classList.toggle('late', e > base);
-    tsLinks();
-  }
-  function tsLinks() {
-    const g = $('#tsGantt'), svg = $('.ts-links', g), tracks = $$('.ts-track', g);
-    if (!tracks.length || !tracks[0].clientWidth) return;
-    const pos = i => { const tr = tracks[i], wk = tr.clientWidth / WEEKS; return { x0: tr.offsetLeft + (ts[i].s - 1) * wk, x1: tr.offsetLeft + (ts[i].s - 1 + ts[i].d) * wk, y: tr.offsetTop + tr.offsetHeight / 2 }; };
-    let d = '';
-    ts.forEach((t, i) => t.deps.forEach(j => {
-      const a = pos(j), b = pos(i), c = t.crit && ts[j].crit && ts[j].s + ts[j].d === t.s;
-      const mx = Math.max(a.x1 + 5, Math.min(b.x0 - 5, a.x1 + 8));
-      d += `<path d="M${a.x1} ${a.y}H${mx}V${b.y}H${b.x0 - 1}" stroke="${c ? '#57A9FF' : '#636366'}" marker-end="url(#tsArr${c ? 'C' : ''})"/>`;
-    }));
-    svg.innerHTML = `<defs><marker id="tsArr" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L6 3L0 6z" fill="#636366"/></marker><marker id="tsArrC" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L6 3L0 6z" fill="#57A9FF"/></marker></defs><g fill="none" stroke-width="1.3">${d}</g>`;
-  }
-  function tsHist(res, done) {
-    const cv = $('#tsCanvas'), dpr = Math.min(2, devicePixelRatio || 1), w = cv.clientWidth, h = cv.clientHeight;
-    if (!w) return;
-    if (cv.width !== Math.round(w * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
-    const c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
-    const plan = tsEnd(), lo = plan - 1, hi = plan + 5, BW = .2, nb = Math.round((hi - lo) / BW), bins = new Array(nb).fill(0);
-    res.forEach(v => { const k = Math.floor((v - lo) / BW); if (k >= 0 && k < nb) bins[k]++; });
-    const maxB = Math.max(8, ...bins), base = h - 16, X = v => (v - lo) / (hi - lo) * w;
-    const sorted = done ? [...res].sort((a, b) => a - b) : null, p50 = done && sorted[Math.floor(sorted.length * .5)], p85 = done && sorted[Math.floor(sorted.length * .85)];
-    bins.forEach((b, k) => {
-      const v = lo + (k + .5) * BW, bh = b / maxB * (base - 14);
-      c.fillStyle = !done ? '#0A84FF' : v <= p50 ? '#0A84FF' : v <= p85 ? '#5AA9FF' : '#FFB020';
-      c.fillRect(X(lo + k * BW) + 1, base - bh, Math.max(1, w / nb - 2), bh);
-    });
-    c.fillStyle = '#6E6E73'; c.font = '500 10px ' + getComputedStyle(document.body).getPropertyValue('--f-mono');
-    c.textAlign = 'center';
-    for (let wk = Math.ceil(lo); wk <= hi; wk++) c.fillText('wk ' + wk, X(wk), h - 3);
-    const vline = (v, col, label, dash) => { c.strokeStyle = col; c.setLineDash(dash ? [3, 3] : []); c.beginPath(); c.moveTo(X(v) + .5, 10); c.lineTo(X(v) + .5, base); c.stroke(); c.setLineDash([]); c.fillStyle = col; c.textAlign = X(v) > w - 60 ? 'right' : 'left'; c.fillText(label, X(v) + (c.textAlign === 'left' ? 4 : -4), 10); };
-    vline(plan, '#8E8E93', 'plan', true);
-    if (done) { vline(p50, '#fff', 'P50', false); vline(p85, '#FFB020', 'P85', false); }
-    return { p50, p85 };
-  }
-  function tsSim() {
-    if (tsSimRaf) return;
-    const winEl = W.timeline.el, btn = $('#tsRun'), N = 1000, res = [];
-    winEl.classList.add('sim'); btn.disabled = true; btn.textContent = 'Simulating…';
-    const tri = (a, m, b) => { const u = Math.random(), f = (m - a) / (b - a); return u < f ? a + Math.sqrt(u * (b - a) * (m - a)) : b - Math.sqrt((1 - u) * (b - a) * (b - m)); };
-    const lag = ts.map((t, i) => t.s - tsES(i)); // manual delays beyond the earliest start are kept
-    const one = () => { const e = []; ts.forEach((t, i) => { const st = t.deps.length ? Math.max(...t.deps.map(j => e[j])) + lag[i] : t.s - 1; e[i] = st + t.d * tri(.75, .95, 1.5); }); return e[ts.length - 1]; };
-    const finish = () => {
-      tsSimRaf = 0; tsRes = res;
-      const { p50, p85 } = tsHist(res, true), plan = tsEnd(), hit = res.filter(v => v <= plan).length / N;
-      $('#tsRead').innerHTML = `Plan: end of <b>week ${plan}</b>, only <b>${Math.round(hit * 100)}%</b> likely. Coin flip (P50): <b>week ${p50.toFixed(1)}</b>. Strong confidence (P85): <b class="amb">week ${p85.toFixed(1)}</b>. Promise that one.`;
-      btn.disabled = false; btn.textContent = '↻ Run again';
-      setTimeout(() => winEl.classList.remove('sim'), 900);
-    };
-    if (reduced) { for (let i = 0; i < N; i++) res.push(one()); return finish(); }
-    const frame = () => { for (let i = 0; i < 28 && res.length < N; i++) res.push(one()); tsHist(res, false); $('#tsRead').textContent = `Running simulation ${res.length.toLocaleString('en')} / 1,000…`; if (res.length < N) tsSimRaf = requestAnimationFrame(frame); else finish(); };
-    tsSimRaf = requestAnimationFrame(frame);
-  }
-  APPS.timeline.init = () => {
-    if (APPS.timeline.ready) { tsDraw(); return; } APPS.timeline.ready = true;
-    const g = $('#tsGantt');
-    g.innerHTML = '<span></span><div class="ts-weeks">' + Array.from({ length: WEEKS }, (_, i) => `<span>${i + 1}</span>`).join('') + '</div>' +
-      ts.map((t, i) => `<span class="ts-name">${t.n}</span><div class="ts-track"><div class="ts-bar" data-i="${i}" tabindex="0">${t.d}w</div></div>`).join('') +
-      '<svg class="ts-links" aria-hidden="true"></svg>';
-    let D = null;
-    g.addEventListener('pointerdown', e => {
-      const b = e.target.closest('.ts-bar'); if (!b) return;
-      e.preventDefault(); b.setPointerCapture(e.pointerId); b.classList.add('drag');
-      D = { b, i: +b.dataset.i, sx: e.clientX, base: ts.map(t => t.s), wk: b.parentElement.clientWidth / WEEKS, last: 0 };
-    });
-    g.addEventListener('pointermove', e => {
-      if (!D) return;
-      const delta = Math.round((e.clientX - D.sx) / D.wk); if (delta === D.last) return;
-      const saved = ts.map(t => t.s);
-      ts.forEach((t, k) => { t.s = D.base[k]; });
-      ts[D.i].s = Math.max(1, tsES(D.i), D.base[D.i] + delta); tsCascade();
-      if (tsEnd() > WEEKS) { ts.forEach((t, k) => { t.s = saved[k]; }); return; }
-      D.last = delta; tsDraw();
-      if (tsRes) { tsRes = null; tsHist([], false); $('#tsRead').textContent = 'Plan changed. Run the simulation again.'; }
-    });
-    const end = () => { if (!D) return; D.b.classList.remove('drag'); if (D.last) pipSay(tsEnd() > 10 ? 'Launch slipped. Told you to run Monte Carlo.' : 'Still on track!', 2000); D = null; };
-    g.addEventListener('pointerup', end); g.addEventListener('pointercancel', end);
-    g.addEventListener('keydown', e => {
-      const b = e.target.closest('.ts-bar'); if (!b || !/Arrow(Left|Right)/.test(e.key)) return;
-      e.preventDefault(); const i = +b.dataset.i, saved = ts.map(t => t.s);
-      ts[i].s = Math.max(1, tsES(i), ts[i].s + (e.key === 'ArrowRight' ? 1 : -1)); tsCascade();
-      if (tsEnd() > WEEKS) ts.forEach((t, k) => { t.s = saved[k]; });
-      tsDraw();
-    });
-    $('#tsRun').addEventListener('click', tsSim);
-    tsDraw(); tsHist([], false);
-  };
-  APPS.timeline.close = () => { if (tsSimRaf) { cancelAnimationFrame(tsSimRaf); tsSimRaf = 0; $('#tsRun').disabled = false; $('#tsRun').textContent = '▶ Run Monte Carlo · 1,000 runs'; W.timeline.el.classList.remove('sim'); } };
-
   /* ----- app: Planning Poker ----- */
   const PP_VALS = ['1', '2', '3', '5', '8', '13', '?', '☕'], PP_NUM = ['1', '2', '3', '5', '8', '13'];
   const PP_SEATS = [{ n: 'You', h: '#6B3E26', c: '#FFD12B' }, { n: 'Dev', h: '#1E1D2B', c: '#5B7BD5' }, { n: 'QA', h: '#C2563A', c: '#4CAF50' }, { n: 'PM', h: '#E8C170', c: '#E05A8A' }];
@@ -4300,8 +4147,8 @@ Kyiv, Ukraine · 19 years in IT
     $('#afOk').hidden = true; $('#afNo').hidden = true;
   };
 
-  /* ----- demo videos (Hireloop recruitment, AI Decoded, AI Factory) ----- */
-  ['hlVideo', 'eduVideo', 'fvVideo'].forEach(id => {
+  /* ----- demo videos (Hireloop recruitment, AI Decoded, AI Factory, Timeline Studio) ----- */
+  ['hlVideo', 'eduVideo', 'fvVideo', 'tlVideo'].forEach(id => {
     const v = $('#' + id);
     v.muted = true;
     let ours = 0, byUser = false;   // ours: pauses we made ourselves, so only the viewer's own pause stops autoplay
@@ -4755,7 +4602,7 @@ Kyiv, Ukraine · 19 years in IT
   measure();
   function bootDesk() {
     if (!mobile) {
-      TABS.prod.boot.forEach(id => { const w = W[id]; w.el.hidden = false; w.open = true; place(w); APPS[id].init(); focusWin(w); });
+      TABS.prod.boot.forEach(id => { const w = W[id]; w.el.hidden = false; w.open = true; place(w); APPS[id].init && APPS[id].init(); focusWin(w); });
     }
     P.on = 'floor'; P.rel = P.x = aw * .7; P.y = floorY();
     TABS.prod.seen = true; setTab('prod', true); setQuiet(true, null); pipRender();
@@ -4764,7 +4611,6 @@ Kyiv, Ukraine · 19 years in IT
   new ResizeObserver(() => {
     const switched = measure();
     Object.values(W).forEach(w => { if (w.placed) { if (switched && !mobile) place(w); else { clampWin(w); applyPos(w); } } });
-    if (W.timeline.open && APPS.timeline.ready) { tsLinks(); if (!tsSimRaf) tsHist(tsRes || [], !!tsRes); }
     if (P.on === 'floor') { P.y = floorY(); P.rel = clampN(P.rel, 22, aw - 22); P.x = P.rel; }
     else if (!P.on || P.mode === 'drag') { P.x = clampN(P.x, 22, aw - 22); P.y = Math.min(P.y, floorY()); }
     pipVisibility(); pipRender();

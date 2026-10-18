@@ -19,6 +19,7 @@
   --signal: #0A7AA3;
   --ph-support: #9AAAB7;
   --scrim: rgba(20, 30, 40, .45);
+  --map-bg: #E9EDF0; --map-street: #FFFFFF; --map-water: #BFD9E6; --map-park: #D3E4CF; --map-label: #6F97AD;
 
   --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -42,6 +43,7 @@
   --signal: #5BC4E8;
   --ph-support: #4A5D6E;
   --scrim: rgba(4, 8, 12, .72);
+  --map-bg: #0E1820; --map-street: #1B2A36; --map-water: #10304A; --map-park: #142820; --map-label: #4F87A6;
   color-scheme: dark;
 }
 
@@ -294,35 +296,33 @@ section.block + section.block { border-top: 1px solid var(--line); }
 .fb-themes .filter[aria-pressed="true"] i { box-shadow: 0 0 0 2px var(--bg); }
 .fbx-wrap { position: relative; }
 .fbx {
-  position: relative; height: 620px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px;
-  background:
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--line) 55%, transparent) 0 1px, transparent 1px 78px),
-    repeating-linear-gradient(90deg, color-mix(in srgb, var(--line) 55%, transparent) 0 1px, transparent 1px 78px),
-    radial-gradient(120% 90% at 50% 40%, var(--bg-2), var(--bg-3));
+  position: relative; height: 620px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--map-bg);
 }
 .fbx-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.fbx-map { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.fbx-map .st { stroke: var(--map-street); fill: none; stroke-linecap: round; }
+.fbx-map .wt { fill: var(--map-water); } .fbx-map .pk { fill: var(--map-park); }
+.fbx-map text { fill: var(--map-label); font: italic 500 15px var(--f-body); }
+
 .fbx-hud { position: absolute; z-index: 3; pointer-events: none; font: 500 .62rem/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .fbx-hud b { color: var(--fg); font-weight: 600; }
 .fbx-hud.tl { left: 16px; top: 14px; } .fbx-hud.tr { right: 16px; top: 14px; display: flex; gap: 14px; }
 .fbx-hud.bl { left: 16px; bottom: 14px; } .fbx-hud.br { right: 16px; bottom: 14px; font-variant-numeric: tabular-nums; }
-.fbx-t { position: absolute; left: 0; top: 0; z-index: 1; display: grid; justify-items: center; gap: 7px; padding: 6px; border: 0; background: none; color: var(--fg); transform: translate(-50%, -28px); transition: opacity .3s; }
-.fbx-t .fb-av { position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; font: 700 .8rem/1 var(--f-mono); color: var(--fg); background: var(--bg-2); border: 1.5px solid var(--rc); box-shadow: 0 0 0 5px color-mix(in srgb, var(--rc) 13%, transparent); transition: transform .2s; }
-.fbx-t:hover .fb-av, .fbx-t:focus-visible .fb-av { transform: scale(1.08); }
-.fbx-t .fb-av::after {
-  --c: var(--signal); --l: 10px; --w: 2px;
-  content: ""; position: absolute; inset: -13px; opacity: 0; transition: opacity .2s;
-  background:
-    linear-gradient(var(--c),var(--c)) top left / var(--l) var(--w), linear-gradient(var(--c),var(--c)) top left / var(--w) var(--l),
-    linear-gradient(var(--c),var(--c)) top right / var(--l) var(--w), linear-gradient(var(--c),var(--c)) top right / var(--w) var(--l),
-    linear-gradient(var(--c),var(--c)) bottom left / var(--l) var(--w), linear-gradient(var(--c),var(--c)) bottom left / var(--w) var(--l),
-    linear-gradient(var(--c),var(--c)) bottom right / var(--l) var(--w), linear-gradient(var(--c),var(--c)) bottom right / var(--w) var(--l);
-  background-repeat: no-repeat;
+.fbx-t { position: absolute; left: 0; top: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; padding: 0; border: 0; background: none; color: var(--fg); transform: translate(-50%, calc(-100% + 5px)); transition: opacity .3s; }
+.fbx-t .bdg {
+  display: flex; align-items: center; gap: 7px; height: 26px; padding: 0 10px 0 4px; border-radius: 6px; white-space: nowrap;
+  background: var(--bg-2); border: 1px solid var(--line); box-shadow: 0 6px 16px -10px rgba(0, 0, 0, .45);
+  font: 600 .74rem/1 var(--f-body); color: var(--fg); transition: transform .2s, background-color .25s, border-color .25s, color .25s;
 }
-.fbx-t.trk .fb-av::after { opacity: 1; animation: fbxHunt .8s ease-in-out infinite alternate; }
-.fbx-t.got .fb-av::after { --c: var(--accent); opacity: 1; animation: none; }
-.fbx-t.got .fb-av { border-color: var(--accent); }
-@keyframes fbxHunt { from { transform: scale(1.18) rotate(4deg); } to { transform: scale(.94) rotate(-3deg); } }
-.fbx-t .nm { padding: 3px 6px; border-radius: 3px; white-space: nowrap; font: 600 .62rem/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; background: color-mix(in srgb, var(--bg-2) 85%, transparent); }
+.fbx-t .ini { width: 18px; height: 18px; display: grid; place-items: center; border-radius: 4px; background: var(--rc); color: var(--bg-2); font: 700 .52rem/1 var(--f-mono); letter-spacing: .02em; }
+.fbx-t .stem { width: 1.5px; height: 10px; background: var(--fg); opacity: .7; }
+.fbx-t .pin { width: 10px; height: 10px; border-radius: 50%; background: var(--rc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--rc) 22%, transparent); }
+.fbx-t:hover .bdg, .fbx-t:focus-visible .bdg { transform: translateY(-2px); border-color: var(--accent); }
+.fbx-t.trk .bdg { border-color: var(--signal); animation: fbxTrk .7s ease-in-out infinite alternate; }
+@keyframes fbxTrk { to { box-shadow: 0 0 0 4px color-mix(in srgb, var(--signal) 30%, transparent); } }
+.fbx-t.got .bdg { background: var(--fg); color: var(--bg); border: 2px solid var(--accent); }
+.fbx-t.got .pin, .fbx-t.got .stem { background: var(--accent); opacity: 1; }
+.fbx-t.got .pin { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent); }
 .fbx-t.off { opacity: .22; }
 .fbx-drone { position: absolute; left: -36px; top: -36px; z-index: 2; width: 72px; height: 72px; pointer-events: none; will-change: transform; --dl: var(--signal); }
 .fbx-drone + .fbx-drone { --dl: var(--accent); }
@@ -337,7 +337,7 @@ section.block + section.block { border-top: 1px solid var(--line); }
 .fbx-drone b { position: absolute; left: 50%; top: 100%; transform: translate(-50%, -2px); font: 700 .55rem/1 var(--f-mono); letter-spacing: .14em; color: var(--dl); white-space: nowrap; }
 @keyframes fbxSpin { to { transform: rotate(360deg); } }
 /* the recommendation file reuses the hero's subject-file styles */
-.fb-dos { z-index: 4; width: min(440px, 46%); cursor: pointer; }
+.fb-dos { z-index: 4; width: min(408px, 44%); cursor: pointer; }
 .fb-dos .dos-in { transition: box-shadow .3s, border-color .4s; }
 .fb-dos.held .dos-in { box-shadow: 0 30px 80px -24px rgba(0,0,0,.75), 0 0 0 4px color-mix(in srgb, var(--accent) 38%, transparent); }
 .fb-dos .dos-body { grid-template-columns: 92px minmax(0, 1fr); padding-bottom: 8px; }
@@ -349,8 +349,8 @@ section.block + section.block { border-top: 1px solid var(--line); }
 .fb-dos .stamp { top: 100px; left: 14px; font-size: .68rem; }
 .fb-q { display: grid; gap: 10px; padding: 12px 14px 4px; border-top: 1px dashed var(--line); opacity: 0; transform: translateY(6px); transition: opacity .45s, transform .45s; cursor: auto; }
 .fb-q.on { opacity: 1; transform: none; }
-.fb-pull { margin: 0; font: 750 1.12rem/1.15 var(--f-display); font-stretch: 106%; text-wrap: balance; color: var(--fg); }
-.fb-text { display: grid; gap: .7em; max-height: 168px; overflow-y: auto; padding-right: 6px; font: 400 .84rem/1.6 var(--f-body); color: color-mix(in srgb, var(--fg) 84%, var(--muted)); overscroll-behavior: contain; }
+.fb-pull { margin: 0; font: 750 1.04rem/1.15 var(--f-display); font-stretch: 106%; text-wrap: balance; color: var(--fg); }
+.fb-text { display: grid; gap: .7em; max-height: 160px; overflow-y: auto; padding-right: 6px; font: 400 .81rem/1.6 var(--f-body); color: color-mix(in srgb, var(--fg) 84%, var(--muted)); overscroll-behavior: contain; }
 .fb-text p { margin: 0; }
 .fb-text mark { background: none; color: inherit; border-radius: 3px; padding: 0 1px; transition: background-color .3s, box-shadow .3s; }
 .fb-text mark.hit { background: color-mix(in srgb, var(--tc) 22%, transparent); color: var(--fg); box-shadow: inset 0 -2px 0 var(--tc); }
@@ -367,13 +367,14 @@ section.block + section.block { border-top: 1px solid var(--line); }
   .fbx { height: 430px; }
   .fbx-hud.bl, .fbx-hud.br { display: none; }
   .fbx-hud.tl { left: 12px; top: 12px; font-size: .56rem; } .fbx-hud.tr { right: 12px; top: 12px; font-size: .56rem; } #fbxCount { display: none; }
-  .fbx-t .fb-av { width: 36px; height: 36px; font-size: .68rem; }
-  .fbx-t .nm { font-size: .56rem; }
+  .fbx-t .bdg { height: 23px; gap: 5px; padding: 0 8px 0 3px; font-size: .66rem; }
+  .fbx-t .ini { width: 16px; height: 16px; font-size: .48rem; }
+  .fbx-t .stem { height: 8px; }
   .fbx-drone { width: 56px; height: 56px; left: -28px; top: -28px; }
   .fb-dos { position: relative; width: 100%; margin-top: 12px; transform: none !important; }
   .fb-text { max-height: none; overflow: visible; }
 }
-@media (prefers-reduced-motion: reduce) { .fbx-drone .blade, .fbx-t.trk .fb-av::after { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .fbx-drone .blade, .fbx-t.trk .bdg { animation: none; } }
 
 /* ---------- impact: numbers + the events behind them ---------- */
 .evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
@@ -1936,11 +1937,19 @@ html.thermal { filter: url(#thermalFx); }
       <div class="fb-themes reveal" id="fbThemes" role="group" aria-label="Highlight a theme"></div>
       <div class="fbx-wrap reveal" id="fb">
         <div class="fbx" id="fbx">
+          <svg class="fbx-map" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path class="pk" d="M80 56h160v128H80zM820 395h140v155H820zM380 423h110v99H380zM40 470h90v110H40z"/>
+            <path class="wt" d="M610-10C560 110 640 225 590 338S520 535 600 640H770C700 505 760 352 720 240S700 56 760-10Z"/>
+            <path class="st" stroke-width="12" d="M-10 480L1010 508M0 620L360 0"/>
+            <path class="st" stroke-width="7" d="M-10 85L1010 127M-10 282L600 324M740 296L1010 324M120-10L160 630M300-10L320 630M470-10L450 630M880-10L900 630M-10 170L280 190M760 420L1010 440M200 560L470 590"/>
+            <path class="st" stroke-width="5" d="M560 330L730 345"/>
+            <text x="655" y="470" transform="rotate(-72 655 470)">Dnipro</text>
+          </svg>
           <canvas class="fbx-cv" id="fbxCv" aria-hidden="true"></canvas>
           <div class="fbx-hud tl">UAV recon · <b>feedback sweep</b></div>
           <div class="fbx-hud tr"><span class="rec"><i></i>Live</span><span id="fbxCount">8 sources</span></div>
           <div class="fbx-hud bl">Click a colleague to send a drone · click the file to hold it</div>
-          <div class="fbx-hud br" id="fbxCoord">50.4501° N · 30.5234° E</div>
+          <div class="fbx-hud br" id="fbxCoord">Kyiv · 1:12 000 · 50.4501° N · 30.5234° E</div>
           <div id="fbxTargets" role="group" aria-label="Colleagues"></div>
           <div class="fbx-drone" id="fbxD0" aria-hidden="true"><svg viewBox="-36 -36 72 72"><path class="arm" d="M-21-21L21 21M21-21L-21 21" stroke-width="4.5" stroke-linecap="round"/><g class="rotor" transform="translate(-21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(-21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><rect class="hull" x="-9" y="-12" width="18" height="24" rx="7"/><circle class="cam" cy="8" r="3.4"/><circle class="led" cy="-7" r="2"/></svg><b>UAV-01</b></div>
           <div class="fbx-drone" id="fbxD1" aria-hidden="true"><svg viewBox="-36 -36 72 72"><path class="arm" d="M-21-21L21 21M21-21L-21 21" stroke-width="4.5" stroke-linecap="round"/><g class="rotor" transform="translate(-21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(-21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><rect class="hull" x="-9" y="-12" width="18" height="24" rx="7"/><circle class="cam" cy="8" r="3.4"/><circle class="led" cy="-7" r="2"/></svg><b>UAV-02</b></div>
@@ -2948,17 +2957,16 @@ Oleg is a hard worker, always willing to jump in the thick of it and get the sho
   // where each colleague stands on the recon map (% of the stage), desktop and phone
   const FBX_POS = [[13, 30], [34, 19], [56, 33], [82, 21], [22, 68], [45, 77], [67, 63], [87, 74]];
   const FBX_POS_M = [[22, 20], [72, 15], [42, 40], [82, 42], [16, 56], [60, 64], [28, 86], [78, 86]];
-  $('#fbxTargets').innerHTML = FB.map((f, i) => `<button class="fbx-t" type="button" data-i="${i}" style="--rc:${FB_REL[f.rel][1]}" aria-label="${f.n}, ${FB_REL[f.rel][0]}. Read the recommendation"><span class="fb-av">${f.ini}</span><span class="nm">${f.n.split(' ')[0]}</span></button>`).join('');
+  $('#fbxTargets').innerHTML = FB.map((f, i) => `<button class="fbx-t" type="button" data-i="${i}" style="--rc:${FB_REL[f.rel][1]}" aria-label="${f.n}, ${FB_REL[f.rel][0]}. Read the recommendation"><span class="bdg"><span class="ini">${f.ini}</span>${f.n.split(' ')[0]}</span><span class="stem"></span><span class="pin"></span></button>`).join('');
   const fbTs = $$('.fbx-t', fbx);
   const fbFlow = matchMedia('(max-width: 760px)');
   const fbd = [0, 1].map(i => ({ el: $('#fbxD' + i), x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0, job: -1, wanderT: 0, trail: [] }));
-  let fbW = 0, fbH = 0, fbDots = [], fbTp = [], fbCol = {}, fbColT = 0;
+  let fbW = 0, fbH = 0, fbTp = [], fbCol = {}, fbColT = 0;
   let fbCur = -1, fbAct = 1, fbPh = 'idle', fbIsHeld = false, fbHov = false, fbUser = false, fbLeft = 0, fbTotal = 1, fbTok = 0, fbRun = false, fbSeen = false, fbLast = 0, fbStarted = false;
   function fbSize() {
     const r = fbx.getBoundingClientRect(); fbW = r.width; fbH = r.height;
     const dpr = Math.min(2, devicePixelRatio || 1);
     fbCv.width = Math.round(fbW * dpr); fbCv.height = Math.round(fbH * dpr); fbCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    fbDots = []; const sp = 26; for (let y = sp / 2; y < fbH; y += sp) for (let x = sp / 2; x < fbW; x += sp) fbDots.push(x, y);
     const P = fbFlow.matches ? FBX_POS_M : FBX_POS;
     fbTp = P.map(([x, y]) => ({ x: x / 100 * fbW, y: y / 100 * fbH }));
     fbTs.forEach((b, i) => { b.style.left = fbTp[i].x + 'px'; b.style.top = fbTp[i].y + 'px'; });
@@ -3110,13 +3118,6 @@ Oleg is a hard worker, always willing to jump in the thick of it and get the sho
   }
   function fbDraw(now) {
     const c = fbCtx; c.clearRect(0, 0, fbW, fbH);
-    // dot field that lights up under the drones
-    c.fillStyle = fbCol.fg;
-    for (let k = 0; k < fbDots.length; k += 2) {
-      const x = fbDots[k], y = fbDots[k + 1];
-      let near = 0; fbd.forEach(d => { const q = 1 - Math.hypot(x - d.x, y - d.y) / 120; if (q > near) near = q; });
-      c.globalAlpha = .1 + near * .5; c.fillRect(x - .9, y - .9, 1.8 + near * 1.2, 1.8 + near * 1.2);
-    }
     fbd.forEach((d, i) => {
       c.fillStyle = i ? fbCol.acc : fbCol.sig;
       for (let k = 0; k < d.trail.length; k += 2) { c.globalAlpha = (k / d.trail.length) * .35; c.beginPath(); c.arc(d.trail[k], d.trail[k + 1], 1.6, 0, 7); c.fill(); }

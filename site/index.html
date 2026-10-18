@@ -869,40 +869,10 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 
 /* --- Planning Poker (pixel) --- */
 .win[data-app="poker"] { --wb: #3A3852; --wt: #FFD12B; background: #2E2C3F; color: #E6E4F5; }
-.win[data-app="poker"] .win-title, .pp-room { font-family: "Silkscreen", var(--f-mono); }
-.pp-room { position: relative; display: grid; gap: 12px; padding: 12px; background: #3A3852; border: 3px solid #4F4C6E; box-shadow: 4px 4px 0 #1E1D2B; }
-.pp-story span { font-size: .6rem; color: #A5A2C7; }
-.pp-story b { display: block; margin-top: 3px; color: #FFD12B; font-size: .84rem; font-weight: 700; }
-.pp-table { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 12px 6px; background: #2A6B46; border: 3px solid #1F4F34; box-shadow: inset 0 0 0 3px #348258; }
-.pp-seat { position: relative; display: grid; justify-items: center; gap: 6px; font-size: .58rem; color: #E6F5EA; }
-.pp-av { width: 32px; height: 32px; display: block; }
-.pp-think { position: absolute; top: -6px; right: calc(50% - 30px); padding: 1px 4px; background: #fff; color: #2E2C3F; font-size: .56rem; box-shadow: 2px 2px 0 #1E1D2B; animation: ppBlink .8s steps(2, start) infinite; }
-@keyframes ppBlink { to { opacity: .35; } }
-.pp-card { width: 34px; height: 46px; perspective: 300px; outline: 2px dashed rgba(255, 255, 255, .22); outline-offset: -2px; }
-.pp-ci { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .45s cubic-bezier(.3, 1.4, .5, 1); opacity: 0; }
-.pp-card.in { outline: 0; }
-.pp-card.in .pp-ci { opacity: 1; animation: ppDrop .3s steps(4); }
-.pp-card.flip .pp-ci { transform: rotateY(180deg); }
-@keyframes ppDrop { from { transform: translateY(-18px); } }
-.pp-face { position: absolute; inset: 0; display: grid; place-items: center; border: 2px solid #1E1D2B; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.pp-back { background: repeating-linear-gradient(45deg, #5B7BD5 0 4px, #4A66B8 4px 8px); }
-.pp-front, .pp-hand button { font-family: "Silkscreen", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", var(--f-mono) !important; }
-.pp-front { background: #FFD12B; color: #2E2C3F; font-size: .95rem; font-weight: 700; transform: rotateY(180deg); }
-.pp-status { min-height: 1.3em; text-align: center; font-size: .68rem; color: #FFD12B; }
-.pp-hand { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-.pp-hand button { width: 36px; height: 48px; padding: 0; border: 2px solid #1E1D2B; background: #F4F1FF; color: #2E2C3F; font: 700 .86rem/1 "Silkscreen", var(--f-mono); box-shadow: 2px 2px 0 #1E1D2B; transition: transform .12s steps(3); }
-.pp-hand button:hover { transform: translateY(-4px); }
-.pp-hand button[aria-pressed="true"] { background: #FFD12B; transform: translateY(-8px); }
-.pp-hand button:disabled { opacity: .5; cursor: default; transform: none; }
-.pp-actions { display: flex; justify-content: center; gap: 10px; }
-.pp-btn { height: 34px; padding: 0 14px; border: 0; color: #fff; font: 700 .7rem/1 "Silkscreen", var(--f-mono); box-shadow: 3px 3px 0 #1E1D2B; }
-.pp-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1E1D2B; }
-.pp-btn.green { background: #4CAF50; }
-.pp-btn.green:not(:disabled) { animation: ppPulse 1s steps(2) infinite; }
-@keyframes ppPulse { 50% { background: #5FCB63; } }
-.pp-btn.blue { background: #5B7BD5; }
-.pp-btn:disabled { filter: grayscale(.8); opacity: .55; cursor: default; }
-.pp-conf { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.win[data-app="poker"] .win-title { font-family: "Silkscreen", var(--f-mono); }
+.pk-body { flex: none; padding: 10px; display: block; }
+.pk-frame { position: relative; margin: 0; height: 0; padding-top: 56.25%; overflow: hidden; background: #000; border: 3px solid #4F4C6E; box-shadow: 4px 4px 0 #1E1D2B; }
+.pk-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- Nimbus (glass) --- */
 .win[data-app="nimbus"] {
@@ -1481,16 +1451,8 @@ html.thermal { filter: url(#thermalFx); }
               <span class="win-title">Planning Poker</span>
               <a class="win-open" href="https://planningpoker-psi.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
             </header>
-            <div class="win-body pp">
-              <p class="w-lead">Real-time estimation rooms for agile teams. Create a room, share the link, vote and reveal together, pixel by pixel.</p>
-              <div class="pp-room" id="ppRoom">
-                <div class="pp-story"><span>Story · KAN-42</span><b>Locate the subject from orbit</b></div>
-                <div class="pp-table" id="ppTable"></div>
-                <div class="pp-status" id="ppStatus" aria-live="polite">Pick a card</div>
-                <div class="pp-hand" id="ppHand" aria-label="Your cards"></div>
-                <div class="pp-actions"><button class="pp-btn green" id="ppReveal" type="button" disabled>Reveal</button><button class="pp-btn blue" id="ppNew" type="button">New round</button></div>
-                <canvas class="pp-conf" id="ppConf" aria-hidden="true"></canvas>
-              </div>
+            <div class="win-body pk-body">
+              <figure class="pk-frame"><video id="pkVideo" src="poker-demo.mp4" poster="poker-poster.jpg" controls muted playsinline preload="none" aria-label="Planning Poker demo"></video></figure>
             </div>
           </article>
 
@@ -2841,7 +2803,7 @@ html.thermal { filter: url(#thermalFx); }
     { g: 'Roles', ico: '◆', label: 'Technical Program Manager @ Ring', hint: '2019', run: () => { go('journey'); select('ring-tpm', true); } },
     { g: 'Roles', ico: '◆', label: 'Release Manager @ Luxoft', hint: '2013', run: () => { go('journey'); select('luxoft', true); } },
     { g: 'Projects', ico: '▣', label: 'Timeline Studio', hint: 'demo video', run: () => deskApi.launchApp('timeline') },
-    { g: 'Projects', ico: '▣', label: 'Planning Poker', hint: 'Pixel estimation', run: () => deskApi.launchApp('poker') },
+    { g: 'Projects', ico: '▣', label: 'Planning Poker', hint: 'demo video', run: () => deskApi.launchApp('poker') },
     { g: 'Projects', ico: '▣', label: 'Nimbus', hint: 'AI task board', run: () => deskApi.launchApp('nimbus') },
     { g: 'Projects', ico: '▣', label: 'AI Decoded', hint: 'AI learning platform', run: () => deskApi.launchApp('aidecoded') },
     { g: 'Projects', ico: '▣', label: 'Pip', hint: 'Desktop companion', run: () => deskApi.launchApp('pip') },
@@ -3435,7 +3397,7 @@ Kyiv, Ukraine · 19 years in IT
   const escH = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const APPS = {
     timeline: { g: 'prod', name: 'Timeline Studio', w: 640, say: 'Monte Carlo! A casino where I always win.' },
-    poker: { g: 'prod', name: 'Planning Poker', w: 450, say: 'I vote ☕. I always vote ☕.' },
+    poker: { g: 'prod', name: 'Planning Poker', w: 520, say: 'I vote ☕. I always vote ☕.' },
     nimbus: { g: 'prod', name: 'Nimbus', w: 560, say: 'Glassy. Like my visor.' },
     aidecoded: { g: 'edu', name: 'AI Decoded', w: 640, say: 'Lesson time. Turn the temperature up.' },
     pip: { g: 'bot', name: 'Pip', w: 500, say: 'Hey, that’s me!' },
@@ -3918,86 +3880,6 @@ Kyiv, Ukraine · 19 years in IT
     });
   };
 
-  /* ----- app: Planning Poker ----- */
-  const PP_VALS = ['1', '2', '3', '5', '8', '13', '?', '☕'], PP_NUM = ['1', '2', '3', '5', '8', '13'];
-  const PP_SEATS = [{ n: 'You', h: '#6B3E26', c: '#FFD12B' }, { n: 'Dev', h: '#1E1D2B', c: '#5B7BD5' }, { n: 'QA', h: '#C2563A', c: '#4CAF50' }, { n: 'PM', h: '#E8C170', c: '#E05A8A' }];
-  const FACE = ['..hhhh..', '.hhhhhh.', '.hssssh.', '.sesses.', '.ssssss.', '..smms..', '.cccccc.', 'cccccccc'];
-  const pixAv = s => `<svg class="pp-av" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true">${FACE.map((row, y) => [...row].map((ch, x) => ch === '.' ? '' : `<rect x="${x}" y="${y}" width="1" height="1" fill="${{ h: s.h, s: '#F2C9A0', e: '#1E1D2B', m: '#B5413A', c: s.c }[ch]}"/>`).join('')).join('')}</svg>`;
-  let pp = { votes: [], round: 0, consensus: false, revealed: false, timers: [] };
-  function ppReset() {
-    pp.timers.forEach(clearTimeout);
-    pp = { votes: [null, null, null, null], round: pp.round + 1, consensus: Math.random() < .4, revealed: false, timers: [], started: false };
-    $$('.pp-card', $('#ppTable')).forEach(c => { c.className = 'pp-card'; });
-    $$('.pp-think', $('#ppTable')).forEach(t => { t.hidden = true; });
-    $$('#ppHand button').forEach(b => { b.setAttribute('aria-pressed', 'false'); b.disabled = false; });
-    $('#ppReveal').disabled = true; $('#ppStatus').textContent = 'Pick a card';
-  }
-  function ppSetCard(k, v) {
-    const c = $$('.pp-card', $('#ppTable'))[k];
-    $('.pp-front', c).textContent = v; c.classList.remove('in'); void c.offsetWidth; c.classList.add('in');
-    $$('.pp-think', $('#ppTable'))[k].hidden = true;
-  }
-  function ppBot(you) {
-    if (you === '☕') return '☕';
-    if (pp.consensus && you !== '?') return you;
-    const i = you === '?' ? 3 : PP_NUM.indexOf(you), j = clampN(i + pick([-2, -1, -1, 1, 1, 2]), 0, PP_NUM.length - 1);
-    return Math.random() < .35 && you !== '?' ? you : PP_NUM[j];
-  }
-  function ppVote(v) {
-    if (pp.revealed) return;
-    pp.votes[0] = v; ppSetCard(0, v);
-    $$('#ppHand button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v));
-    if (!pp.started) {
-      pp.started = true;
-      [1, 2, 3].forEach(k => {
-        $$('.pp-think', $('#ppTable'))[k].hidden = false;
-        pp.timers.push(setTimeout(() => {
-          let b = ppBot(pp.votes[0]);
-          if (k === 3 && !pp.consensus && PP_NUM.includes(b) && pp.votes.slice(0, 3).every(x => x === b)) { const j = PP_NUM.indexOf(b); b = PP_NUM[j < 5 ? j + 1 : j - 1]; }
-          pp.votes[k] = b; ppSetCard(k, b);
-          if (pp.votes.every(Boolean)) { $('#ppReveal').disabled = false; $('#ppStatus').textContent = 'All votes in. Reveal!'; }
-        }, (reduced ? 150 : 500) + k * rnd(250, 520)));
-      });
-      $('#ppStatus').textContent = 'Waiting for the team…';
-    }
-  }
-  function ppReveal() {
-    if (pp.revealed || !pp.votes.every(Boolean)) return;
-    pp.revealed = true; $('#ppReveal').disabled = true; $$('#ppHand button').forEach(b => { b.disabled = true; });
-    $$('.pp-card', $('#ppTable')).forEach((c, k) => pp.timers.push(setTimeout(() => c.classList.add('flip'), reduced ? 0 : k * 140)));
-    pp.timers.push(setTimeout(() => {
-      const v = pp.votes, st = $('#ppStatus');
-      if (v.every(x => x === '☕')) { st.textContent = '☕ ×4. Coffee break approved.'; ppConfetti(); }
-      else if (v.every(x => x === v[0])) { st.textContent = `Consensus: ${v[0]}!`; ppConfetti(); pipSay('Consensus! Ship it.', 1800); }
-      else {
-        const nums = v.filter(x => PP_NUM.includes(x)).map(Number);
-        if (nums.length < 2) { st.textContent = 'Too many question marks. Refine the story.'; return; }
-        const hi = Math.max(...nums), lo = Math.min(...nums), who = PP_SEATS[v.indexOf(String(hi))].n, avg = nums.reduce((a, b) => a + b, 0) / nums.length;
-        const sug = PP_NUM.map(Number).reduce((a, b) => Math.abs(b - avg) < Math.abs(a - avg) ? b : a);
-        st.textContent = `Spread ${lo}–${hi}. ${who === 'You' ? 'You explain' : who + ' explains'} the ${hi}. Suggest ${sug}.`;
-      }
-    }, reduced ? 50 : 700));
-  }
-  function ppConfetti() {
-    if (reduced) return;
-    const cv = $('#ppConf'), room = $('#ppRoom'), w = room.clientWidth, h = room.clientHeight;
-    cv.width = w; cv.height = h; const c = cv.getContext('2d');
-    const cols = ['#FFD12B', '#4CAF50', '#5B7BD5', '#E05A8A', '#FFFFFF'];
-    const ps = Array.from({ length: 80 }, () => ({ x: w / 2 + rnd(-40, 40), y: h * .45, vx: rnd(-260, 260), vy: rnd(-420, -120), s: pick([4, 4, 6]), c: pick(cols) }));
-    const t0 = performance.now(); let last = t0;
-    const f = t => { const dt = (t - last) / 1000; last = t; c.clearRect(0, 0, w, h); ps.forEach(p => { p.vy += 700 * dt; p.x += p.vx * dt; p.y += p.vy * dt; c.fillStyle = p.c; c.fillRect(Math.round(p.x / 2) * 2, Math.round(p.y / 2) * 2, p.s, p.s); }); if (t - t0 < 1800) requestAnimationFrame(f); else c.clearRect(0, 0, w, h); };
-    requestAnimationFrame(f);
-  }
-  APPS.poker.init = () => {
-    if (APPS.poker.ready) return; APPS.poker.ready = true;
-    $('#ppTable').innerHTML = PP_SEATS.map(s => `<div class="pp-seat">${pixAv(s)}<span class="pp-think" hidden>…</span><div class="pp-card"><div class="pp-ci"><div class="pp-face pp-back"></div><div class="pp-face pp-front"></div></div></div><span>${s.n}</span></div>`).join('');
-    $('#ppHand').innerHTML = PP_VALS.map(v => `<button type="button" data-v="${v}" aria-pressed="false" aria-label="Vote ${v === '☕' ? 'coffee break' : v}">${v}</button>`).join('');
-    $('#ppHand').addEventListener('click', e => { const b = e.target.closest('button'); if (b) ppVote(b.dataset.v); });
-    $('#ppReveal').addEventListener('click', ppReveal);
-    $('#ppNew').addEventListener('click', ppReset);
-    ppReset();
-  };
-
   /* ----- app: Nimbus ----- */
   let nbId = 10;
   const nb = [
@@ -4160,8 +4042,8 @@ Kyiv, Ukraine · 19 years in IT
     $('#afOk').hidden = true; $('#afNo').hidden = true;
   };
 
-  /* ----- demo videos (Hireloop recruitment, AI Decoded, AI Factory, Timeline Studio) ----- */
-  ['hlVideo', 'eduVideo', 'fvVideo', 'tlVideo'].forEach(id => {
+  /* ----- demo videos (Hireloop recruitment, AI Decoded, AI Factory, Timeline Studio, Planning Poker) ----- */
+  ['hlVideo', 'eduVideo', 'fvVideo', 'tlVideo', 'pkVideo'].forEach(id => {
     const v = $('#' + id);
     v.muted = true;
     let ours = 0, byUser = false;   // ours: pauses we made ourselves, so only the viewer's own pause stops autoplay

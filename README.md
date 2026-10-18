@@ -6,7 +6,7 @@ Interactive personal CV site for Oleg Saveliev.
 
 - `cv-site.html`: the source you edit (styles, markup and script in one file).
 - `build.sh`: wraps the source into a full page at `site/index.html`.
-- `site/`: the finished site, ready to host (`index.html`, `oleg.jpg`, `Oleg-Saveliev-CV.pdf`, the Pip images `pip-*.jpg`, `hireloop-demo.mp4`, `aidecoded-demo.mp4`, `factory-demo.mp4`, `timeline-demo.mp4` and their posters, `aid-hero.jpg` for the Projects desktop, and the tab icons `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`).
+- `site/`: the finished site, ready to host (`index.html`, `oleg.jpg`, `Oleg-Saveliev-CV.pdf`, the Pip images `pip-*.jpg`, `hireloop-demo.mp4`, `aidecoded-demo.mp4`, `factory-demo.mp4`, `timeline-demo.mp4`, `poker-demo.mp4` and their posters, `aid-hero.jpg` for the Projects desktop, and the tab icons `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`).
 - `vercel.json`: tells Vercel to run `build.sh` and serve the `site/` folder.
 - `.claude/launch.json`: local preview server on port 8791.
 - `tools/build_geo.py`: turns Natural Earth and OpenStreetMap downloads into the map data embedded in `cv-site.html` (the `kyivGeo` block) for the Locate animation.
@@ -32,7 +32,7 @@ Live on Vercel: https://oleg-saveliev.vercel.app/ . Every push to `main` redeplo
 ## What's on the page
 
 - **Projects:** a working mini desktop split into workspace tabs.
-  - Personal productivity: Timeline Studio (a muted demo video that autoplays), Planning Poker, Nimbus, Delivery Copilot (its outputs use sample data).
+  - Personal productivity: Timeline Studio and Planning Poker (muted demo videos that autoplay), Nimbus, Delivery Copilot (its outputs use sample data).
   - Education: AI Decoded, a window that plays the walkthrough video (autoplays muted when it opens; the title bar links to aidecoded.academy).
   - Personal bot: Pip, who naps until clicked and falls back asleep after 45 seconds. He lives only in this tab. The Pip images are cropped from the Pip LinkedIn carousel.
   - Development: AI Factory demo (a muted video that opens and autoplays with the tab) and the interactive AI Factory simulation (opens from its icon).

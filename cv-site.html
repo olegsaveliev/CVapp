@@ -288,68 +288,92 @@ section.block + section.block { border-top: 1px solid var(--line); }
 .reveal { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
 
 
-/* ---------- feedback: colleague recommendations ---------- */
+/* ---------- feedback: drone recon over colleague recommendations ---------- */
 .fb-themes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
 .fb-themes .filter i { width: 8px; height: 8px; border-radius: 50%; background: var(--tc, var(--muted)); }
 .fb-themes .filter[aria-pressed="true"] i { box-shadow: 0 0 0 2px var(--bg); }
-.fb { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 18px; align-items: start; }
-.fb-roster { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.fb-who {
-  width: 100%; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 11px;
-  padding: 9px 11px; border: 1px solid var(--line); border-radius: 11px; background: var(--bg-2); color: var(--fg); text-align: left;
-  transition: border-color .2s, opacity .25s, transform .2s;
+.fbx-wrap { position: relative; }
+.fbx {
+  position: relative; height: 620px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px;
+  background:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--line) 55%, transparent) 0 1px, transparent 1px 78px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--line) 55%, transparent) 0 1px, transparent 1px 78px),
+    radial-gradient(120% 90% at 50% 40%, var(--bg-2), var(--bg-3));
 }
-.fb-who:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
-.fb-who[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
-.fb-who.off { opacity: .32; }
-.fb-who b { display: block; font: 600 .9rem/1.2 var(--f-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fb-who small { display: block; margin-top: 2px; font: 500 .62rem/1.2 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fb-av {
-  width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%;
-  font: 700 .78rem/1 var(--f-mono); letter-spacing: .04em; color: var(--fg); background: var(--bg-3); border: 1.5px solid var(--rc, var(--line));
+.fbx-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.fbx-hud { position: absolute; z-index: 3; pointer-events: none; font: 500 .62rem/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.fbx-hud b { color: var(--fg); font-weight: 600; }
+.fbx-hud.tl { left: 16px; top: 14px; } .fbx-hud.tr { right: 16px; top: 14px; display: flex; gap: 14px; }
+.fbx-hud.bl { left: 16px; bottom: 14px; } .fbx-hud.br { right: 16px; bottom: 14px; font-variant-numeric: tabular-nums; }
+.fbx-t { position: absolute; left: 0; top: 0; z-index: 1; display: grid; justify-items: center; gap: 7px; padding: 6px; border: 0; background: none; color: var(--fg); transform: translate(-50%, -28px); transition: opacity .3s; }
+.fbx-t .fb-av { position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; font: 700 .8rem/1 var(--f-mono); color: var(--fg); background: var(--bg-2); border: 1.5px solid var(--rc); box-shadow: 0 0 0 5px color-mix(in srgb, var(--rc) 13%, transparent); transition: transform .2s; }
+.fbx-t:hover .fb-av, .fbx-t:focus-visible .fb-av { transform: scale(1.08); }
+.fbx-t .fb-av::after {
+  --c: var(--signal); --l: 10px; --w: 2px;
+  content: ""; position: absolute; inset: -13px; opacity: 0; transition: opacity .2s;
+  background:
+    linear-gradient(var(--c),var(--c)) top left / var(--l) var(--w), linear-gradient(var(--c),var(--c)) top left / var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) top right / var(--l) var(--w), linear-gradient(var(--c),var(--c)) top right / var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) bottom left / var(--l) var(--w), linear-gradient(var(--c),var(--c)) bottom left / var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) bottom right / var(--l) var(--w), linear-gradient(var(--c),var(--c)) bottom right / var(--w) var(--l);
+  background-repeat: no-repeat;
 }
-.fb-dots { display: flex; gap: 3px; }
-.fb-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
-.fb-dots i.on { background: var(--tc); }
-.fb-card {
-  position: relative; min-width: 0; display: flex; flex-direction: column; gap: 18px; overflow: hidden;
-  padding: clamp(22px, 3vw, 34px); border: 1px solid var(--line); border-radius: 16px;
-  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 7%, var(--bg-2)), var(--bg-2) 55%);
-}
-.fb-card::before {
-  content: "“"; position: absolute; right: clamp(14px, 3vw, 30px); top: -.18em; pointer-events: none;
-  font: 800 clamp(7rem, 14vw, 11rem)/1 var(--f-display); color: color-mix(in srgb, var(--accent) 16%, transparent);
-}
-.fb-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font: 500 .66rem/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.fb-rel { padding: 4px 8px; border-radius: 4px; border: 1px solid var(--rc); color: var(--rc); }
-.fb-pull { position: relative; margin: 0; max-width: 24ch; font: 750 clamp(1.5rem, 3.2vw, 2.25rem)/1.08 var(--f-display); font-stretch: 108%; letter-spacing: -.01em; text-wrap: balance; }
-.fb-text { position: relative; display: grid; gap: .8em; max-width: 68ch; font-size: .97rem; line-height: 1.65; color: color-mix(in srgb, var(--fg) 86%, var(--muted)); }
+.fbx-t.trk .fb-av::after { opacity: 1; animation: fbxHunt .8s ease-in-out infinite alternate; }
+.fbx-t.got .fb-av::after { --c: var(--accent); opacity: 1; animation: none; }
+.fbx-t.got .fb-av { border-color: var(--accent); }
+@keyframes fbxHunt { from { transform: scale(1.18) rotate(4deg); } to { transform: scale(.94) rotate(-3deg); } }
+.fbx-t .nm { padding: 3px 6px; border-radius: 3px; white-space: nowrap; font: 600 .62rem/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; background: color-mix(in srgb, var(--bg-2) 85%, transparent); }
+.fbx-t.off { opacity: .22; }
+.fbx-drone { position: absolute; left: -36px; top: -36px; z-index: 2; width: 72px; height: 72px; pointer-events: none; will-change: transform; --dl: var(--signal); }
+.fbx-drone + .fbx-drone { --dl: var(--accent); }
+.fbx-drone svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(12px 22px 5px rgba(0, 0, 0, .22)); }
+.fbx-drone .arm { stroke: color-mix(in srgb, var(--fg) 80%, var(--bg)); }
+.fbx-drone .disc { fill: color-mix(in srgb, var(--fg) 9%, transparent); stroke: color-mix(in srgb, var(--fg) 22%, transparent); }
+.fbx-drone .blade { fill: color-mix(in srgb, var(--fg) 70%, transparent); transform-box: fill-box; transform-origin: center; animation: fbxSpin .13s linear infinite; }
+.fbx-drone .rotor:nth-child(odd) .blade { animation-direction: reverse; }
+.fbx-drone .hull { fill: var(--fg); }
+.fbx-drone .cam { fill: var(--bg-2); stroke: var(--dl); stroke-width: 1.4; }
+.fbx-drone .led { fill: var(--dl); animation: blink .7s steps(2, start) infinite; }
+.fbx-drone b { position: absolute; left: 50%; top: 100%; transform: translate(-50%, -2px); font: 700 .55rem/1 var(--f-mono); letter-spacing: .14em; color: var(--dl); white-space: nowrap; }
+@keyframes fbxSpin { to { transform: rotate(360deg); } }
+/* the recommendation file reuses the hero's subject-file styles */
+.fb-dos { z-index: 4; width: min(440px, 46%); cursor: pointer; }
+.fb-dos .dos-in { transition: box-shadow .3s, border-color .4s; }
+.fb-dos.held .dos-in { box-shadow: 0 30px 80px -24px rgba(0,0,0,.75), 0 0 0 4px color-mix(in srgb, var(--accent) 38%, transparent); }
+.fb-dos .dos-body { grid-template-columns: 92px minmax(0, 1fr); padding-bottom: 8px; }
+.fb-ph { aspect-ratio: 1; display: grid; place-items: center; }
+.fb-big { font: 800 1.9rem/1 var(--f-display); font-stretch: 118%; color: var(--fg); filter: blur(4px); opacity: .55; transition: filter .8s, opacity .8s; }
+.fb-dos.matched .fb-big { filter: none; opacity: 1; }
+.fb-dos .dossier dd, .fb-dos dd { font-size: .78rem; }
+.fb-dos .face-box { left: 18%; top: 16%; width: 64%; height: 64%; }
+.fb-dos .stamp { top: 100px; left: 14px; font-size: .68rem; }
+.fb-q { display: grid; gap: 10px; padding: 12px 14px 4px; border-top: 1px dashed var(--line); opacity: 0; transform: translateY(6px); transition: opacity .45s, transform .45s; cursor: auto; }
+.fb-q.on { opacity: 1; transform: none; }
+.fb-pull { margin: 0; font: 750 1.12rem/1.15 var(--f-display); font-stretch: 106%; text-wrap: balance; color: var(--fg); }
+.fb-text { display: grid; gap: .7em; max-height: 168px; overflow-y: auto; padding-right: 6px; font: 400 .84rem/1.6 var(--f-body); color: color-mix(in srgb, var(--fg) 84%, var(--muted)); overscroll-behavior: contain; }
 .fb-text p { margin: 0; }
 .fb-text mark { background: none; color: inherit; border-radius: 3px; padding: 0 1px; transition: background-color .3s, box-shadow .3s; }
 .fb-text mark.hit { background: color-mix(in srgb, var(--tc) 22%, transparent); color: var(--fg); box-shadow: inset 0 -2px 0 var(--tc); }
-.fb-sign { display: flex; align-items: center; gap: 12px; }
-.fb-sign .fb-av { width: 46px; height: 46px; font-size: .9rem; }
-.fb-sign div b { display: block; font: 700 1.02rem/1.2 var(--f-display); font-stretch: 108%; }
-.fb-sign div span { display: block; font-size: .82rem; color: var(--muted); }
-.fb-foot { display: flex; align-items: center; gap: 10px; margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--line); font: 500 .7rem/1 var(--f-mono); color: var(--muted); }
-.fb-count { font-variant-numeric: tabular-nums; letter-spacing: .08em; }
-.fb-count b { color: var(--fg); }
+.fb-foot { display: flex; align-items: center; gap: 10px; padding: 10px 14px 14px; font: 500 .64rem/1.2 var(--f-mono); letter-spacing: .06em; color: var(--muted); }
+.fb-hold { display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; }
+.fb-dos.held .fb-hold { color: var(--accent); }
 .fb-nav { margin-left: auto; display: flex; gap: 6px; }
-.fb-nav button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg-2); color: var(--fg); font: 600 .95rem/1 var(--f-mono); }
+.fb-nav button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg-2); color: var(--fg); font: 600 .85rem/1 var(--f-mono); }
 .fb-nav button:hover { border-color: var(--accent); color: var(--accent); }
-.fb-src { color: var(--muted); text-decoration: none; }
+.fb-src { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .fb-src:hover { color: var(--accent); }
-.fb-timer { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); opacity: .7; }
-@media (max-width: 820px) {
-  .fb { grid-template-columns: minmax(0, 1fr); }
-  .fb-roster { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
-  .fb-roster::-webkit-scrollbar { display: none; }
-  .fb-roster li { flex: none; }
-  .fb-who { width: auto; grid-template-columns: 30px auto; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; }
-  .fb-who .fb-av { width: 30px; height: 30px; font-size: .66rem; }
-  .fb-who small, .fb-who .fb-dots, .fb-who .fb-ln { display: none; }
-  .fb-who[aria-selected="true"] { box-shadow: none; }
+.fb-cd { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--dc); transform-origin: 0 50%; transform: scaleX(0); }
+@media (max-width: 760px) {
+  .fbx { height: 430px; }
+  .fbx-hud.bl, .fbx-hud.br { display: none; }
+  .fbx-hud.tl { left: 12px; top: 12px; font-size: .56rem; } .fbx-hud.tr { right: 12px; top: 12px; font-size: .56rem; } #fbxCount { display: none; }
+  .fbx-t .fb-av { width: 36px; height: 36px; font-size: .68rem; }
+  .fbx-t .nm { font-size: .56rem; }
+  .fbx-drone { width: 56px; height: 56px; left: -28px; top: -28px; }
+  .fb-dos { position: relative; width: 100%; margin-top: 12px; transform: none !important; }
+  .fb-text { max-height: none; overflow: visible; }
 }
+@media (prefers-reduced-motion: reduce) { .fbx-drone .blade, .fbx-t.trk .fb-av::after { animation: none; } }
 
 /* ---------- impact: numbers + the events behind them ---------- */
 .evs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
@@ -1907,12 +1931,47 @@ html.thermal { filter: url(#thermalFx); }
       <div class="sec-head reveal">
         <span class="eyebrow">Field reports</span>
         <h2>What colleagues say</h2>
-        <p>Recommendations from managers, peers and people I hired, as written on LinkedIn. Pick a theme to see who said it, and where.</p>
+        <p>Recommendations from managers, peers and people I hired, as written on LinkedIn. Two drones sweep the team and pull each file. Click a file to hold it while you read, or pick a theme to see who said it.</p>
       </div>
       <div class="fb-themes reveal" id="fbThemes" role="group" aria-label="Highlight a theme"></div>
-      <div class="fb reveal" id="fb">
-        <ul class="fb-roster" id="fbRoster" role="tablist" aria-label="Colleagues"></ul>
-        <article class="fb-card" id="fbCard" role="tabpanel" aria-live="polite"></article>
+      <div class="fbx-wrap reveal" id="fb">
+        <div class="fbx" id="fbx">
+          <canvas class="fbx-cv" id="fbxCv" aria-hidden="true"></canvas>
+          <div class="fbx-hud tl">UAV recon · <b>feedback sweep</b></div>
+          <div class="fbx-hud tr"><span class="rec"><i></i>Live</span><span id="fbxCount">8 sources</span></div>
+          <div class="fbx-hud bl">Click a colleague to send a drone · click the file to hold it</div>
+          <div class="fbx-hud br" id="fbxCoord">50.4501° N · 30.5234° E</div>
+          <div id="fbxTargets" role="group" aria-label="Colleagues"></div>
+          <div class="fbx-drone" id="fbxD0" aria-hidden="true"><svg viewBox="-36 -36 72 72"><path class="arm" d="M-21-21L21 21M21-21L-21 21" stroke-width="4.5" stroke-linecap="round"/><g class="rotor" transform="translate(-21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(-21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><rect class="hull" x="-9" y="-12" width="18" height="24" rx="7"/><circle class="cam" cy="8" r="3.4"/><circle class="led" cy="-7" r="2"/></svg><b>UAV-01</b></div>
+          <div class="fbx-drone" id="fbxD1" aria-hidden="true"><svg viewBox="-36 -36 72 72"><path class="arm" d="M-21-21L21 21M21-21L-21 21" stroke-width="4.5" stroke-linecap="round"/><g class="rotor" transform="translate(-21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 -21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><g class="rotor" transform="translate(-21 21)"><circle class="disc" r="12.5"/><rect class="blade" x="-12" y="-1.7" width="24" height="3.4" rx="1.7"/></g><rect class="hull" x="-9" y="-12" width="18" height="24" rx="7"/><circle class="cam" cy="8" r="3.4"/><circle class="led" cy="-7" r="2"/></svg><b>UAV-02</b></div>
+        </div>
+        <aside class="dossier fb-dos" id="fbDos" hidden aria-live="polite" aria-label="Recommendation file">
+          <div class="dos-in">
+            <div class="dos-head">
+              <span class="dos-title"><i></i><span id="fbDosStatus">Acquiring</span></span>
+              <span class="dos-file" id="fbDosFile">REC-01</span>
+              <button class="dos-x" type="button" id="fbDosX" aria-label="Close and move on">×</button>
+            </div>
+            <div class="dos-body">
+              <div class="dos-photo fb-ph"><span class="fb-big" id="fbDosIni"></span><span class="face-box"></span><span class="scanline"></span><span class="ph-tag" id="fbDosUav">UAV-01</span></div>
+              <dl class="dos-fields">
+                <div><dt>Name</dt><dd class="dos-name" data-k="n"></dd></div>
+                <div><dt>Role</dt><dd data-k="role"></dd></div>
+                <div><dt>Relation</dt><dd data-k="relT"></dd></div>
+                <div><dt>Filed</dt><dd data-k="d"></dd></div>
+              </dl>
+            </div>
+            <div class="dos-match"><span>Trust signal</span><span class="meter"><i id="fbDosBar"></i></span><b id="fbDosPct">0.0%</b></div>
+            <div class="fb-q" id="fbQ"><p class="fb-pull" id="fbDosPull"></p><div class="fb-text" id="fbDosText"></div></div>
+            <div class="fb-foot">
+              <span class="fb-hold" id="fbHold">Click to hold</span>
+              <a class="fb-src" href="https://www.linkedin.com/in/oleg-savelyev/details/recommendations/" target="_blank" rel="noopener">LinkedIn ↗</a>
+              <span class="fb-nav"><button type="button" data-d="-1" aria-label="Previous colleague">←</button><button type="button" data-d="1" aria-label="Next colleague">→</button></span>
+            </div>
+            <span class="fb-cd" id="fbCd"></span>
+            <span class="stamp">VERIFIED</span>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
@@ -2875,73 +2934,219 @@ Oleg is a hard worker, always willing to jump in the thick of it and get the sho
   FB.forEach(f => { f.has = new Set([...f.t.matchAll(/\[\[(\w+):/g)].map(m => m[1])); });
   const fbTc = k => FB_THEMES.find(x => x[0] === k)[2];
   const fbHtml = t => t.split('\n').map(p => `<p>${p.replace(/\[\[(\w+):([^\]]+)\]\]/g, (_, k, w) => `<mark data-t="${k}" style="--tc:${fbTc(k)}">${w}</mark>`)}</p>`).join('');
-  const fbThemes = $('#fbThemes'), fbRoster = $('#fbRoster'), fbCard = $('#fbCard');
-  let fbI = 0, fbTheme = 'all', fbAuto = !reduced, fbTimerAnim = null, fbSeen = false;
+  const fbThemes = $('#fbThemes'), fbx = $('#fbx'), fbDos = $('#fbDos'), fbCv = $('#fbxCv'), fbCtx = fbCv.getContext('2d');
+  let fbTheme = 'all';
   [['all', 'All voices', null], ...FB_THEMES].forEach(([k, label, c]) => {
     const n = k === 'all' ? FB.length : FB.filter(f => f.has.has(k)).length;
     const b = document.createElement('button');
     b.className = 'filter'; b.type = 'button'; b.dataset.k = k; b.setAttribute('aria-pressed', k === 'all');
     if (c) b.style.setProperty('--tc', c);
     b.innerHTML = `${c ? '<i aria-hidden="true"></i>' : ''}${label} <span class="n">${k === 'all' ? n : n + '/' + FB.length}</span>`;
-    b.addEventListener('click', () => { fbStop(); fbSetTheme(k); });
+    b.addEventListener('click', () => fbSetTheme(k));
     fbThemes.appendChild(b);
   });
-  fbRoster.innerHTML = FB.map((f, i) => `<li role="presentation"><button class="fb-who" type="button" role="tab" id="fbw${i}" data-i="${i}" aria-controls="fbCard" style="--rc:${FB_REL[f.rel][1]}">
-    <span class="fb-av" aria-hidden="true">${f.ini}</span><span class="fb-ln"><b>${f.n}</b><small>${FB_REL[f.rel][0]}</small></span><b class="fb-mob" hidden>${f.n.split(' ')[0]}</b>
-    <span class="fb-dots" aria-hidden="true">${FB_THEMES.map(([k, , c]) => `<i class="${f.has.has(k) ? 'on' : ''}" style="--tc:${c}"></i>`).join('')}</span></button></li>`).join('');
-  const fbMobile = matchMedia('(max-width: 820px)');
-  const fbNames = () => $$('.fb-mob', fbRoster).forEach(e => { e.hidden = !fbMobile.matches; });
-  fbMobile.addEventListener('change', fbNames); fbNames();
-  fbRoster.addEventListener('click', e => { const b = e.target.closest('.fb-who'); if (b) { fbStop(); fbShow(+b.dataset.i); } });
-  fbRoster.addEventListener('keydown', e => {
-    const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key]; if (!d) return;
-    e.preventDefault(); fbStop(); fbStep(d); $('#fbw' + fbI).focus();
-  });
+  // where each colleague stands on the recon map (% of the stage), desktop and phone
+  const FBX_POS = [[13, 30], [34, 19], [56, 33], [82, 21], [22, 68], [45, 77], [67, 63], [87, 74]];
+  const FBX_POS_M = [[22, 20], [72, 15], [42, 40], [82, 42], [16, 56], [60, 64], [28, 86], [78, 86]];
+  $('#fbxTargets').innerHTML = FB.map((f, i) => `<button class="fbx-t" type="button" data-i="${i}" style="--rc:${FB_REL[f.rel][1]}" aria-label="${f.n}, ${FB_REL[f.rel][0]}. Read the recommendation"><span class="fb-av">${f.ini}</span><span class="nm">${f.n.split(' ')[0]}</span></button>`).join('');
+  const fbTs = $$('.fbx-t', fbx);
+  const fbFlow = matchMedia('(max-width: 760px)');
+  const fbd = [0, 1].map(i => ({ el: $('#fbxD' + i), x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0, job: -1, wanderT: 0, trail: [] }));
+  let fbW = 0, fbH = 0, fbDots = [], fbTp = [], fbCol = {}, fbColT = 0;
+  let fbCur = -1, fbAct = 1, fbPh = 'idle', fbIsHeld = false, fbHov = false, fbUser = false, fbLeft = 0, fbTotal = 1, fbTok = 0, fbRun = false, fbSeen = false, fbLast = 0, fbStarted = false;
+  function fbSize() {
+    const r = fbx.getBoundingClientRect(); fbW = r.width; fbH = r.height;
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    fbCv.width = Math.round(fbW * dpr); fbCv.height = Math.round(fbH * dpr); fbCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    fbDots = []; const sp = 26; for (let y = sp / 2; y < fbH; y += sp) for (let x = sp / 2; x < fbW; x += sp) fbDots.push(x, y);
+    const P = fbFlow.matches ? FBX_POS_M : FBX_POS;
+    fbTp = P.map(([x, y]) => ({ x: x / 100 * fbW, y: y / 100 * fbH }));
+    fbTs.forEach((b, i) => { b.style.left = fbTp[i].x + 'px'; b.style.top = fbTp[i].y + 'px'; });
+    if (!fbStarted) fbd.forEach((d, i) => { d.x = i ? fbW + 70 : -70; d.y = i ? fbH * .72 : fbH * .3; d.tx = i ? fbW * .7 : fbW * .3; d.ty = fbH * .5; });
+    if (fbCur >= 0) { const h = fbHover(fbCur), d = fbd[fbAct]; d.tx = h.x; d.ty = h.y; }
+    fbPlace();
+  }
+  const fbHover = i => {
+    const t = fbTp[i], m = fbFlow.matches, dy = m ? 82 : 116, dx = (t.x > fbW / 2 ? 1 : -1) * (m ? 26 : 44), up = t.y - dy;
+    return { x: Math.min(fbW - 36, Math.max(36, t.x + dx)), y: up < 40 ? t.y + dy : up };
+  };
   const fbList = () => FB.map((f, i) => i).filter(i => fbTheme === 'all' || FB[i].has.has(fbTheme));
-  function fbStep(d) { const l = fbList(); const p = l.indexOf(fbI); fbShow(l[(p < 0 ? 0 : p + d + l.length) % l.length]); }
+  const fbNext = d => { const l = fbList(); const p = l.indexOf(fbCur); return l[(p < 0 ? 0 : p + d + l.length) % l.length]; };
   function fbSetTheme(k) {
     fbTheme = k;
     $$('.filter', fbThemes).forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k));
-    $$('.fb-who', fbRoster).forEach(b => b.classList.toggle('off', k !== 'all' && !FB[+b.dataset.i].has.has(k)));
-    const keep = k === 'all' || FB[fbI].has.has(k);
-    fbShow(keep ? fbI : fbList()[0], keep);
-  }
-  function fbMarks() { $$('mark', fbCard).forEach(m => m.classList.toggle('hit', m.dataset.t === fbTheme)); }
-  function fbShow(i, quiet) {
-    fbI = i; const f = FB[i], rel = FB_REL[f.rel], l = fbList();
-    $$('.fb-who', fbRoster).forEach(b => { const on = +b.dataset.i === i; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
-    const sel = $('#fbw' + i); if (fbMobile.matches && sel) fbRoster.scrollTo({ left: sel.parentElement.offsetLeft - (fbRoster.clientWidth - sel.offsetWidth) / 2, behavior: reduced ? 'auto' : 'smooth' });
-    fbCard.setAttribute('aria-labelledby', 'fbw' + i);
-    fbCard.style.setProperty('--rc', rel[1]);
-    fbCard.innerHTML = `<div class="fb-meta"><span class="fb-rel">${rel[0]}</span><span>${f.d}</span></div>
-      <p class="fb-pull">“${f.pull}”</p>
-      <div class="fb-text">${fbHtml(f.t)}</div>
-      <div class="fb-sign"><span class="fb-av" style="--rc:${rel[1]}" aria-hidden="true">${f.ini}</span><div><b>${f.n}</b><span>${f.role}</span></div></div>
-      <div class="fb-foot"><span class="fb-count"><b>${String(l.indexOf(i) + 1).padStart(2, '0')}</b> / ${String(l.length).padStart(2, '0')}</span>
-        <a class="fb-src" href="https://www.linkedin.com/in/oleg-savelyev/details/recommendations/" target="_blank" rel="noopener">on LinkedIn ↗</a>
-        <span class="fb-nav"><button type="button" data-d="-1" aria-label="Previous recommendation">←</button><button type="button" data-d="1" aria-label="Next recommendation">→</button></span></div>
-      <span class="fb-timer" aria-hidden="true"></span>`;
+    fbTs.forEach((b, i) => b.classList.toggle('off', k !== 'all' && !FB[i].has.has(k)));
+    $('#fbxCount').textContent = fbList().length + (fbList().length === 1 ? ' source' : ' sources');
     fbMarks();
-    if (!quiet && !reduced) fbCard.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'cubic-bezier(.2,.9,.25,1)' });
-    fbTick();
+    if (fbCur >= 0 && !fbList().includes(fbCur)) fbGo(fbNext(1), false);
   }
-  fbCard.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b) { fbStop(); fbStep(+b.dataset.d); } });
-  // gentle auto-rotation while the section is on screen, until the visitor takes over
-  function fbTick() {
-    if (fbTimerAnim) { fbTimerAnim.cancel(); fbTimerAnim = null; }
-    if (!fbAuto || !fbSeen) return;
-    const bar = $('.fb-timer', fbCard);
-    fbTimerAnim = bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 9000, easing: 'linear' });
-    fbTimerAnim.onfinish = () => { if (fbAuto && fbSeen) fbStep(1); };
+  function fbMarks() { $$('mark', fbDos).forEach(m => m.classList.toggle('hit', m.dataset.t === fbTheme)); }
+  function fbHeld(on) {
+    fbIsHeld = on; fbDos.classList.toggle('held', on);
+    $('#fbHold').textContent = on ? '◼ Holding · click to release' : 'Click to hold';
+    if (fbPh === 'read') $('#fbDosStatus').textContent = on ? 'File held' : 'Testimony verified';
   }
-  function fbStop() { fbAuto = false; if (fbTimerAnim) { fbTimerAnim.cancel(); fbTimerAnim = null; } }
-  const fbPause = on => { if (fbTimerAnim) on ? fbTimerAnim.pause() : fbTimerAnim.play(); };
-  $('#fb').addEventListener('pointerenter', () => fbPause(true));
-  $('#fb').addEventListener('pointerleave', () => fbPause(false));
-  $('#fb').addEventListener('focusin', () => fbPause(true));
-  $('#fb').addEventListener('focusout', e => { if (!$('#fb').contains(e.relatedTarget)) fbPause(false); });
-  new IntersectionObserver(es => { fbSeen = es[0].isIntersecting; if (fbSeen) { if (!fbTimerAnim) fbTick(); } else if (fbTimerAnim) { fbTimerAnim.cancel(); fbTimerAnim = null; } }, { threshold: .35 }).observe($('#fb'));
-  fbShow(0, true);
+  // send a drone to colleague i; byUser holds the file once it opens
+  function fbGo(i, byUser) {
+    const tok = ++fbTok;
+    if (fbCur >= 0) fbTs[fbCur].classList.remove('trk', 'got');
+    fbd.forEach(d => { d.job = -1; });
+    if (!fbFlow.matches && !fbDos.hidden) { fbDos.classList.add('out'); setTimeout(() => { if (tok === fbTok && fbPh === 'fly') fbDos.hidden = true; }, 230); }
+    fbCur = i; fbUser = byUser; fbHeld(false);
+    const h = fbHover(i);
+    fbAct = byUser ? (Math.hypot(fbd[0].x - h.x, fbd[0].y - h.y) <= Math.hypot(fbd[1].x - h.x, fbd[1].y - h.y) ? 0 : 1) : 1 - fbAct;
+    const d = fbd[fbAct]; d.job = i; d.tx = h.x; d.ty = h.y;
+    fbd[1 - fbAct].wanderT = 0;
+    fbTs[i].classList.add('trk'); fbPh = 'fly';
+    if (reduced) { d.x = h.x; d.y = h.y; fbScan(); }
+    if (!fbRun) fbKick();
+  }
+  function fbScan() {
+    const tok = fbTok, f = FB[fbCur], rel = FB_REL[f.rel];
+    fbPh = 'scan';
+    fbDos.classList.remove('matched', 'stamped', 'out');
+    $('#fbDosStatus').textContent = 'Scanning colleague…';
+    $('#fbDosFile').textContent = 'REC-' + String(fbCur + 1).padStart(2, '0');
+    $('#fbDosUav').textContent = 'UAV-0' + (fbAct + 1);
+    $('#fbDosIni').textContent = f.ini;
+    $$('dd[data-k]', fbDos).forEach(dd => { dd.textContent = ''; dd.classList.remove('typing'); });
+    $('#fbQ').classList.remove('on');
+    $('#fbDosPull').textContent = '“' + f.pull + '”';
+    $('#fbDosText').innerHTML = fbHtml(f.t); $('#fbDosText').scrollTop = 0; fbMarks();
+    $('#fbDosBar').style.width = '0%'; $('#fbDosPct').textContent = '0.0%'; $('#fbCd').style.transform = 'scaleX(0)';
+    fbDos.hidden = false; fbPlace();
+    if (fbFlow.matches && fbUser) fbDos.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+    const t0 = performance.now(), dur = reduced ? 0 : 1100, peak = 97 + (f.n.length % 5) * .6;
+    const prog = now => {
+      if (tok !== fbTok) return;
+      const p = dur ? Math.min(1, (now - t0) / dur) : 1, v = (1 - Math.pow(1 - p, 2)) * peak - (p < 1 ? Math.random() * 3 : 0);
+      $('#fbDosBar').style.width = Math.max(0, v) + '%'; $('#fbDosPct').textContent = Math.max(0, v).toFixed(1) + '%';
+      if (p < 1) requestAnimationFrame(prog); else fbMatch(tok);
+    };
+    requestAnimationFrame(prog);
+  }
+  function fbMatch(tok) {
+    const f = FB[fbCur], vals = { n: f.n.toUpperCase(), role: f.role, relT: FB_REL[f.rel][0], d: f.d };
+    fbDos.classList.add('matched'); fbTs[fbCur].classList.replace('trk', 'got');
+    $('#fbDosStatus').textContent = 'Testimony verified';
+    const dds = $$('dd[data-k]', fbDos); let i = 0;
+    const done = () => {
+      fbDos.classList.add('stamped'); $('#fbQ').classList.add('on'); fbPlace();
+      fbPh = 'read'; fbTotal = fbLeft = 8000 + Math.min(7000, f.t.length * 7);
+      if (fbUser) fbHeld(true); else fbHeld(fbIsHeld);
+    };
+    const next = () => {
+      if (tok !== fbTok) return;
+      if (i >= dds.length) return done();
+      const dd = dds[i++], v = vals[dd.dataset.k]; let c = 0;
+      if (reduced) { dd.textContent = v; return next(); }
+      dd.classList.add('typing');
+      const tk = () => {
+        if (tok !== fbTok) return;
+        dd.textContent = v.slice(0, ++c);
+        if (c < v.length) setTimeout(tk, 14); else { dd.classList.remove('typing'); setTimeout(next, 60); }
+      };
+      tk();
+    };
+    setTimeout(next, 200);
+  }
+  function fbPlace() {
+    if (fbDos.hidden || fbCur < 0 || fbFlow.matches) return;
+    const t = fbTp[fbCur], cw = fbDos.offsetWidth, ch = fbDos.offsetHeight;
+    const x = t.x > fbW / 2 ? 18 : fbW - cw - 18, y = Math.min(Math.max(t.y - ch * .45, 16), Math.max(16, fbH - ch - 16));
+    fbDos.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+  }
+  fbTs.forEach(b => b.addEventListener('click', () => fbGo(+b.dataset.i, true)));
+  fbDos.addEventListener('click', e => {
+    if (e.target.closest('a')) return;
+    const nav = e.target.closest('[data-d]');
+    if (nav) return fbGo(fbNext(+nav.dataset.d), true);
+    if (e.target.closest('#fbDosX')) return fbGo(fbNext(1), false);
+    if (fbPh === 'read' && !(getSelection && String(getSelection()).length)) fbHeld(!fbIsHeld);
+  });
+  $('#fbDosText').addEventListener('wheel', () => { if (fbPh === 'read' && !fbIsHeld) fbHeld(true); }, { passive: true });
+  $('#fbDosText').addEventListener('touchstart', () => { if (fbPh === 'read' && !fbIsHeld) fbHeld(true); }, { passive: true });
+  fbDos.addEventListener('pointerenter', () => { fbHov = true; });
+  fbDos.addEventListener('pointerleave', () => { fbHov = false; });
+  function fbColors() {
+    const cs = getComputedStyle(document.documentElement);
+    fbCol = { fg: cs.getPropertyValue('--fg').trim(), sig: cs.getPropertyValue('--signal').trim(), acc: cs.getPropertyValue('--accent').trim() };
+  }
+  // a patrol point for the idle drone, clear of the busy drone and the open file
+  function fbSpot() {
+    const busy = fbCur >= 0 ? fbHover(fbCur) : null, m = fbFlow.matches ? 40 : 70;
+    const box = !fbDos.hidden && !fbFlow.matches ? fbDos.getBoundingClientRect() : null, fr = fbx.getBoundingClientRect();
+    let p;
+    for (let k = 0; k < 12; k++) {
+      p = { x: m + Math.random() * (fbW - 2 * m), y: m + Math.random() * (fbH - 2 * m) };
+      const nearBusy = busy && Math.hypot(p.x - busy.x, p.y - busy.y) < 190;
+      const inFile = box && p.x > box.left - fr.left - 40 && p.x < box.right - fr.left + 40 && p.y > box.top - fr.top - 40 && p.y < box.bottom - fr.top + 40;
+      if (!nearBusy && !inFile) break;
+    }
+    return p;
+  }
+  function fbFrame(now) {
+    if (!fbRun) return;
+    const dt = Math.min(.05, (now - (fbLast || now)) / 1000); fbLast = now;
+    if (now > fbColT) { fbColors(); fbColT = now + 1000; }
+    fbd.forEach((d, i) => {
+      if (d.job < 0 && now > d.wanderT) { const p = fbSpot(); d.tx = p.x; d.ty = p.y; d.wanderT = now + 2200 + Math.random() * 2000; }
+      const w = d.job >= 0 ? 2.6 : 1.2;
+      d.vx += (w * w * (d.tx - d.x) - 2 * w * d.vx) * dt; d.vy += (w * w * (d.ty - d.y) - 2 * w * d.vy) * dt;
+      const sp = Math.hypot(d.vx, d.vy), mx = 520; if (sp > mx) { d.vx *= mx / sp; d.vy *= mx / sp; }
+      d.x += d.vx * dt; d.y += d.vy * dt;
+      const bob = reduced ? 0 : Math.sin(now / 420 + i * 2.1) * 2.6, tilt = Math.max(-18, Math.min(18, d.vx * .05));
+      d.el.style.transform = `translate(${d.x.toFixed(1)}px, ${(d.y + bob).toFixed(1)}px) rotate(${tilt.toFixed(1)}deg)`;
+      d.trail.push(d.x, d.y + bob); if (d.trail.length > 36) d.trail.splice(0, 2);
+    });
+    if (fbPh === 'fly') { const d = fbd[fbAct]; if (Math.hypot(d.tx - d.x, d.ty - d.y) < 7 && Math.hypot(d.vx, d.vy) < 40) fbScan(); }
+    if (fbPh === 'read' && !fbIsHeld && !fbHov && fbSeen) {
+      fbLeft -= dt * 1000;
+      $('#fbCd').style.transform = `scaleX(${Math.max(0, fbLeft / fbTotal)})`;
+      if (fbLeft <= 0) fbGo(fbNext(1), false);
+    }
+    fbDraw(now);
+    requestAnimationFrame(fbFrame);
+  }
+  function fbDraw(now) {
+    const c = fbCtx; c.clearRect(0, 0, fbW, fbH);
+    // dot field that lights up under the drones
+    c.fillStyle = fbCol.fg;
+    for (let k = 0; k < fbDots.length; k += 2) {
+      const x = fbDots[k], y = fbDots[k + 1];
+      let near = 0; fbd.forEach(d => { const q = 1 - Math.hypot(x - d.x, y - d.y) / 120; if (q > near) near = q; });
+      c.globalAlpha = .1 + near * .5; c.fillRect(x - .9, y - .9, 1.8 + near * 1.2, 1.8 + near * 1.2);
+    }
+    fbd.forEach((d, i) => {
+      c.fillStyle = i ? fbCol.acc : fbCol.sig;
+      for (let k = 0; k < d.trail.length; k += 2) { c.globalAlpha = (k / d.trail.length) * .35; c.beginPath(); c.arc(d.trail[k], d.trail[k + 1], 1.6, 0, 7); c.fill(); }
+    });
+    if (fbCur >= 0) {
+      const d = fbd[fbAct], t = fbTp[fbCur], col = fbPh === 'fly' || fbPh === 'scan' ? fbCol.sig : fbCol.acc;
+      if (fbPh === 'fly') {
+        c.globalAlpha = .45; c.strokeStyle = col; c.lineWidth = 1.2; c.setLineDash([4, 6]); c.lineDashOffset = -now / 40;
+        c.beginPath(); c.moveTo(d.x, d.y); c.lineTo(t.x, t.y); c.stroke(); c.setLineDash([]);
+      } else {
+        const hw = fbFlow.matches ? 26 : 34, g = c.createLinearGradient(d.x, d.y, t.x, t.y);
+        g.addColorStop(0, col); g.addColorStop(1, 'transparent');
+        c.globalAlpha = fbPh === 'scan' ? .32 + Math.sin(now / 60) * .08 : .2; c.fillStyle = g;
+        c.beginPath(); c.moveTo(d.x - 4, d.y); c.lineTo(t.x - hw, t.y); c.lineTo(t.x + hw, t.y); c.lineTo(d.x + 4, d.y); c.closePath(); c.fill();
+        c.globalAlpha = .5; c.strokeStyle = col; c.lineWidth = 1;
+        c.beginPath(); c.arc(t.x, t.y, hw + 6 + Math.sin(now / 300) * 3, 0, 7); c.stroke();
+        if (fbPh === 'scan') { const sy = t.y - hw + ((now / 4) % (hw * 2)); c.globalAlpha = .8; c.fillStyle = col; c.fillRect(t.x - hw, sy, hw * 2, 1.5); }
+      }
+    }
+    c.globalAlpha = 1;
+  }
+  function fbKick() { if (fbRun || !fbSeen) return; fbRun = true; fbLast = 0; requestAnimationFrame(fbFrame); }
+  new IntersectionObserver(es => {
+    fbSeen = es[0].isIntersecting;
+    if (fbSeen) { fbKick(); if (!fbStarted) { fbStarted = true; setTimeout(() => { if (fbCur < 0) fbGo(fbList()[0], false); }, reduced ? 0 : 900); } }
+    else fbRun = false;
+  }, { threshold: .2 }).observe(fbx);
+  new ResizeObserver(fbSize).observe(fbx);
+  fbFlow.addEventListener('change', () => { fbDos.style.transform = ''; fbSize(); });
+  fbSize();
 
   /* ---------------- copy email ---------------- */
   async function copyEmail() {
@@ -2970,7 +3175,7 @@ Oleg is a hard worker, always willing to jump in the thick of it and get the sho
     { g: 'Sections', ico: '#', label: 'Impact', hint: 'Numbers + key moments', run: () => go('impact') },
     { g: 'Sections', ico: '#', label: 'Skills radar', hint: 'Competencies', run: () => go('skills') },
     { g: 'Sections', ico: '#', label: 'Certifications', hint: '17 certs', run: () => go('certs') },
-    { g: 'Sections', ico: '#', label: 'Feedback', hint: '8 recommendations', run: () => go('feedback') },
+    { g: 'Sections', ico: '#', label: 'Feedback', hint: 'Drone recon · 8 recommendations', run: () => go('feedback') },
     { g: 'Sections', ico: '#', label: 'Contact', hint: 'Get in touch', run: () => go('contact') },
     { g: 'Roles', ico: '◆', label: 'Delivery Manager, GenAI @ EPAM', hint: '2026', run: () => { go('journey'); select('epam', true); } },
     { g: 'Roles', ico: '◆', label: 'Delivery Lead, AI/ML @ Ring', hint: '2022', run: () => { go('journey'); select('ring-lead', true); } },

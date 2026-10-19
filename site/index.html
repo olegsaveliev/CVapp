@@ -1481,8 +1481,7 @@ html.thermal { filter: url(#thermalFx); }
         <button class="desk-tab" type="button" role="tab" id="tab-dev" data-tab="dev" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="factoryvid factory"></span><span class="tb-l">Development</span><em>2</em></button>
         <button class="desk-tab" type="button" role="tab" id="tab-cv" data-tab="cv" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="cam tg journey"></span><span class="tb-l"><span class="tb-long">Computer </span>vision</span><em>3</em></button>
         <button class="desk-tab" type="button" role="tab" id="tab-hire" data-tab="hire" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="hireloop"></span><span class="tb-l">Recruitment</span><em>1</em></button>
-        <button class="desk-tab" type="button" role="tab" id="tab-safe" data-tab="safe" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="guardrail"></span><span class="tb-l"><span class="tb-long">Guardrail </span>Harness</span><em>1</em></button>
-        <button class="desk-tab" type="button" role="tab" id="tab-blog" data-tab="blog" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="inkflow routewise"></span><span class="tb-l">AI apps</span><em>2</em></button>
+        <button class="desk-tab" type="button" role="tab" id="tab-blog" data-tab="blog" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="inkflow routewise guardrail"></span><span class="tb-l">AI apps</span><em>3</em></button>
       </div>
       <div class="desk reveal" id="desk" data-tab="prod" role="tabpanel" aria-labelledby="tab-prod">
         <div class="desk-bar">
@@ -1533,15 +1532,11 @@ html.thermal { filter: url(#thermalFx); }
                 <li><button type="button" data-open="hireloop"><span class="dk-ic ai-hireloop"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="11" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="52 17" stroke-linecap="round" transform="rotate(-60 24 24)"/><circle cx="24" cy="24" r="3.6" fill="#fff"/></svg></span><b>Hireloop</b></button></li>
               </ul>
             </div>
-            <div class="dg" data-g="safe" role="group" aria-label="Guardrail Harness apps">
-              <ul>
-                <li><button type="button" data-open="guardrail"><span class="dk-ic ai-guardrail"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 9l13 5v9c0 8-5.6 14.4-13 17-7.4-2.6-13-9-13-17v-9z" fill="none" stroke="#fff" stroke-width="3.4" stroke-linejoin="round"/><path d="M18 24.5l4.2 4.2L30.5 20" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Guardrail Harness</b></button></li>
-              </ul>
-            </div>
             <div class="dg" data-g="blog" role="group" aria-label="AI apps">
               <ul>
                 <li><button type="button" data-open="inkflow"><span class="dk-ic ai-inkflow"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M33 10l5 5-17 17-7 2 2-7z" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/><path d="M12 39h24" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg></span><b>Inkflow</b></button></li>
                 <li><button type="button" data-open="routewise"><span class="dk-ic ai-routewise"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="12" cy="24" r="4" fill="#fff"/><path d="M16 24h6c4 0 5-10 10-10h4M22 24c4 0 5 10 10 10h4" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><circle cx="37" cy="14" r="3" fill="#fff"/><circle cx="37" cy="34" r="3" fill="#fff"/></svg></span><b>RouteWise</b></button></li>
+                <li><button type="button" data-open="guardrail"><span class="dk-ic ai-guardrail"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 9l13 5v9c0 8-5.6 14.4-13 17-7.4-2.6-13-9-13-17v-9z" fill="none" stroke="#fff" stroke-width="3.4" stroke-linejoin="round"/><path d="M18 24.5l4.2 4.2L30.5 20" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Guardrail Harness</b></button></li>
               </ul>
             </div>
           </div>
@@ -3872,7 +3867,7 @@ Kyiv, Ukraine · 19 years in IT
     tg: { g: 'cv', name: 'Pi Cam Bot', w: 330, say: 'Another bot. Hi, colleague.' },
     journey: { g: 'cv', name: 'Frame Journey', w: 620, say: 'Lens to phone in eight steps.' },
     hireloop: { g: 'hire', name: 'Hireloop recruitment', w: 440, say: 'Recruitment, huh? I know a candidate.' },
-    guardrail: { g: 'safe', name: 'Guardrail Harness', w: 640, say: 'Guardrails! Finally someone keeps the bots in line.' },
+    guardrail: { g: 'blog', name: 'Guardrail Harness', w: 580, say: 'Guardrails! Finally someone keeps the bots in line.' },
     inkflow: { g: 'blog', name: 'Inkflow · Marketing Blog', w: 600, say: 'A blog? I have opinions. Mostly about water.' },
     routewise: { g: 'blog', name: 'RouteWise · Model router', w: 560, say: 'Cheap model for easy questions. So, me for everything.' },
     copilot: { g: 'prod', name: 'Delivery Copilot', w: 590, say: 'These run his Mondays. I run his water breaks.' }
@@ -3884,7 +3879,7 @@ Kyiv, Ukraine · 19 years in IT
   $$('#dock [data-open]').forEach(b => { b.firstElementChild.innerHTML = icon(b.dataset.open).innerHTML; });
   $$('#deskTabs .tb-ics[data-apps]').forEach(t => { t.innerHTML = t.dataset.apps.split(' ').map(id => icon(id).outerHTML).join(''); });
   // workspaces: each tab is its own desktop
-  const TABS = { prod: { path: '~/productivity', boot: ['timeline', 'poker'] }, edu: { path: '~/education', boot: ['aidecoded'] }, bot: { path: '~/bot', boot: ['pip'] }, dev: { path: '~/dev', boot: ['factoryvid'] }, cv: { path: '~/vision', boot: ['cam', 'tg'] }, hire: { path: '~/recruitment', boot: ['hireloop'] }, safe: { path: '~/guardrail-harness', boot: ['guardrail'] }, blog: { path: '~/ai-apps', boot: ['inkflow', 'routewise'] } };
+  const TABS = { prod: { path: '~/productivity', boot: ['timeline', 'poker'] }, edu: { path: '~/education', boot: ['aidecoded'] }, bot: { path: '~/bot', boot: ['pip'] }, dev: { path: '~/dev', boot: ['factoryvid'] }, cv: { path: '~/vision', boot: ['cam', 'tg'] }, hire: { path: '~/recruitment', boot: ['hireloop'] }, blog: { path: '~/ai-apps', boot: ['inkflow', 'guardrail', 'routewise'] } };
   const TAB_ORDER = Object.keys(TABS);
   let tab = 'prod';
   const vis = w => w.open && !w.min && w.g === tab;
@@ -3918,6 +3913,7 @@ Kyiv, Ukraine · 19 years in IT
     else if (win.id === 'poker') { win.x = aw - win.w - 20; win.y = 92; }
     else if (win.id === 'cam') { win.x = Math.max(108, Math.round(aw * .08)); win.y = 14; }
     else if (win.id === 'inkflow') { win.x = Math.max(108, Math.round(aw * .1)); win.y = 16; }
+    else if (win.id === 'guardrail') { win.x = Math.round((aw - win.w) / 2) + 40; win.y = 64; }
     else if (win.id === 'routewise') { win.x = aw - win.w - 20; win.y = 120; }
     else if (win.id === 'tg') { win.x = aw - win.w - 18; win.y = 36; }
     else if (TABS[win.g].boot.length === 1) { win.x = Math.round((aw - win.w) / 2) + 30; win.y = clampN(ah - win.el.offsetHeight - 16, 24, 96); }

@@ -807,6 +807,7 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 
 .ai-hireloop { background: linear-gradient(160deg, #1FB6A6, #0B5F59); }
 .ai-guardrail { background: linear-gradient(160deg, #6E7BFF, #2A2F8F); }
+.ai-inkflow { background: linear-gradient(160deg, #F0567A, #8E1E45); }
 
 /* windows */
 .win {
@@ -1027,6 +1028,10 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 .fv-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 
 /* --- Hireloop recruitment --- */
+.win[data-app="inkflow"] { --wb: #2A1219; --wt: #FF9DB5; background: #1C0B11; color: #FBE9EE; }
+.ik-body { flex: none; padding: 10px; display: block; }
+.ik-frame { position: relative; margin: 0; height: 0; padding-top: 56.25%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(255, 157, 181, .25); }
+.ik-frame video { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: contain; }
 .win[data-app="guardrail"] { --wb: #15172E; --wt: #A5ADFF; background: #0E1024; color: #E8EAFF; }
 .gr-body { flex: none; padding: 10px; display: block; }
 .gr-frame { position: relative; margin: 0; height: 0; padding-top: 56.25%; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px rgba(165, 173, 255, .25); }
@@ -1459,6 +1464,7 @@ html.thermal { filter: url(#thermalFx); }
         <button class="desk-tab" type="button" role="tab" id="tab-cv" data-tab="cv" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="cam tg journey"></span><span class="tb-l"><span class="tb-long">Computer </span>vision</span><em>3</em></button>
         <button class="desk-tab" type="button" role="tab" id="tab-hire" data-tab="hire" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="hireloop"></span><span class="tb-l">Recruitment</span><em>1</em></button>
         <button class="desk-tab" type="button" role="tab" id="tab-safe" data-tab="safe" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="guardrail"></span><span class="tb-l"><span class="tb-long">Guardrail </span>Harness</span><em>1</em></button>
+        <button class="desk-tab" type="button" role="tab" id="tab-blog" data-tab="blog" aria-selected="false" aria-controls="desk" tabindex="-1"><span class="tb-ics" data-apps="inkflow"></span><span class="tb-l"><span class="tb-long">Marketing </span>Blog</span><em>1</em></button>
       </div>
       <div class="desk reveal" id="desk" data-tab="prod" role="tabpanel" aria-labelledby="tab-prod">
         <div class="desk-bar">
@@ -1512,6 +1518,11 @@ html.thermal { filter: url(#thermalFx); }
             <div class="dg" data-g="safe" role="group" aria-label="Guardrail Harness apps">
               <ul>
                 <li><button type="button" data-open="guardrail"><span class="dk-ic ai-guardrail"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 9l13 5v9c0 8-5.6 14.4-13 17-7.4-2.6-13-9-13-17v-9z" fill="none" stroke="#fff" stroke-width="3.4" stroke-linejoin="round"/><path d="M18 24.5l4.2 4.2L30.5 20" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Guardrail Harness</b></button></li>
+              </ul>
+            </div>
+            <div class="dg" data-g="blog" role="group" aria-label="Marketing Blog apps">
+              <ul>
+                <li><button type="button" data-open="inkflow"><span class="dk-ic ai-inkflow"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M33 10l5 5-17 17-7 2 2-7z" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/><path d="M12 39h24" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg></span><b>Inkflow</b></button></li>
               </ul>
             </div>
           </div>
@@ -1633,6 +1644,19 @@ html.thermal { filter: url(#thermalFx); }
             </header>
             <div class="win-body fv-body">
               <figure class="fv-frame"><video id="fvVideo" src="factory-demo.mp4" poster="factory-poster.jpg" controls muted playsinline preload="none" aria-label="AI Factory demo"></video></figure>
+            </div>
+          </article>
+
+          <!-- Inkflow marketing blog -->
+          <article class="win" data-app="inkflow" aria-label="Inkflow marketing blog" hidden>
+            <header class="win-bar">
+              <div class="win-dots"><button class="wd close" type="button" aria-label="Close Inkflow"></button><button class="wd min" type="button" aria-label="Minimize Inkflow"></button><button class="wd max" type="button" aria-label="Maximize Inkflow"></button></div>
+              <button class="win-home" type="button">‹ Home</button>
+              <span class="win-title">Inkflow · Marketing Blog</span>
+              <a class="win-open" href="https://inkflow-pied.vercel.app/" target="_blank" rel="noopener">Open live ↗</a>
+            </header>
+            <div class="win-body ik-body">
+              <figure class="ik-frame"><video id="ikVideo" src="inkflow-demo.mp4" poster="inkflow-poster.jpg" controls muted playsinline preload="none" aria-label="Inkflow marketing blog demo"></video></figure>
             </div>
           </article>
 
@@ -1814,6 +1838,7 @@ html.thermal { filter: url(#thermalFx); }
           <button type="button" data-open="journey" data-name="Frame Journey" aria-label="Frame Journey"><span class="dk-ic ai-journey"></span></button>
           <button type="button" data-open="hireloop" data-name="Hireloop recruitment" aria-label="Hireloop recruitment"><span class="dk-ic ai-hireloop"></span></button>
           <button type="button" data-open="guardrail" data-name="Guardrail Harness" aria-label="Guardrail Harness"><span class="dk-ic ai-guardrail"></span></button>
+          <button type="button" data-open="inkflow" data-name="Inkflow · Marketing Blog" aria-label="Inkflow marketing blog"><span class="dk-ic ai-inkflow"></span></button>
         </div>
       </div>
     </div>
@@ -3213,6 +3238,7 @@ Oleg is a hard worker, always willing to jump in the thick of it and get the sho
     { g: 'Projects', ico: '▣', label: 'Pip', hint: 'Desktop companion', run: () => deskApi.launchApp('pip') },
     { g: 'Projects', ico: '▣', label: 'Hireloop recruitment', hint: 'demo video', run: () => deskApi.launchApp('hireloop') },
     { g: 'Projects', ico: '▣', label: 'Guardrail Harness', hint: 'demo video', run: () => deskApi.launchApp('guardrail') },
+    { g: 'Projects', ico: '▣', label: 'Inkflow · Marketing Blog', hint: 'demo video', run: () => deskApi.launchApp('inkflow') },
     { g: 'Projects', ico: '▣', label: 'AI Factory', hint: 'ai-delivery-flow', run: () => deskApi.launchApp('factory') },
     { g: 'Projects', ico: '▣', label: 'AI Factory demo', hint: 'demo video', run: () => deskApi.launchApp('factoryvid') },
     { g: 'Projects', ico: '▣', label: 'CAM-02', hint: 'Raspberry Pi 5 edge camera', run: () => deskApi.launchApp('cam') },
@@ -3813,6 +3839,7 @@ Kyiv, Ukraine · 19 years in IT
     journey: { g: 'cv', name: 'Frame Journey', w: 620, say: 'Lens to phone in eight steps.' },
     hireloop: { g: 'hire', name: 'Hireloop recruitment', w: 440, say: 'Recruitment, huh? I know a candidate.' },
     guardrail: { g: 'safe', name: 'Guardrail Harness', w: 640, say: 'Guardrails! Finally someone keeps the bots in line.' },
+    inkflow: { g: 'blog', name: 'Inkflow · Marketing Blog', w: 640, say: 'A blog? I have opinions. Mostly about water.' },
     copilot: { g: 'prod', name: 'Delivery Copilot', w: 590, say: 'These run his Mondays. I run his water breaks.' }
   };
   const W = {};
@@ -3822,7 +3849,7 @@ Kyiv, Ukraine · 19 years in IT
   $$('#dock [data-open]').forEach(b => { b.firstElementChild.innerHTML = icon(b.dataset.open).innerHTML; });
   $$('#deskTabs .tb-ics[data-apps]').forEach(t => { t.innerHTML = t.dataset.apps.split(' ').map(id => icon(id).outerHTML).join(''); });
   // workspaces: each tab is its own desktop
-  const TABS = { prod: { path: '~/productivity', boot: ['timeline', 'poker'] }, edu: { path: '~/education', boot: ['aidecoded'] }, bot: { path: '~/bot', boot: ['pip'] }, dev: { path: '~/dev', boot: ['factoryvid'] }, cv: { path: '~/vision', boot: ['cam', 'tg'] }, hire: { path: '~/recruitment', boot: ['hireloop'] }, safe: { path: '~/guardrail-harness', boot: ['guardrail'] } };
+  const TABS = { prod: { path: '~/productivity', boot: ['timeline', 'poker'] }, edu: { path: '~/education', boot: ['aidecoded'] }, bot: { path: '~/bot', boot: ['pip'] }, dev: { path: '~/dev', boot: ['factoryvid'] }, cv: { path: '~/vision', boot: ['cam', 'tg'] }, hire: { path: '~/recruitment', boot: ['hireloop'] }, safe: { path: '~/guardrail-harness', boot: ['guardrail'] }, blog: { path: '~/marketing-blog', boot: ['inkflow'] } };
   const TAB_ORDER = Object.keys(TABS);
   let tab = 'prod';
   const vis = w => w.open && !w.min && w.g === tab;
@@ -4448,8 +4475,8 @@ Kyiv, Ukraine · 19 years in IT
     $('#afOk').hidden = true; $('#afNo').hidden = true;
   };
 
-  /* ----- demo videos (Hireloop recruitment, AI Decoded, AI Factory, Timeline Studio, Planning Poker, Guardrail Harness) ----- */
-  ['hlVideo', 'eduVideo', 'fvVideo', 'tlVideo', 'pkVideo', 'grVideo'].forEach(id => {
+  /* ----- demo videos (Hireloop recruitment, AI Decoded, AI Factory, Timeline Studio, Planning Poker, Guardrail Harness, Inkflow) ----- */
+  ['hlVideo', 'eduVideo', 'fvVideo', 'tlVideo', 'pkVideo', 'grVideo', 'ikVideo'].forEach(id => {
     const v = $('#' + id);
     v.muted = true;
     let ours = 0, byUser = false;   // ours: pauses we made ourselves, so only the viewer's own pause stops autoplay

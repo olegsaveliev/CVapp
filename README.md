@@ -37,7 +37,7 @@ Live on Vercel: https://oleg-saveliev.vercel.app/ . Every push to `main` redeplo
   - Personal bot: Pip, who naps until clicked and falls back asleep after 45 seconds. He lives only in this tab. The Pip images are cropped from the Pip LinkedIn carousel.
   - Development: AI Factory demo (a muted video that opens and autoplays with the tab) and the interactive AI Factory simulation (opens from its icon).
   - Computer vision: CAM-02, Pi Cam Bot and Frame Journey, a drawn simulation of the Raspberry Pi 5 edge camera from github.com/olegsaveliev/cv-project (the 60-second alert cooldown runs 6x faster there). The hero's person box and the subject file both link to it ("Real camera: CAM-02").
-  - Recruitment: Hireloop recruitment, a window that plays the product demo video (it autoplays muted when the window opens and pauses when it closes or you switch workspace).
+  - Recruitment: Hireloop recruitment and HirePilot recruitment, windows that plays the product demo video (it autoplays muted when the window opens and pauses when it closes or you switch workspace).
   - AI apps: Guardrail Harness, RouteWise (model router with budgets) and Driftwatch (spots when an AI help bot drifts out of date), three windows that open together and play their demo videos (autoplay muted; title bars link to guardrail-harness-eight.vercel.app, routewise-xi.vercel.app/#playground and driftwatch-ruby.vercel.app).
   - Marketing: Inkflow (marketing blog), one window playing its demo video (title bar links to inkflow-pied.vercel.app).
   - Instagram: CarouselPilot (Instagram carousel builder), one portrait window that plays its vertical demo video (autoplay muted; title bar links to carouselpilot.vercel.app/dashboard).

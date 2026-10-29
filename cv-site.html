@@ -1326,13 +1326,34 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
 @keyframes inPulse { 50% { transform: scale(1.07); } }
 .in-bar { height: 2px; margin-top: 8px; border-radius: 2px; background: #1F4A2A; overflow: hidden; }
 .in-bar b { display: block; height: 100%; width: 0; background: var(--accent); }
+/* after the feed closes it minimises to a round "replay" chip in the same corner */
+.in-chip {
+  position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 65;
+  display: flex; align-items: center; gap: 10px; padding: 0; border: 0; background: none;
+  animation: inChipIn .45s cubic-bezier(.2,.9,.3,1.3) backwards;
+}
+@keyframes inChipIn { from { opacity: 0; transform: scale(.3); } }
+.in-chip-face {
+  position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex: none;
+  background: #071009 url(intro-poster.jpg) center 18% / 150% auto no-repeat;
+  box-shadow: 0 0 0 2px var(--accent), 0 0 0 5px color-mix(in srgb, var(--accent) 20%, transparent), 0 10px 26px rgba(0,0,0,.35);
+}
+.in-chip-face::after { content: "▶"; position: absolute; inset: 0; display: grid; place-items: center; padding-left: 3px; color: #fff; font-size: .95rem; background: rgba(7,16,9,.45); opacity: 0; transition: opacity .2s; }
+.in-chip-dot { position: absolute; right: 1px; top: 1px; width: 12px; height: 12px; border-radius: 50%; background: #FF3B30; border: 2px solid var(--bg); animation: agBlink 1.2s steps(2) infinite; }
+.in-chip-lbl {
+  order: -1; padding: 7px 10px; border-radius: 999px; white-space: nowrap; font: 500 .62rem/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase;
+  background: #071009; color: #CFEFD6; border: 1px solid #1F4A2A; opacity: 0; transform: translateX(8px); transition: opacity .2s, transform .2s; pointer-events: none;
+}
+.in-chip:hover .in-chip-face::after, .in-chip:focus-visible .in-chip-face::after { opacity: 1; }
+.in-chip:hover .in-chip-lbl, .in-chip:focus-visible .in-chip-lbl { opacity: 1; transform: none; }
 .in-end { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; font: 600 .62rem/1 var(--f-mono); letter-spacing: .16em; color: #CFEFD6; background: rgba(7,16,9,.82); }
 @media (max-width: 560px) {
   .intro { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: 150px; padding: 6px; }
   .in-top { font-size: .5rem; padding-bottom: 6px; } .in-top span b, .in-ts { display: none; }
   .in-snd { right: 6px; top: 6px; padding: 5px 8px; font-size: .56rem; }
+  .in-chip { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); } .in-chip-face { width: 44px; height: 44px; }
 }
-@media (prefers-reduced-motion: reduce) { .intro, .intro::after, .intro.out, .in-feed::after, .in-snd, .in-top i { animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+@media (prefers-reduced-motion: reduce) { .intro, .intro::after, .intro.out, .in-feed::after, .in-snd, .in-top i, .in-chip, .in-chip-dot { animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
 .hx-al-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 500 .62rem/1 var(--f-mono); letter-spacing: .12em; white-space: nowrap; color: #FF5A4E; }
 .hx-al-top span { display: inline-flex; gap: 8px; align-items: center; }
 .hx-al-top i { width: 8px; height: 8px; border-radius: 50%; background: #FF3B30; animation: agBlink .8s steps(2) infinite; }
@@ -2220,6 +2241,7 @@ html.thermal { filter: url(#thermalFx); }
   </div>
   <div class="in-bar" aria-hidden="true"><b id="inBar"></b></div>
 </aside>
+<button class="in-chip" type="button" id="inChip" aria-label="Replay Oleg's video greeting" hidden><span class="in-chip-lbl">▶ Replay intro</span><span class="in-chip-face"></span><span class="in-chip-dot" aria-hidden="true"></span></button>
 <div class="hx-alert" id="hxAlert" role="dialog" aria-labelledby="hxAlertT" hidden>
   <div class="hx-al-top"><span><i></i>CAM-01 · ALERT · SUBJECT AVAILABLE</span><button type="button" id="hxAlertX" aria-label="Dismiss">✕</button></div>
   <b id="hxAlertT">Still thinking of hiring me?</b>
@@ -5452,18 +5474,31 @@ Kyiv, Ukraine · 19 years in IT
 
   // ---- intro: a 9-second live-feed greeting in the corner, once per visit; muted with burned-in subtitles, tap for sound ----
   (() => {
-    const box = $('#intro'), vid = $('#inVid'), snd = $('#inSnd'), bar = $('#inBar'), ts = $('#inTs');
-    try { if (sessionStorage.getItem('cv-intro')) return; sessionStorage.setItem('cv-intro', '1'); } catch {}
-    let gone = false;
+    const box = $('#intro'), vid = $('#inVid'), snd = $('#inSnd'), bar = $('#inBar'), ts = $('#inTs'), chip = $('#inChip');
+    let seen = false;
+    try { seen = !!sessionStorage.getItem('cv-intro'); sessionStorage.setItem('cv-intro', '1'); } catch {}
+    let gone = true;
+    function setSound(on) { vid.muted = !on; snd.setAttribute('aria-pressed', on); snd.textContent = on ? '🔇 Mute' : '🔊 Sound'; }
+    // Opening restarts the whole card (entry, lock-on and "connecting" animations) by re-inserting it.
+    function open(withSound) {
+      gone = false; chip.hidden = true;
+      box.querySelector('.in-end')?.remove(); box.classList.remove('out');
+      const at = box.nextSibling; box.remove(); at.before(box);
+      box.hidden = false; vid.preload = 'auto';
+      vid.currentTime = 0; bar.style.width = '0'; ts.textContent = 'REC 00:00'; setSound(withSound);
+      setTimeout(() => { if (!gone) vid.play().catch(() => { setSound(false); vid.play().catch(() => {}); }); }, reduced ? 0 : 1100);
+    }
     function close() {
       if (gone) return; gone = true; vid.pause();
-      box.classList.add('out'); setTimeout(() => { box.hidden = true; }, 520);
+      box.classList.add('out');
+      setTimeout(() => { box.hidden = true; chip.hidden = false; }, 520);
     }
-    setTimeout(() => {
-      if (!palOverlay.hidden || !termOverlay.hidden || locating) return;
-      box.hidden = false; vid.preload = 'auto';
-      setTimeout(() => { if (!gone) vid.play().catch(() => {}); }, reduced ? 0 : 1100);
+    if (seen) chip.hidden = false;
+    else setTimeout(() => {
+      if (!palOverlay.hidden || !termOverlay.hidden || locating) { chip.hidden = false; return; }
+      open(false);
     }, 1200);
+    chip.addEventListener('click', () => open(true));
     vid.addEventListener('timeupdate', () => {
       bar.style.width = (vid.currentTime / (vid.duration || 9) * 100) + '%';
       ts.textContent = 'REC 00:' + String(Math.floor(vid.currentTime)).padStart(2, '0');
@@ -5473,8 +5508,7 @@ Kyiv, Ukraine · 19 years in IT
       vid.parentNode.appendChild(end); setTimeout(close, 1400);
     });
     snd.addEventListener('click', () => {
-      const on = vid.muted; vid.muted = !on; snd.setAttribute('aria-pressed', on);
-      snd.textContent = on ? '🔇 Mute' : '🔊 Sound';
+      const on = vid.muted; setSound(on);
       if (on) { vid.currentTime = 0; vid.play().catch(() => {}); }
     });
     $('#inX').addEventListener('click', close);

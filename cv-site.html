@@ -1278,6 +1278,61 @@ footer { border-top: 1px solid var(--line); padding-block: 28px; }
   animation: hxAlIn .5s cubic-bezier(.2,.9,.3,1.2);
 }
 @keyframes hxAlIn { from { opacity: 0; transform: translateY(24px) scale(.96); } }
+
+/* ---------- intro: an incoming live feed of Oleg in the corner, once per visit ---------- */
+.intro {
+  position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 65; width: 232px;
+  padding: 8px; border-radius: 12px; background: #071009; color: #CFEFD6; border: 1px solid #1F4A2A;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  transform-origin: 100% 100%; animation: inIn .55s cubic-bezier(.2,.9,.3,1.2) backwards;
+}
+.intro::after {
+  --c: var(--accent); --l: 14px; --w: 2px;
+  content: ""; position: absolute; inset: -6px; pointer-events: none;
+  background:
+    linear-gradient(var(--c),var(--c)) top left / var(--l) var(--w), linear-gradient(var(--c),var(--c)) top left / var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) top right / var(--l) var(--w), linear-gradient(var(--c),var(--c)) top right / var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) bottom left / var(--l) var(--w), linear-gradient(var(--c),var(--c)) bottom left / var(--w) var(--l),
+    linear-gradient(var(--c),var(--c)) bottom right / var(--l) var(--w), linear-gradient(var(--c),var(--c)) bottom right / var(--w) var(--l);
+  background-repeat: no-repeat; animation: inLock .5s .35s cubic-bezier(.2,.9,.3,1.2) backwards;
+}
+@keyframes inIn { from { opacity: 0; transform: translateY(24px) scale(.9); } }
+@keyframes inLock { from { inset: -18px; opacity: 0; } }
+.intro.out { animation: inOut .5s cubic-bezier(.5,0,.8,.3) forwards; }
+@keyframes inOut { 60% { transform: scale(1, .02); opacity: 1; } to { transform: scale(0, .02); opacity: 0; } }
+.in-top { display: flex; justify-content: space-between; align-items: center; padding: 2px 2px 8px; font: 500 .6rem/1 var(--f-mono); letter-spacing: .12em; white-space: nowrap; }
+.in-top span { display: inline-flex; gap: 7px; align-items: center; }
+.in-top i { width: 7px; height: 7px; border-radius: 50%; background: #FF3B30; animation: agBlink .8s steps(2) infinite; }
+.in-top button { background: none; border: 0; color: #7FA88A; font-size: .85rem; line-height: 1; padding: 2px 4px; }
+.in-top button:hover { color: #fff; }
+.in-feed { position: relative; aspect-ratio: 3 / 4; border-radius: 6px; overflow: hidden; background: #000; }
+.in-feed video { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* scanlines + a one-off static burst while the feed "connects" */
+.in-feed::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px); }
+.in-feed::after {
+  content: "CONNECTING…"; position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none;
+  font: 500 .62rem/1 var(--f-mono); letter-spacing: .16em; color: #9CC7A6;
+  background: #071009 repeating-linear-gradient(90deg, rgba(120,255,160,.08) 0 2px, transparent 2px 5px);
+  animation: inConn .9s .25s steps(6) forwards;
+}
+@keyframes inConn { 70% { opacity: .9; clip-path: inset(0 0 0 0); } to { opacity: 0; clip-path: inset(50% 0 50% 0); } }
+.in-ts { position: absolute; left: 8px; top: 8px; z-index: 3; font: 500 .56rem/1 var(--f-mono); letter-spacing: .1em; color: #fff; text-shadow: 0 1px 2px #000; }
+.in-snd {
+  position: absolute; right: 8px; top: 8px; z-index: 3; display: inline-flex; gap: 5px; align-items: center; padding: 6px 9px; border-radius: 999px; border: 0;
+  font: 600 .62rem/1 var(--f-mono); letter-spacing: .04em; background: var(--accent); color: var(--accent-ink); box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: inPulse 1.6s 1.4s ease-in-out infinite;
+}
+.in-snd[aria-pressed="true"] { animation: none; background: rgba(0,0,0,.55); color: #fff; box-shadow: none; }
+@keyframes inPulse { 50% { transform: scale(1.07); } }
+.in-bar { height: 2px; margin-top: 8px; border-radius: 2px; background: #1F4A2A; overflow: hidden; }
+.in-bar b { display: block; height: 100%; width: 0; background: var(--accent); }
+.in-end { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; font: 600 .62rem/1 var(--f-mono); letter-spacing: .16em; color: #CFEFD6; background: rgba(7,16,9,.82); }
+@media (max-width: 560px) {
+  .intro { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: 150px; padding: 6px; }
+  .in-top { font-size: .5rem; padding-bottom: 6px; } .in-top span b, .in-ts { display: none; }
+  .in-snd { right: 6px; top: 6px; padding: 5px 8px; font-size: .56rem; }
+}
+@media (prefers-reduced-motion: reduce) { .intro, .intro::after, .intro.out, .in-feed::after, .in-snd, .in-top i { animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
 .hx-al-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 500 .62rem/1 var(--f-mono); letter-spacing: .12em; white-space: nowrap; color: #FF5A4E; }
 .hx-al-top span { display: inline-flex; gap: 8px; align-items: center; }
 .hx-al-top i { width: 8px; height: 8px; border-radius: 50%; background: #FF3B30; animation: agBlink .8s steps(2) infinite; }
@@ -2156,6 +2211,15 @@ html.thermal { filter: url(#thermalFx); }
 <div class="toast" id="toast" role="status"></div>
 
 <!-- HIRE.EXE: alert, game, thermal mode -->
+<aside class="intro" id="intro" aria-label="Video greeting from Oleg" hidden>
+  <div class="in-top"><span><i></i>LIVE<b> · CAM-00 · OLEG</b></span><button type="button" id="inX" aria-label="Close greeting">✕</button></div>
+  <div class="in-feed">
+    <video id="inVid" src="intro-demo.mp4" poster="intro-poster.jpg" muted playsinline preload="none"></video>
+    <span class="in-ts mono" id="inTs">REC 00:00</span>
+    <button class="in-snd" type="button" id="inSnd" aria-pressed="false">🔊 Sound</button>
+  </div>
+  <div class="in-bar" aria-hidden="true"><b id="inBar"></b></div>
+</aside>
 <div class="hx-alert" id="hxAlert" role="dialog" aria-labelledby="hxAlertT" hidden>
   <div class="hx-al-top"><span><i></i>CAM-01 · ALERT · SUBJECT AVAILABLE</span><button type="button" id="hxAlertX" aria-label="Dismiss">✕</button></div>
   <b id="hxAlertT">Still thinking of hiring me?</b>
@@ -5385,6 +5449,36 @@ Kyiv, Ukraine · 19 years in IT
   chip.addEventListener('click', () => { if (chip.dataset.state === 'hired') { go('contact'); copyEmail(); } else openGame(); });
   $('#hireAgain').addEventListener('click', () => { openGame(); start(); });
   syncChip();
+
+  // ---- intro: a 9-second live-feed greeting in the corner, once per visit; muted with burned-in subtitles, tap for sound ----
+  (() => {
+    const box = $('#intro'), vid = $('#inVid'), snd = $('#inSnd'), bar = $('#inBar'), ts = $('#inTs');
+    try { if (sessionStorage.getItem('cv-intro')) return; sessionStorage.setItem('cv-intro', '1'); } catch {}
+    let gone = false;
+    function close() {
+      if (gone) return; gone = true; vid.pause();
+      box.classList.add('out'); setTimeout(() => { box.hidden = true; }, 520);
+    }
+    setTimeout(() => {
+      if (!palOverlay.hidden || !termOverlay.hidden || locating) return;
+      box.hidden = false; vid.preload = 'auto';
+      setTimeout(() => { if (!gone) vid.play().catch(() => {}); }, reduced ? 0 : 1100);
+    }, 1200);
+    vid.addEventListener('timeupdate', () => {
+      bar.style.width = (vid.currentTime / (vid.duration || 9) * 100) + '%';
+      ts.textContent = 'REC 00:' + String(Math.floor(vid.currentTime)).padStart(2, '0');
+    });
+    vid.addEventListener('ended', () => {
+      const end = document.createElement('div'); end.className = 'in-end'; end.textContent = 'TRANSMISSION ENDED';
+      vid.parentNode.appendChild(end); setTimeout(close, 1400);
+    });
+    snd.addEventListener('click', () => {
+      const on = vid.muted; vid.muted = !on; snd.setAttribute('aria-pressed', on);
+      snd.textContent = on ? '🔇 Mute' : '🔊 Sound';
+      if (on) { vid.currentTime = 0; vid.play().catch(() => {}); }
+    });
+    $('#inX').addEventListener('click', close);
+  })();
 
   // ---- "Still thinking of hiring me?" alert: after 30 s on the page, or when the mouse heads for the tabs ----
   const alertEl = $('#hxAlert'), bornAt = Date.now();
